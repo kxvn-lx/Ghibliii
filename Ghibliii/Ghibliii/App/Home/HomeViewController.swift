@@ -17,6 +17,7 @@ class HomeViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setNavigationBarTitle("Ghibliii")
         collectionView.collectionViewLayout = makeLayout()
         
         setupView()
@@ -91,7 +92,9 @@ extension HomeViewController {
                 cell.filmName.text = film.title
                 cell.filmYear.text = film.releaseDate
                 
-                ImageEngine.shared.load(withFilmID: film.id, to: cell.filmImageView)
+                ImageEngine.shared.load(withFilmID: film.id) { (loadedImage) in
+                    cell.filmImageView.image = loadedImage.resizeImageWith(newSize: cell.frame.size)
+                }
                 
                 return cell
             })

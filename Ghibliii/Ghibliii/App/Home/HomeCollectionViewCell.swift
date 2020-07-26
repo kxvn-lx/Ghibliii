@@ -12,7 +12,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     static let REUSE_IDENTIFIER = "FilmCell"
     let filmImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .systemGray5
+        imageView.backgroundColor = .systemGray6
         imageView.contentMode = .scaleToFill
         imageView.layer.cornerRadius = 5
         imageView.layer.cornerCurve = .continuous
@@ -37,7 +37,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setupView()
     }
     
