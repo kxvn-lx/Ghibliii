@@ -44,6 +44,19 @@ class HomeCollectionViewCell: UICollectionViewCell {
         setupConstraint()
     }
     
+    override func setNeedsLayout() {
+        filmImageView.snp.remakeConstraints { (make) in
+            make.width.equalTo(self.frame.width)
+            make.height.equalTo(self.frame.width * 1.5)
+            make.top.equalToSuperview()
+        }
+        
+        textStackView.snp.remakeConstraints { (make) in
+            make.width.equalToSuperview()
+            make.top.equalTo(filmImageView.snp.bottom).offset(10)
+        }
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         self.filmImageView.image = UIImage()

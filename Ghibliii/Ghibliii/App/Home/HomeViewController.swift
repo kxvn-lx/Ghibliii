@@ -79,11 +79,15 @@ extension HomeViewController {
     fileprivate func makeLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             let isPhone = layoutEnvironment.traitCollection.userInterfaceIdiom == .phone
-            let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: isPhone ? .fractionalWidth(0.65) : .fractionalHeight(1))
             let itemCount = isPhone ? 3 : 4
-            let item = NSCollectionLayoutItem(layoutSize: size)
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitem: item, count: itemCount)
+            
+            let groupFractionalHeight: Float = isPhone ? 0.65: 0.45
+            let groupSize = NSCollectionLayoutSize(
+              widthDimension: .fractionalWidth(1),
+              heightDimension: .fractionalWidth(CGFloat(groupFractionalHeight)))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: itemCount)
             let section = NSCollectionLayoutSection(group: group)
             return section
         }
