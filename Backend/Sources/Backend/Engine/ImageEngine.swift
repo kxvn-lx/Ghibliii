@@ -7,35 +7,38 @@
 
 import UIKit
 
-public struct ImageEngine {
-    private static let imageServiceCache = NSCache<NSString, UIImage>()
-    public typealias ImageEngineSuccess = (UIImage) -> Void
+public class ImageEngine {
+    private let cachedImages = NSCache<NSURL, UIImage>()
+    public typealias ImageEngineSuccess = (UIImage?) -> Swift.Void
     
     public static let shared = ImageEngine()
     private init() { }
     
     /// load an image from the given urlString
     /// Also cache the image for performance
-    public func load(withFilmID imageID: String, success: ImageEngineSuccess?) {
+    public func load(withFilmID imageID: String, success: @escaping ImageEngineSuccess) {
         let urlString = FILM_IMAGE[imageID]!
+        guard let imageURL = NSURL(string: urlString) else { return }
         
-        if let imageFromCache = ImageEngine.imageServiceCache.object(forKey: urlString as NSString) {
-            success?(imageFromCache)
+        // Check for cache
+        if let imageFromCache = cachedImages.object(forKey: imageURL) {
+            DispatchQueue.main.async {
+                success(imageFromCache)
+            }
             return
         }
         
-        guard let imageURL = URL(string: urlString) else { return }
-        URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
-            guard let imageData = data else { return }
-            if let error = error {
-                print(error.localizedDescription)
+        // Go fetch the image.
+        URLSession.shared.dataTask(with: imageURL as URL) { (data, response, error) in
+            guard let imageData = data, error == nil, let imageToCache = UIImage(data: imageData) else {
+                print(error!.localizedDescription)
+                success(nil)
                 return
             }
-            if let imageToCache = UIImage(data: imageData) {
-                DispatchQueue.main.async {
-                    ImageEngine.imageServiceCache.setObject(imageToCache, forKey: urlString as NSString)
-                    success?(imageToCache)
-                }
+            
+            DispatchQueue.main.async {
+                self.cachedImages.setObject(imageToCache, forKey: imageURL, cost: imageData.count)
+                success(imageToCache)
             }
         }.resume()
     }

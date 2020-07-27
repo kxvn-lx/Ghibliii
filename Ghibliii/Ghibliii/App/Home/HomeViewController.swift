@@ -100,10 +100,10 @@ extension HomeViewController {
                 
                 ImageEngine.shared.load(withFilmID: film.id) { (loadedImage) in
                     DispatchQueue.main.async {
-                        cell.filmImageView.image = loadedImage.resizeImageWith(newSize: cell.frame.size)
+                        cell.filmImageView.image = loadedImage?.resizeImageWith(newSize: cell.frame.size)
                     }
                 }
-                
+
                 return cell
             })
     }
