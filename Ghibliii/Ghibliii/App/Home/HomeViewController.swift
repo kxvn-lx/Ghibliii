@@ -58,6 +58,11 @@ class HomeViewController: UICollectionViewController {
         }
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
+        print(film)
+    }
+    
 }
 
 // MARK: - Delegate and datasource configurations
@@ -67,53 +72,18 @@ extension HomeViewController {
     fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Film>
     
     /// Configure the layout
-    fileprivate func createPortraitSection() -> NSCollectionLayoutSection {
-        let contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-        
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = contentInsets
-        
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalWidth(0.65))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        
-        return section
-    }
-    
-    fileprivate func createLandscapeSection() -> NSCollectionLayoutSection {
-        let contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-        
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = contentInsets
-        
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 4)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        
-        return section
-    }
     
     fileprivate func makeLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            if self.traitCollection.horizontalSizeClass == .compact {
-                return self.createPortraitSection()
-            } else {
-                return self.createLandscapeSection()
-            }
+            let isPhone = layoutEnvironment.traitCollection.userInterfaceIdiom == .phone
+            let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: isPhone ? .fractionalWidth(0.65) : .fractionalHeight(1))
+            let itemCount = isPhone ? 3 : 4
+            let item = NSCollectionLayoutItem(layoutSize: size)
+            item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitem: item, count: itemCount)
+            let section = NSCollectionLayoutSection(group: group)
+            return section
         }
-        
-        // Configure the Layout with interSectionSpacing
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = 20
-        layout.configuration = config
         
         return layout
     }
@@ -145,13 +115,6 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController {
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
-        print(film)
-    }
-}
-
 extension HomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
@@ -161,7 +124,7 @@ extension HomeViewController: UISearchResultsUpdating {
     func filterContentForSearchText(_ searchQuery: String?) {
         let filteredFilms: [Film]
         if let searchQuery = searchQuery, !searchQuery.isEmpty {
-            filteredFilms = films.filter { $0.contains(query: searchQuery) }
+            filteredFilms = films.filter { $0.title.lowercased().contains(searchQuery.lowercased()) }
         } else {
             filteredFilms = films
         }
