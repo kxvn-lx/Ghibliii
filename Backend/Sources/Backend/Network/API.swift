@@ -21,7 +21,8 @@ public class API {
         var datas: [T]?
         
         session.dataTask(with: url) { (data, _, error) in
-            guard let data = data, error == nil else { fatalError() }
+            guard let data = data else { fatalError() }
+            if error != nil { fatalError(error!.localizedDescription) }
             
             do {
                 datas = try JSONDecoder().decode([Film].self, from: data) as? [T]

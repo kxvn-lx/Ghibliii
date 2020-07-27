@@ -50,35 +50,54 @@ extension HomeViewController {
     fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Film>
     
     /// Configure the layout
-    fileprivate func makeLayout() -> UICollectionViewLayout {
-        let margin: CGFloat = 5
+    fileprivate func createPortraitSection() -> NSCollectionLayoutSection {
+        let contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
-        )
-        let fullPhotoItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        fullPhotoItem.contentInsets = NSDirectionalEdgeInsets(
-            top: margin,
-            leading: margin,
-            bottom: margin,
-            trailing: margin
-        )
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = contentInsets
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
+            widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalWidth(0.65))
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitem: fullPhotoItem,
-            count: 3
-        )
-        group.interItemSpacing = .fixed(10)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
         
         let section = NSCollectionLayoutSection(group: group)
         
-        let layout = UICollectionViewCompositionalLayout(section: section)
+        return section
+    }
+    
+    fileprivate func createLandscapeSection() -> NSCollectionLayoutSection {
+        let contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = contentInsets
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 4)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    
+    fileprivate func makeLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            if self.traitCollection.horizontalSizeClass == .compact {
+                return self.createPortraitSection()
+            } else {
+                return self.createLandscapeSection()
+            }
+        }
+        
+        // Configure the Layout with interSectionSpacing
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.interSectionSpacing = 20
+        layout.configuration = config
+        
         return layout
     }
     
