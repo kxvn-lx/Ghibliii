@@ -13,6 +13,20 @@ class HomeViewController: UICollectionViewController {
     private var dataSource: DataSource!
     private var films = [Film]()
     
+    // Searchbar properties
+    private let searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        return searchController
+    }()
+    var isSearchBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    var isFiltering: Bool {
+        return searchController.isActive && !isSearchBarEmpty
+    }
+    
     // MARK: - Class methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +42,11 @@ class HomeViewController: UICollectionViewController {
     
     private func setupView() {
         self.view.addSubview(collectionView)
+        
+        // Setup searchController
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     /// Fetch the initial movies data
@@ -43,9 +62,7 @@ class HomeViewController: UICollectionViewController {
 
 // MARK: - Delegate and datasource configurations
 extension HomeViewController {
-    fileprivate enum Section {
-        case main
-    }
+    fileprivate enum Section { case main }
     fileprivate typealias DataSource = UICollectionViewDiffableDataSource<Section, Film>
     fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Film>
     
@@ -132,5 +149,26 @@ extension HomeViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
         print(film)
+    }
+}
+
+extension HomeViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        filterContentForSearchText(searchBar.text)
+    }
+    
+    func filterContentForSearchText(_ searchQuery: String?) {
+        let filteredFilms: [Film]
+        if let searchQuery = searchQuery, !searchQuery.isEmpty {
+            filteredFilms = films.filter { $0.contains(query: searchQuery) }
+        } else {
+            filteredFilms = films
+        }
+        
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(filteredFilms, toSection: .main)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
