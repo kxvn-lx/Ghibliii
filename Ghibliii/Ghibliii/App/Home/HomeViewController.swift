@@ -15,6 +15,8 @@ class HomeViewController: UICollectionViewController {
     private var films = [Film]()
     private var pipeline = ImagePipeline.shared
     
+    private lazy var dataPersistEngine = DataPersistEngine()
+    
     // Searchbar properties
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -55,10 +57,16 @@ class HomeViewController: UICollectionViewController {
     
     /// Fetch the initial movies data
     private func fetchData() {
-        API.shared.getData(type: Film.self, fromEndpoint: .film()) { [weak self] (films) in
-            guard let films = films else { return }
-            self?.films = films
-            self?.createSnapshot(from: films)
+        if dataPersistEngine.films.isEmpty {
+            API.shared.getData(type: Film.self, fromEndpoint: .film()) { [weak self] (films) in
+                guard let films = films else { return }
+                self?.films = films
+                self?.dataPersistEngine.saveFilms(films)
+                self?.createSnapshot(from: films)
+            }
+        } else {
+            self.films = dataPersistEngine.films
+            self.createSnapshot(from: films)
         }
     }
     
