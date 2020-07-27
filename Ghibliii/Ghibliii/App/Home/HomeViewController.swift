@@ -99,7 +99,9 @@ extension HomeViewController {
                 cell.filmYear.text = film.releaseDate
                 
                 ImageEngine.shared.load(withFilmID: film.id) { (loadedImage) in
-                    cell.filmImageView.image = loadedImage.resizeImageWith(newSize: cell.frame.size)
+                    DispatchQueue.main.async {
+                        cell.filmImageView.image = loadedImage.resizeImageWith(newSize: cell.frame.size)
+                    }
                 }
                 
                 return cell
