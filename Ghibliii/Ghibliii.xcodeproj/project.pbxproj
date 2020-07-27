@@ -14,6 +14,7 @@
 		0A16787224CD26D00060B62C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A16787124CD26D00060B62C /* Assets.xcassets */; };
 		0A16787524CD26D00060B62C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A16787324CD26D00060B62C /* LaunchScreen.storyboard */; };
 		0A16788024CD38520060B62C /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 0A16787F24CD38520060B62C /* Backend */; };
+		0A508EE224CEBA4E00793E8B /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 0A508EE124CEBA4E00793E8B /* Nuke */; };
 		0A656F5824CDB579000C4113 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A656F5724CDB579000C4113 /* UIViewController.swift */; };
 		0A656F5A24CDBCC7000C4113 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A656F5924CDBCC7000C4113 /* UIImage.swift */; };
 		0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */; };
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A508EE224CEBA4E00793E8B /* Nuke in Frameworks */,
 				0A16788024CD38520060B62C /* Backend in Frameworks */,
 				0AF9A5CC24CD6796001D116C /* SnapKit in Frameworks */,
 			);
@@ -135,6 +137,7 @@
 			packageProductDependencies = (
 				0A16787F24CD38520060B62C /* Backend */,
 				0AF9A5CB24CD6796001D116C /* SnapKit */,
+				0A508EE124CEBA4E00793E8B /* Nuke */,
 			);
 			productName = Ghibliii;
 			productReference = 0A16786524CD26CE0060B62C /* Ghibliii.app */;
@@ -165,6 +168,7 @@
 			mainGroup = 0A16785C24CD26CE0060B62C;
 			packageReferences = (
 				0AF9A5CA24CD6796001D116C /* XCRemoteSwiftPackageReference "SnapKit" */,
+				0A508EE024CEBA4E00793E8B /* XCRemoteSwiftPackageReference "Nuke" */,
 			);
 			productRefGroup = 0A16786624CD26CE0060B62C /* Products */;
 			projectDirPath = "";
@@ -408,6 +412,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0A508EE024CEBA4E00793E8B /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.1;
+			};
+		};
 		0AF9A5CA24CD6796001D116C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -422,6 +434,11 @@
 		0A16787F24CD38520060B62C /* Backend */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Backend;
+		};
+		0A508EE124CEBA4E00793E8B /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A508EE024CEBA4E00793E8B /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
 		};
 		0AF9A5CB24CD6796001D116C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

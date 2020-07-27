@@ -7,11 +7,13 @@
 
 import UIKit
 import Backend
+import Nuke
 
 class HomeViewController: UICollectionViewController {
     
     private var dataSource: DataSource!
     private var films = [Film]()
+    private var pipeline = ImagePipeline.shared
     
     // Searchbar properties
     private let searchController: UISearchController = {
@@ -38,6 +40,8 @@ class HomeViewController: UICollectionViewController {
         
         configureDataSource()
         fetchData()
+        
+        ImageLoadingOptions.shared.transition = .fadeIn(duration: 0.125)
     }
     
     private func setupView() {
@@ -72,7 +76,6 @@ extension HomeViewController {
     fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Film>
     
     /// Configure the layout
-    
     fileprivate func makeLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             let isPhone = layoutEnvironment.traitCollection.userInterfaceIdiom == .phone
@@ -98,11 +101,11 @@ extension HomeViewController {
                 cell.filmName.text = film.title
                 cell.filmYear.text = film.releaseDate
                 
-                ImageEngine.shared.load(withFilmID: film.id) { (loadedImage) in
-                    DispatchQueue.main.async {
-                        cell.filmImageView.image = loadedImage?.resizeImageWith(newSize: cell.frame.size)
-                    }
-                }
+                let url = URL(string: FILM_IMAGE[film.id]!)!
+                var request = ImageRequest(url: url)
+                request.processors = [ImageProcessors.Resize(size: cell.bounds.size)]
+                
+                loadImage(with: request, into: cell.filmImageView)
 
                 return cell
             })
