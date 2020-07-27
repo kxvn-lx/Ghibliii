@@ -44,6 +44,11 @@ class HomeCollectionViewCell: UICollectionViewCell {
         setupConstraint()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.filmImageView.image = UIImage()
+    }
+    
     private func setupView() {
         addSubview(filmImageView)
         textStackView = UIStackView(arrangedSubviews: [filmName, filmYear])
