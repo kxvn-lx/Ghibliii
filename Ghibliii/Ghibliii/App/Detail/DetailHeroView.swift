@@ -56,7 +56,7 @@ class DetailHeroView: UIView {
             loadImage(with: URL(string: FILM_IMAGE[film.id]!)!, into: filmImageView)
             
             yearLabel.text = film.releaseDate
-            rtLabel.text = "\(film.rtScore)% people liked this movie"
+            rtLabel.text = "Rotten tomatoes: \(film.rtScore)%"
         }
     }
     

@@ -19,7 +19,6 @@
 		0A5BFE8D24CFB89700962C7C /* DetailHeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5BFE8C24CFB89700962C7C /* DetailHeroView.swift */; };
 		0A656F5824CDB579000C4113 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A656F5724CDB579000C4113 /* UIViewController.swift */; };
 		0A656F5A24CDBCC7000C4113 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A656F5924CDBCC7000C4113 /* UIImage.swift */; };
-		0A69E0F324D0199300D5E8AB /* HomeViewController+TransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A69E0F224D0199300D5E8AB /* HomeViewController+TransitioningDelegate.swift */; };
 		0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */; };
 		0AF9A5CC24CD6796001D116C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF9A5CB24CD6796001D116C /* SnapKit */; };
 /* End PBXBuildFile section */
@@ -39,7 +38,6 @@
 		0A656F5724CDB579000C4113 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		0A656F5924CDBCC7000C4113 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		0A656F5B24CE88D9000C4113 /* Ghibliii.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghibliii.entitlements; sourceTree = "<group>"; };
-		0A69E0F224D0199300D5E8AB /* HomeViewController+TransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+TransitioningDelegate.swift"; sourceTree = "<group>"; };
 		0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,7 +92,6 @@
 		0A16787C24CD26E20060B62C /* App */ = {
 			isa = PBXGroup;
 			children = (
-				0A69E0F124D0196A00D5E8AB /* Home+Detail Transitions  */,
 				0A508EE624CF2F3F00793E8B /* Detail */,
 				0A787C6324CD6C8A00D569CE /* Home */,
 			);
@@ -124,14 +121,6 @@
 				0A656F5724CDB579000C4113 /* UIViewController.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		0A69E0F124D0196A00D5E8AB /* Home+Detail Transitions  */ = {
-			isa = PBXGroup;
-			children = (
-				0A69E0F224D0199300D5E8AB /* HomeViewController+TransitioningDelegate.swift */,
-			);
-			path = "Home+Detail Transitions ";
 			sourceTree = "<group>";
 		};
 		0A787C6324CD6C8A00D569CE /* Home */ = {
@@ -224,7 +213,6 @@
 			files = (
 				0A16786D24CD26CE0060B62C /* HomeViewController.swift in Sources */,
 				0A16786924CD26CE0060B62C /* AppDelegate.swift in Sources */,
-				0A69E0F324D0199300D5E8AB /* HomeViewController+TransitioningDelegate.swift in Sources */,
 				0A16786B24CD26CE0060B62C /* SceneDelegate.swift in Sources */,
 				0A5BFE8D24CFB89700962C7C /* DetailHeroView.swift in Sources */,
 				0A656F5A24CDBCC7000C4113 /* UIImage.swift in Sources */,

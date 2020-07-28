@@ -71,11 +71,9 @@ class HomeViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
-        
         let vc = DetailViewController()
         vc.film = film
         let navController = UINavigationController(rootViewController: vc)
-        navController.modalPresentationStyle = .fullScreen
         self.present(navController, animated: true, completion: nil)
         
     }
