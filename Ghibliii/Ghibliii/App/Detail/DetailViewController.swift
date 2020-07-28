@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title3).pointSize, weight: .semibold)
         label.textColor = .label
         return label
     }()
