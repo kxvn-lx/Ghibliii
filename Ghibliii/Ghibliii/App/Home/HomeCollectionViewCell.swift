@@ -70,6 +70,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
 
         textStackView.alignment = .leading
         textStackView.axis = .vertical
+        textStackView.distribution = .fillProportionally
     }
     
     private func setupConstraint() {

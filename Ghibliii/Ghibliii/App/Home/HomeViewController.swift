@@ -13,7 +13,6 @@ class HomeViewController: UICollectionViewController {
     
     private var dataSource: DataSource!
     private var films = [Film]()
-    private var pipeline = ImagePipeline.shared
     
     private lazy var dataPersistEngine = DataPersistEngine()
     
@@ -72,7 +71,12 @@ class HomeViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
-        print(film)
+        
+        let vc = DetailViewController()
+        vc.film = film
+        let navController = UINavigationController(rootViewController: vc)
+        self.present(navController, animated: true, completion: nil)
+        
     }
     
 }

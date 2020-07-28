@@ -36,11 +36,13 @@ public struct DataPersistEngine {
         }
     }
     
+    /// Save the films locally
     public mutating func saveFilms(_ films: [Film]) {
         self.films = films
         save()
     }
     
+    /// Do the saving
     private func save() {
         do {
             let savedData = SavedData(films: films)

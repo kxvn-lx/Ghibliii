@@ -15,7 +15,12 @@ public class API {
     
     private init() { }
     
+    
     /// Retrieve the data from the given endpoint
+    /// - Parameters:
+    ///   - type: The type of the data that will be retrieved
+    ///   - endpoint: The endpoint
+    ///   - completion: Completion block when the data is recevied
     public func getData<T>(type: T.Type, fromEndpoint endpoint: Endpoint, completion: @escaping ([T]?) -> Void) {
         let url = makeURL(endpoint: endpoint)
         var datas: [T]?
