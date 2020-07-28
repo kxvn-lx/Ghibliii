@@ -75,6 +75,7 @@ class HomeViewController: UICollectionViewController {
         let vc = DetailViewController()
         vc.film = film
         let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen
         self.present(navController, animated: true, completion: nil)
         
     }
