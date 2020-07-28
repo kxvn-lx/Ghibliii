@@ -29,7 +29,7 @@ public let FILM_IMAGE: [String: String] = [
     // My neighbors the yamadas
     "45204234-adfd-45cb-a505-a8e7a676b114": "https://res.cloudinary.com/dtojbksfg/image/upload/v1595733364/My_Neighbors_the_Yamadas_yavhma.jpg",
     // Spirited Away
-    "dc2e6bd1-8156-4886-adff-b39e6043af0c": "https://res.cloudinary.com/dtojbksfg/image/upload/v1595733502/Spirited_Away_boqhfg.png",
+    "dc2e6bd1-8156-4886-adff-b39e6043af0c": "https://res.cloudinary.com/dtojbksfg/image/upload/v1595924783/Spirited_Away_x9nvq4.png",
     // The Cat Returns
     "90b72513-afd4-4570-84de-a56c312fdf81": "https://res.cloudinary.com/dtojbksfg/image/upload/v1595733422/The_Cat_Returns_inmvg7.jpg",
     // Howl's moving castle
