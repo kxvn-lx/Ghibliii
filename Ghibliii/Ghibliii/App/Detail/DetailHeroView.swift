@@ -24,10 +24,9 @@ class DetailHeroView: UIView {
         let blurredEffectView = UIVisualEffectView(effect: blurEffect)
         return blurredEffectView
     }()
-    private let filmImageView: UIImageView = {
+    let filmImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemGray5
-        imageView.layer.cornerCurve = .continuous
         imageView.contentMode = .scaleToFill
         
         imageView.layer.shadowColor = UIColor.black.cgColor
@@ -118,7 +117,7 @@ class DetailHeroView: UIView {
             make.width.equalTo(200)
             make.height.equalTo(300)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(20 + 44)
         }
         
         titleLabel.snp.makeConstraints { (make) in

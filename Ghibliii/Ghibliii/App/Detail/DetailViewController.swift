@@ -42,13 +42,7 @@ class DetailViewController: UIViewController {
         label.textColor = .secondaryLabel
         return label
     }()
-    private let showMoreLessButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Show more", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
-        return button
-    }()
+    private var originalHeight: CGFloat = 425
     
     private var mStackView: UIStackView!
     
@@ -73,25 +67,26 @@ class DetailViewController: UIViewController {
         
         detailHeroView = DetailHeroView(film: film)
         mScrollView.addSubview(detailHeroView)
+        mScrollView.delegate = self
         
         // Setup close button
         let closeButton = UIButton(type: .close)
         closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { (make) in
-            make.left.top.equalToSuperview().inset(NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0))
+            make.left.top.equalToSuperview().inset(NSDirectionalEdgeInsets(top: 20 + 44, leading: 20, bottom: 0, trailing: 0))
         }
         
-        // Link button with action
-        showMoreLessButton.addTarget(self, action: #selector(showMoreLessButtonTapped), for: .touchUpInside)
+        // Link Description label with action
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showMoreLessButtonTapped))
+        descriptionLabel.isUserInteractionEnabled = true
+        descriptionLabel.addGestureRecognizer(tap)
         
         // Setup views
-        mStackView = UIStackView(arrangedSubviews: [descriptionLabel, showMoreLessButton, directorLabel, producerLabel])
+        mStackView = UIStackView(arrangedSubviews: [descriptionLabel, directorLabel, producerLabel])
         mStackView.axis = .vertical
         
         mScrollView.addSubview(mStackView)
-        
-        mStackView.setCustomSpacing(20, after: showMoreLessButton)
     }
     
     private func setupConstraint() {
@@ -101,7 +96,7 @@ class DetailViewController: UIViewController {
         
         detailHeroView.snp.makeConstraints { (make) in
             make.width.top.equalToSuperview()
-            make.height.equalTo(425)
+            make.height.equalTo(originalHeight)
         }
         
         mStackView.snp.makeConstraints { (make) in
@@ -117,13 +112,38 @@ class DetailViewController: UIViewController {
         
     }
     
-    @objc private func showMoreLessButtonTapped(_ sender: UIButton) {
-        sender.setTitle(descriptionLabel.numberOfLines == 0 ? "Show more" : "Show less", for: .normal)
+    @objc private func showMoreLessButtonTapped() {
         descriptionLabel.numberOfLines = descriptionLabel.numberOfLines == 0 ? 2 : 0
         UIView.animate(withDuration: 0.0625) {
             self.descriptionLabel.superview?.layoutIfNeeded()
         }
     }
     
-    
+}
+
+extension DetailViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset.y
+        let defaultTop: CGFloat = 0
+        
+        var currentTop = defaultTop
+        if offset < 0 {
+            currentTop = offset
+            detailHeroView.snp.updateConstraints { (make) in
+                make.height.equalTo(originalHeight - offset)
+            }
+            detailHeroView.filmImageView.snp.updateConstraints { (make) in
+                make.top.equalToSuperview().offset(20 - offset)
+            }
+        }
+        else {
+            detailHeroView.snp.updateConstraints { (make) in
+                make.height.equalTo(originalHeight)
+            }
+        }
+        
+        detailHeroView.snp.updateConstraints { (make) in
+            make.top.equalTo(currentTop)
+        }
+    }
 }
