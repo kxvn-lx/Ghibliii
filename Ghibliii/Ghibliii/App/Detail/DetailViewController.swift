@@ -84,7 +84,11 @@ class DetailViewController: UIViewController {
         
         // Setup views
         mStackView = UIStackView(arrangedSubviews: [descriptionLabel, directorLabel, producerLabel])
+        mStackView.addBackgroundColor(.secondarySystemBackground, withCornerRadius: 10)
+        mStackView.isLayoutMarginsRelativeArrangement = true
+        mStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         mStackView.axis = .vertical
+        mStackView.setCustomSpacing(20, after: descriptionLabel)
         
         mScrollView.addSubview(mStackView)
     }
@@ -100,7 +104,11 @@ class DetailViewController: UIViewController {
         }
         
         mStackView.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().multipliedBy(0.95)
+            switch UIDevice.current.userInterfaceIdiom {
+            case .phone: make.width.equalToSuperview().multipliedBy(0.95)
+            case .pad: make.width.equalToSuperview().multipliedBy(0.5)
+            default: break
+            }
             make.top.equalTo(detailHeroView.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
         }
