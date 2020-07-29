@@ -12,7 +12,6 @@ class DetailViewController: UIViewController {
     
     var film: Film! {
         didSet {
-            titleLabel.text = film.title
             descriptionLabel.text = film.filmDescription
             directorLabel.text = "Director: \(film.director)"
             producerLabel.text = "Producer: \(film.producer)"
@@ -28,12 +27,6 @@ class DetailViewController: UIViewController {
         let label = UILabel()
         label.numberOfLines = 2
         label.font = .preferredFont(forTextStyle: .body)
-        label.textColor = .label
-        return label
-    }()
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title3).pointSize, weight: .semibold)
         label.textColor = .label
         return label
     }()
@@ -93,7 +86,7 @@ class DetailViewController: UIViewController {
         showMoreLessButton.addTarget(self, action: #selector(showMoreLessButtonTapped), for: .touchUpInside)
         
         // Setup views
-        mStackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel, showMoreLessButton, directorLabel, producerLabel])
+        mStackView = UIStackView(arrangedSubviews: [descriptionLabel, showMoreLessButton, directorLabel, producerLabel])
         mStackView.axis = .vertical
         
         mScrollView.addSubview(mStackView)
@@ -108,7 +101,7 @@ class DetailViewController: UIViewController {
         
         detailHeroView.snp.makeConstraints { (make) in
             make.width.top.equalToSuperview()
-            make.height.equalTo(400)
+            make.height.equalTo(425)
         }
         
         mStackView.snp.makeConstraints { (make) in

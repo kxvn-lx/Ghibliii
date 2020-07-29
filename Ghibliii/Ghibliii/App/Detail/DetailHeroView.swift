@@ -38,6 +38,12 @@ class DetailHeroView: UIView {
         return imageView
     }()
     private var textStackView: UIStackView!
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title2 ).pointSize, weight: .semibold)
+        label.textColor = .secondaryLabel
+        return label
+    }()
     private let yearLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .callout).pointSize, weight: .semibold)
@@ -55,6 +61,7 @@ class DetailHeroView: UIView {
             loadImage(with: URL(string: FILM_IMAGE[film.id]!)!, into: filmBackgroundImageView)
             loadImage(with: URL(string: FILM_IMAGE[film.id]!)!, into: filmImageView)
             
+            titleLabel.text = film.title
             yearLabel.text = film.releaseDate
             rtLabel.text = "Rotten tomatoes: \(film.rtScore)%"
         }
@@ -89,6 +96,7 @@ class DetailHeroView: UIView {
         filmBackgroundImageView.addSubview(filmBackgroundBlurView)
         
         addSubview(filmImageView)
+        addSubview(titleLabel)
         
         textStackView = UIStackView(arrangedSubviews: [yearLabel, rtLabel])
         textStackView.alignment = .center
@@ -113,10 +121,17 @@ class DetailHeroView: UIView {
             make.top.equalToSuperview().offset(20)
         }
         
-        textStackView.snp.makeConstraints { (make) in
-            make.width.equalTo(200)
+        titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.top.equalTo(filmImageView.snp.bottom).offset(20)
         }
+        
+        textStackView.snp.makeConstraints { (make) in
+            make.width.equalTo(200)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+        }
+        
+
     }
 }
