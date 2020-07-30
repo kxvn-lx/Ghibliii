@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A14BE3C24D28D1500B36E36 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14BE3B24D28D1500B36E36 /* UIDevice.swift */; };
+		0A14BE3E24D28EA100B36E36 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14BE3D24D28EA100B36E36 /* UIScrollView.swift */; };
 		0A16786924CD26CE0060B62C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A16786824CD26CE0060B62C /* AppDelegate.swift */; };
 		0A16786B24CD26CE0060B62C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A16786A24CD26CE0060B62C /* SceneDelegate.swift */; };
 		0A16786D24CD26CE0060B62C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A16786C24CD26CE0060B62C /* HomeViewController.swift */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A14BE3B24D28D1500B36E36 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
+		0A14BE3D24D28EA100B36E36 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		0A16786524CD26CE0060B62C /* Ghibliii.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghibliii.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A16786824CD26CE0060B62C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A16786A24CD26CE0060B62C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +126,8 @@
 				0A656F5924CDBCC7000C4113 /* UIImage.swift */,
 				0A656F5724CDB579000C4113 /* UIViewController.swift */,
 				0A1DACA024D1972500D32AD2 /* UIStackView.swift */,
+				0A14BE3B24D28D1500B36E36 /* UIDevice.swift */,
+				0A14BE3D24D28EA100B36E36 /* UIScrollView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -219,9 +225,11 @@
 				0A16786924CD26CE0060B62C /* AppDelegate.swift in Sources */,
 				0A16786B24CD26CE0060B62C /* SceneDelegate.swift in Sources */,
 				0A5BFE8D24CFB89700962C7C /* DetailHeroView.swift in Sources */,
+				0A14BE3C24D28D1500B36E36 /* UIDevice.swift in Sources */,
 				0A656F5A24CDBCC7000C4113 /* UIImage.swift in Sources */,
 				0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */,
 				0A656F5824CDB579000C4113 /* UIViewController.swift in Sources */,
+				0A14BE3E24D28EA100B36E36 /* UIScrollView.swift in Sources */,
 				0A508EEA24CF2FC200793E8B /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,7 +381,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D87H8GPTK2;
 				INFOPLIST_FILE = Ghibliii/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -395,7 +403,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D87H8GPTK2;
 				INFOPLIST_FILE = Ghibliii/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

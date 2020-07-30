@@ -33,7 +33,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         label.textColor = .secondaryLabel
         return label
     }()
-    private var textStackView: UIStackView!
+    var textStackView: UIStackView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

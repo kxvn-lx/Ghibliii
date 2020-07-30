@@ -42,7 +42,12 @@ class DetailViewController: UIViewController {
         label.textColor = .secondaryLabel
         return label
     }()
-    private var originalHeight: CGFloat = 450
+    private var originalHeight: CGFloat {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .phone: return 450
+        default: return 500
+        }
+    }
     
     private var mStackView: UIStackView!
     
@@ -55,6 +60,11 @@ class DetailViewController: UIViewController {
         
         setupView()
         setupConstraint()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mScrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
     }
     
     override func viewDidLayoutSubviews() {
@@ -74,7 +84,7 @@ class DetailViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { (make) in
-            make.left.top.equalToSuperview().inset(NSDirectionalEdgeInsets(top: 20 + 44, leading: 20, bottom: 0, trailing: 0))
+            make.left.top.equalToSuperview().inset(NSDirectionalEdgeInsets(top: UIDevice.isIphoneX ? 20 + 44 : 20 + 10, leading: 20, bottom: 0, trailing: 0))
         }
         
         // Link Description label with action
@@ -106,7 +116,7 @@ class DetailViewController: UIViewController {
         mStackView.snp.makeConstraints { (make) in
             switch UIDevice.current.userInterfaceIdiom {
             case .phone: make.width.equalToSuperview().multipliedBy(0.95)
-            case .pad: make.width.equalToSuperview().multipliedBy(0.5)
+            case .pad: make.width.equalToSuperview().multipliedBy(0.7)
             default: break
             }
             make.top.equalTo(detailHeroView.snp.bottom).offset(20)
@@ -124,6 +134,9 @@ class DetailViewController: UIViewController {
         descriptionLabel.numberOfLines = descriptionLabel.numberOfLines == 0 ? 2 : 0
         UIView.animate(withDuration: 0.0625) {
             self.descriptionLabel.superview?.layoutIfNeeded()
+        } completion: { [self] (_) in
+            viewDidLayoutSubviews()
+            mScrollView.updateContentView()
         }
     }
     
