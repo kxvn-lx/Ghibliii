@@ -42,7 +42,7 @@ class DetailViewController: UIViewController {
         label.textColor = .secondaryLabel
         return label
     }()
-    private var originalHeight: CGFloat = 425
+    private var originalHeight: CGFloat = 450
     
     private var mStackView: UIStackView!
     
@@ -57,8 +57,8 @@ class DetailViewController: UIViewController {
         setupConstraint()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         mScrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
     }
     
@@ -143,13 +143,17 @@ extension DetailViewController: UIScrollViewDelegate {
             detailHeroView.filmImageView.snp.updateConstraints { (make) in
                 make.top.equalToSuperview().offset(20 - offset)
             }
+            
+            if offset < -150 {
+                closeTapped()
+            }
         }
         else {
             detailHeroView.snp.updateConstraints { (make) in
                 make.height.equalTo(originalHeight)
             }
         }
-        
+
         detailHeroView.snp.updateConstraints { (make) in
             make.top.equalTo(currentTop)
         }
