@@ -98,7 +98,7 @@ extension HomeViewController {
             let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
             
-            let groupFractionalHeight: Float = isPhone ? 0.7: 0.42
+            let groupFractionalHeight: Float = isPhone ? 0.6 : 0.42
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
                 heightDimension: .fractionalWidth(CGFloat(groupFractionalHeight)))

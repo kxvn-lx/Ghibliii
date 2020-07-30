@@ -84,7 +84,7 @@ class DetailViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { (make) in
-            make.left.top.equalToSuperview().inset(NSDirectionalEdgeInsets(top: UIDevice.isIphoneX ? 20 + 44 : 20 + 10, leading: 20, bottom: 0, trailing: 0))
+            make.left.top.equalToSuperview().inset(NSDirectionalEdgeInsets(top: UIDevice.current.hasNotch ? 20 + 44 : 20 + 10, leading: 20, bottom: 0, trailing: 0))
         }
         
         // Link Description label with action
