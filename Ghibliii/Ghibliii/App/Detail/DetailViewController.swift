@@ -157,7 +157,7 @@ extension DetailViewController: UIScrollViewDelegate {
                 make.top.equalToSuperview().offset(20 - offset)
             }
             
-            if offset < -150 {
+            if offset < -300 {
                 closeTapped()
             }
         }
