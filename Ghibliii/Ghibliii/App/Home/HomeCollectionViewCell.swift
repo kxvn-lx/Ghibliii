@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Backend
+import Nuke
 
 class HomeCollectionViewCell: UICollectionViewCell {
     
@@ -22,6 +24,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     let filmName: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .callout)
+        label.adjustsFontForContentSizeCategory = true
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.textColor = .label
@@ -29,11 +32,28 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }()
     let filmYear: UILabel = {
         let label = UILabel()
+        label.adjustsFontForContentSizeCategory = true
         label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = .secondaryLabel
         return label
     }()
     var textStackView: UIStackView!
+    
+    var film: Film! {
+        didSet {
+            let url = URL(string: FILM_IMAGE[film.id]!)!
+            var request = ImageRequest(url: url)
+            request.processors = [ImageProcessors.Resize(size: self.bounds.size)]
+            
+            loadImage(with: request, into: filmImageView)
+            
+            filmName.text = film.title
+            filmName.accessibilityLabel = film.title
+            
+            filmYear.text = film.releaseDate
+            filmYear.accessibilityValue = "\(film.releaseDate)"
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,18 +64,18 @@ class HomeCollectionViewCell: UICollectionViewCell {
         setupConstraint()
     }
     
-    override func setNeedsLayout() {
-        filmImageView.snp.remakeConstraints { (make) in
-            make.width.equalTo(self.frame.width)
-            make.height.equalTo(self.frame.width * 1.5)
-            make.top.equalToSuperview()
-        }
-        
-        textStackView.snp.remakeConstraints { (make) in
-            make.width.equalToSuperview()
-            make.top.equalTo(filmImageView.snp.bottom).offset(10)
-        }
-    }
+//    override func setNeedsLayout() {
+//        filmImageView.snp.remakeConstraints { (make) in
+//            make.width.equalTo(self.frame.width)
+//            make.height.equalTo(self.frame.width * 1.5)
+//            make.top.equalToSuperview()
+//        }
+//
+//        textStackView.snp.remakeConstraints { (make) in
+//            make.width.equalToSuperview()
+//            make.top.equalTo(filmImageView.snp.bottom).offset(10)
+//        }
+//    }
     
     override func prepareForReuse() {
         super.prepareForReuse()

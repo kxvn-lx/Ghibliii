@@ -126,7 +126,7 @@ extension HomeViewController {
             let itemCount = isPhone ? 3 : 4
             let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-            
+
             let groupFractionalHeight: CGFloat = isPhone ? 0.65 : 0.42
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
@@ -136,7 +136,7 @@ extension HomeViewController {
             let section = NSCollectionLayoutSection(group: group)
             return section
         }
-        
+
         return layout
     }
     
@@ -147,14 +147,7 @@ extension HomeViewController {
             cellProvider: { (collectionView, indexPath, film) -> UICollectionViewCell? in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.REUSE_IDENTIFIER, for: indexPath) as! HomeCollectionViewCell
                 
-                cell.filmName.text = film.title
-                cell.filmYear.text = film.releaseDate
-                
-                let url = URL(string: FILM_IMAGE[film.id]!)!
-                var request = ImageRequest(url: url)
-                request.processors = [ImageProcessors.Resize(size: cell.bounds.size)]
-                
-                loadImage(with: request, into: cell.filmImageView)
+                cell.film = film
                 
                 let hoverGestureRecognizer = UIHoverGestureRecognizer(target: self, action: #selector(self.hoverEffect(_:)))
                 cell.addGestureRecognizer(hoverGestureRecognizer)
