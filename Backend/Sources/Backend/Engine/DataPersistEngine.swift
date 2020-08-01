@@ -21,18 +21,17 @@ public struct DataPersistEngine {
     
     public init() {
         do {
-            filePath = try FileManager.default.url(for: .documentDirectory,
+            filePath = try? FileManager.default.url(for: .documentDirectory,
                                                    in: .userDomainMask,
                                                    appropriateFor: nil,
                                                    
                                                    create: false).appendingPathComponent("SavedDatas")
+
             if let data = try? Data(contentsOf: filePath!) {
                 decoder.dataDecodingStrategy = .base64
-                let savedData = try decoder.decode(SavedData.self, from: data)
+                let savedData = try! decoder.decode(SavedData.self, from: data)
                 self.films = savedData.films
             }
-        } catch let error {
-            print(error.localizedDescription)
         }
     }
     
