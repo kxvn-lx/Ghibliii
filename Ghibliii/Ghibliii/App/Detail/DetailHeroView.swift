@@ -58,6 +58,13 @@ class DetailHeroView: UIView {
         label.textColor = .secondaryLabel
         return label
     }()
+    private let imdbLabel: UILabel = {
+        let label = UILabel()
+        label.adjustsFontForContentSizeCategory = true
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.textColor = .secondaryLabel
+        return label
+    }()
     var film: Film! {
         didSet {
             loadImage(with: URL(string: film.image)!, into: filmBackgroundImageView)
@@ -66,6 +73,7 @@ class DetailHeroView: UIView {
             titleLabel.text = film.title
             yearLabel.text = film.releaseDate
             rtLabel.text = "Rotten tomatoes: \(film.rtScore)%"
+            imdbLabel.text = "IMDB: \(film.imdbScore)/10"
         }
     }
     
@@ -100,7 +108,7 @@ class DetailHeroView: UIView {
         addSubview(filmImageView)
         addSubview(titleLabel)
         
-        textStackView = UIStackView(arrangedSubviews: [yearLabel, rtLabel])
+        textStackView = UIStackView(arrangedSubviews: [yearLabel, imdbLabel, rtLabel])
         textStackView.alignment = .center
         textStackView.axis = .vertical
         

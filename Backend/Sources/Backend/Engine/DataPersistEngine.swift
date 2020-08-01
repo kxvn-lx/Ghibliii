@@ -11,7 +11,7 @@ public struct DataPersistEngine {
     
     public var films = [Film]()
     
-    private let filePath: URL
+    private var filePath: URL?
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     
@@ -26,13 +26,13 @@ public struct DataPersistEngine {
                                                    appropriateFor: nil,
                                                    
                                                    create: false).appendingPathComponent("SavedDatas")
-            if let data = try? Data(contentsOf: filePath) {
+            if let data = try? Data(contentsOf: filePath!) {
                 decoder.dataDecodingStrategy = .base64
                 let savedData = try decoder.decode(SavedData.self, from: data)
                 self.films = savedData.films
             }
         } catch let error {
-            fatalError(error.localizedDescription)
+            print(error.localizedDescription)
         }
     }
     
@@ -44,13 +44,15 @@ public struct DataPersistEngine {
     
     /// Do the saving
     private func save() {
-        do {
-            let savedData = SavedData(films: films)
-            let data = try encoder.encode(savedData)
-            try data.write(to: filePath, options: .atomicWrite)
-        } catch let error {
-            print("Error while saving datas: \(error.localizedDescription)")
+        if let filePath = self.filePath {
+            do {
+                let savedData = SavedData(films: films)
+                let data = try encoder.encode(savedData)
+                try data.write(to: filePath, options: .atomicWrite)
+            } catch let error {
+                print("Error while saving datas: \(error.localizedDescription)")
+            }
+            encoder.dataEncodingStrategy = .base64
         }
-        encoder.dataEncodingStrategy = .base64
     }
 }

@@ -12,7 +12,7 @@ public struct Film: Codable, Hashable {
     public let image: String
     public let director, producer, releaseDate, rtScore: String
     public let imdbLink: String
-    public let imdbScore, imdScore: String?
+    public let imdbScore: String
 
     enum CodingKeys: String, CodingKey {
         case id, title
@@ -22,7 +22,6 @@ public struct Film: Codable, Hashable {
         case rtScore = "rt_score"
         case imdbLink = "imdb_link"
         case imdbScore = "imdb_score"
-        case imdScore = "imd_score"
     }
     
     public func hash(into hasher: inout Hasher) {
