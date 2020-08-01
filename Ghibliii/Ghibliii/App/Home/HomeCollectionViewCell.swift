@@ -41,7 +41,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     var film: Film! {
         didSet {
-            let url = URL(string: FILM_IMAGE[film.id]!)!
+            let url = URL(string: film.image)!
             var request = ImageRequest(url: url)
             request.processors = [ImageProcessors.Resize(size: self.bounds.size)]
             
@@ -64,18 +64,18 @@ class HomeCollectionViewCell: UICollectionViewCell {
         setupConstraint()
     }
     
-//    override func setNeedsLayout() {
-//        filmImageView.snp.remakeConstraints { (make) in
-//            make.width.equalTo(self.frame.width)
-//            make.height.equalTo(self.frame.width * 1.5)
-//            make.top.equalToSuperview()
-//        }
-//
-//        textStackView.snp.remakeConstraints { (make) in
-//            make.width.equalToSuperview()
-//            make.top.equalTo(filmImageView.snp.bottom).offset(10)
-//        }
-//    }
+    override func setNeedsLayout() {
+        filmImageView.snp.remakeConstraints { (make) in
+            make.width.equalTo(self.frame.width)
+            make.height.equalTo(self.frame.width * 1.5)
+            make.top.equalToSuperview()
+        }
+
+        textStackView.snp.remakeConstraints { (make) in
+            make.width.equalToSuperview()
+            make.top.equalTo(filmImageView.snp.bottom).offset(10)
+        }
+    }
     
     override func prepareForReuse() {
         super.prepareForReuse()

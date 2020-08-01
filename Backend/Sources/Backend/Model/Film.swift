@@ -8,18 +8,21 @@
 import Foundation
 
 public struct Film: Codable, Hashable {
-    public let id, title, filmDescription, director: String
-    public let producer, releaseDate, rtScore: String
-    public let people, species, locations, vehicles: [String]
-    public let url: String
+    public let id, title, filmDescription: String
+    public let image: String
+    public let director, producer, releaseDate, rtScore: String
+    public let imdbLink: String
+    public let imdbScore, imdScore: String?
 
     enum CodingKeys: String, CodingKey {
         case id, title
         case filmDescription = "description"
-        case director, producer
+        case image, director, producer
         case releaseDate = "release_date"
         case rtScore = "rt_score"
-        case people, species, locations, vehicles, url
+        case imdbLink = "imdb_link"
+        case imdbScore = "imdb_score"
+        case imdScore = "imd_score"
     }
     
     public func hash(into hasher: inout Hasher) {

@@ -39,26 +39,29 @@ class DetailHeroView: UIView {
     private var textStackView: UIStackView!
     private let titleLabel: UILabel = {
         let label = UILabel()
+        label.adjustsFontForContentSizeCategory = true
         label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title2 ).pointSize, weight: .semibold)
         label.textColor = .secondaryLabel
         return label
     }()
     private let yearLabel: UILabel = {
         let label = UILabel()
+        label.adjustsFontForContentSizeCategory = true
         label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .callout).pointSize, weight: .semibold)
         label.textColor = .secondaryLabel
         return label
     }()
     private let rtLabel: UILabel = {
         let label = UILabel()
+        label.adjustsFontForContentSizeCategory = true
         label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = .secondaryLabel
         return label
     }()
     var film: Film! {
         didSet {
-            loadImage(with: URL(string: FILM_IMAGE[film.id]!)!, into: filmBackgroundImageView)
-            loadImage(with: URL(string: FILM_IMAGE[film.id]!)!, into: filmImageView)
+            loadImage(with: URL(string: film.image)!, into: filmBackgroundImageView)
+            loadImage(with: URL(string: film.image)!, into: filmImageView)
             
             titleLabel.text = film.title
             yearLabel.text = film.releaseDate

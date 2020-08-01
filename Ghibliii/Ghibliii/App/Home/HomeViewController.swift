@@ -43,6 +43,7 @@ class HomeViewController: UICollectionViewController {
         fetchData()
         
         ImageLoadingOptions.shared.transition = .fadeIn(duration: 0.125)
+        
     }
     
     private func setupView() {
@@ -55,7 +56,7 @@ class HomeViewController: UICollectionViewController {
         
         // Setup bar button item
         let filterButton =  UIButton(type: .custom)
-        filterButton.setImage(UIImage(systemName: "line.horizontal.3.decrease.circle"), for: .normal)
+        filterButton.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for: .normal)
         filterButton.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: filterButton)
     }
@@ -63,16 +64,15 @@ class HomeViewController: UICollectionViewController {
     /// Fetch the initial movies data
     private func fetchData() {
         if dataPersistEngine.films.isEmpty {
-            API.shared.getData(type: Film.self, fromEndpoint: .film()) { [weak self] (films) in
+            API.shared.getData(type: Film.self, fromEndpoint: .films) { [weak self] (films) in
                 guard let films = films else { return }
                 self?.films = films.sorted(by: { $0.title < $1.title })
                 self?.dataPersistEngine.saveFilms(films)
-                self?.createSnapshot(from: films)
             }
         } else {
             self.films = dataPersistEngine.films.sorted(by: { $0.title < $1.title })
-            self.createSnapshot(from: films)
         }
+        self.createSnapshot(from: films)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -89,7 +89,7 @@ class HomeViewController: UICollectionViewController {
     }
     
     @objc private func filterButtonTapped() {
-        let filterAlert = UIAlertController(title: "Filter", message: nil, preferredStyle: .actionSheet)
+        let filterAlert = UIAlertController(title: "Sort movies", message: nil, preferredStyle: .actionSheet)
         let titleFilterAction = UIAlertAction(title: "Name", style: .default) { (_) in
             var snapshot = Snapshot()
             snapshot.appendSections([.main])
@@ -126,7 +126,7 @@ extension HomeViewController {
             let itemCount = isPhone ? 3 : 4
             let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-
+            
             let groupFractionalHeight: CGFloat = isPhone ? 0.65 : 0.42
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
@@ -136,7 +136,7 @@ extension HomeViewController {
             let section = NSCollectionLayoutSection(group: group)
             return section
         }
-
+        
         return layout
     }
     
