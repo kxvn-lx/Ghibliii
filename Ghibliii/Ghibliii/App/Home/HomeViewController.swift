@@ -89,7 +89,7 @@ class HomeViewController: UICollectionViewController {
     }
     
     @objc private func filterButtonTapped() {
-        let filterAlert = UIAlertController(title: "Filter by:", message: nil, preferredStyle: .actionSheet)
+        let filterAlert = UIAlertController(title: "Filter", message: nil, preferredStyle: .actionSheet)
         let titleFilterAction = UIAlertAction(title: "Name", style: .default) { (_) in
             var snapshot = Snapshot()
             snapshot.appendSections([.main])

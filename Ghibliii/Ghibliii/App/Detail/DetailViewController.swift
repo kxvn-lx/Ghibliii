@@ -61,7 +61,7 @@ class DetailViewController: UIViewController {
         
         setupView()
         setupConstraint()
-        fetchFilmPeople()
+//        fetchFilmPeople()
     }
     
     override func viewDidAppear(_ animated: Bool) {
