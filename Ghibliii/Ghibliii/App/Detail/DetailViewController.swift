@@ -184,11 +184,6 @@ extension DetailViewController: UIScrollViewDelegate {
                 closeTapped()
             }
         }
-        else {
-            detailHeroView.snp.updateConstraints { (make) in
-                make.height.equalTo(originalHeight)
-            }
-        }
 
         detailHeroView.snp.updateConstraints { (make) in
             make.top.equalTo(currentTop)
