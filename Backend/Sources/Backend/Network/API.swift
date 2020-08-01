@@ -21,7 +21,7 @@ public class API {
     ///   - type: The type of the data that will be retrieved
     ///   - endpoint: The endpoint
     ///   - completion: Completion block when the data is recevied
-    public func getData<T>(type: T.Type, fromEndpoint endpoint: Endpoint, completion: @escaping ([T]?) -> Void) {
+    public func getData<T: Decodable>(type: T.Type, fromEndpoint endpoint: Endpoint, completion: @escaping ([T]?) -> Void) {
         let url = makeURL(endpoint: endpoint)
         var datas: [T]?
         
@@ -30,7 +30,7 @@ public class API {
             if error != nil { fatalError(error!.localizedDescription) }
             
             do {
-                datas = try JSONDecoder().decode([Film].self, from: data) as? [T]
+                datas = try JSONDecoder().decode([T].self, from: data)
                 completion(datas)
             } catch {
                 print(error)

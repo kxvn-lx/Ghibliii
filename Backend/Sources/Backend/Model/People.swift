@@ -7,12 +7,12 @@
 
 import Foundation
 
-public struct People: Codable {
-    let id, name: String
-    let gender: Gender
-    let age, eyeColor, hairColor: String
-    let films: [String]
-    let species, url: String
+public struct People: Codable, Hashable {
+    public let id, name: String
+    public let gender: Gender
+    public let age, eyeColor, hairColor: String
+    public let films: [String]
+    public let species, url: String
 
     enum CodingKeys: String, CodingKey {
         case id, name, gender, age
@@ -20,9 +20,17 @@ public struct People: Codable {
         case hairColor = "hair_color"
         case films, species, url
     }
+    
+    public func hash(into hasher: inout Hasher) {
+      hasher.combine(id)
+    }
+
+    public static func == (lhs: People, rhs: People) -> Bool {
+      lhs.id == rhs.id
+    }
 }
 
-enum Gender: String, Codable {
+public enum Gender: String, Codable {
     case female = "Female"
     case male = "Male"
     case na = "NA"

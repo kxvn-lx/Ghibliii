@@ -17,6 +17,7 @@ class DetailViewController: UIViewController {
             producerLabel.text = "Producer: \(film.producer)"
         }
     }
+    private var filmPeople = [People]()
     private var detailHeroView: DetailHeroView!
     private let mScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -60,6 +61,7 @@ class DetailViewController: UIViewController {
         
         setupView()
         setupConstraint()
+        fetchFilmPeople()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -121,6 +123,27 @@ class DetailViewController: UIViewController {
             }
             make.top.equalTo(detailHeroView.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
+        }
+    }
+    
+    private func fetchFilmPeople() {
+        API.shared.getData(type: People.self, fromEndpoint: .people(id: nil)) { [weak self] (peoples) in
+            guard let peoples = peoples else { return }
+            var selectedPeoples = [People]()
+            
+            for people in peoples {
+                let peopleFilmID = people.films
+                for id in peopleFilmID {
+                    let parsedID = id.replacingOccurrences(of: "https://ghibliapi.herokuapp.com/films/", with: "")
+                    if parsedID == self?.film.id {
+                        if !selectedPeoples.contains(people) {
+                            selectedPeoples.append(people)
+                        }
+                    }
+                }
+            }
+            self?.filmPeople = selectedPeoples
+            
         }
     }
     
