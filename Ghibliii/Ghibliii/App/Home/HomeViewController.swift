@@ -13,6 +13,11 @@ class HomeViewController: UICollectionViewController {
     
     private var dataSource: DataSource!
     private var films = [Film]()
+    private let filterButton: UIButton = {
+        let button =  UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for: .normal)
+        return button
+    }()
     
     private lazy var dataPersistEngine = DataPersistEngine()
     
@@ -46,6 +51,11 @@ class HomeViewController: UICollectionViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+    }
+    
     private func setupView() {
         self.view.addSubview(collectionView)
         
@@ -55,8 +65,6 @@ class HomeViewController: UICollectionViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         // Setup bar button item
-        let filterButton =  UIButton(type: .custom)
-        filterButton.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for: .normal)
         filterButton.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: filterButton)
     }
@@ -66,9 +74,8 @@ class HomeViewController: UICollectionViewController {
         API.shared.getData(type: Film.self, fromEndpoint: .films) { [weak self] (films) in
             guard let films = films else { return }
             self?.films = films.sorted(by: { $0.title < $1.title })
-            self?.dataPersistEngine.saveFilms(films)
+            self?.createSnapshot(from: films)
         }
-        self.createSnapshot(from: films)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -104,6 +111,12 @@ class HomeViewController: UICollectionViewController {
         filterAlert.addAction(yearFilterAction)
         filterAlert.addAction(cancelAction)
         
+        if let popoverController = filterAlert.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: filterButton.bounds.midX, y: filterButton.bounds.maxY - 80, width: 0, height: 0)
+            popoverController.permittedArrowDirections = [.up]
+        }
+        
         self.present(filterAlert, animated: true, completion: nil)
     }
     
@@ -120,15 +133,24 @@ extension HomeViewController {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             let isPhone = layoutEnvironment.traitCollection.userInterfaceIdiom == .phone
             let itemCount = isPhone ? 3 : 4
+            
+            // Item
             let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-            
-            let groupFractionalHeight: CGFloat = isPhone ? 0.65 : 0.42
-            let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalWidth(groupFractionalHeight))
+
+            // Group
+            let groupFractionalHeight: CGFloat
+            if isPhone {
+                groupFractionalHeight = UIDevice.current.hasNotch ? 0.35 : 0.5
+            } else {
+                groupFractionalHeight = 0.42
+            }
+            print(groupFractionalHeight)
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: isPhone ? .fractionalHeight(groupFractionalHeight) : .fractionalWidth(groupFractionalHeight))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: itemCount)
             group.edgeSpacing = .init(leading: .fixed(0), top: .fixed(10), trailing: .fixed(0), bottom: .fixed(10))
+            
+            // Section
             let section = NSCollectionLayoutSection(group: group)
             return section
         }
