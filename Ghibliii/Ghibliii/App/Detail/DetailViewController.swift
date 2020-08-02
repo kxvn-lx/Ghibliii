@@ -7,6 +7,7 @@
 
 import UIKit
 import Backend
+import SafariServices
 
 class DetailViewController: UIViewController {
     
@@ -44,6 +45,13 @@ class DetailViewController: UIViewController {
         label.font = .preferredFont(forTextStyle: .callout)
         label.textColor = .secondaryLabel
         return label
+    }()
+    private let imdbLinkButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("see on IMDB", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
+        return button
     }()
     private var originalHeight: CGFloat {
         switch UIDevice.current.userInterfaceIdiom {
@@ -95,8 +103,11 @@ class DetailViewController: UIViewController {
         descriptionLabel.isUserInteractionEnabled = true
         descriptionLabel.addGestureRecognizer(tap)
         
+        // Setup button
+        imdbLinkButton.addTarget(self, action: #selector(imdbButtonTapped), for: .touchUpInside)
+        
         // Setup views
-        mStackView = UIStackView(arrangedSubviews: [descriptionLabel, directorLabel, producerLabel])
+        mStackView = UIStackView(arrangedSubviews: [descriptionLabel, directorLabel, producerLabel, imdbLinkButton])
         mStackView.addBackgroundColor(.secondarySystemBackground, withCornerRadius: 10)
         mStackView.isLayoutMarginsRelativeArrangement = true
         mStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
@@ -140,6 +151,13 @@ class DetailViewController: UIViewController {
         } completion: { [self] (_) in
             viewDidLayoutSubviews()
             mScrollView.updateContentView()
+        }
+    }
+    
+    @objc private func imdbButtonTapped() {
+        if let url = URL(string: film.imdbLink) {
+            let vc = SFSafariViewController(url: url)
+            present(vc, animated: true)
         }
     }
     
