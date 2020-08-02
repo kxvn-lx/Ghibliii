@@ -19,8 +19,6 @@ class HomeViewController: UICollectionViewController {
         return button
     }()
     
-    private lazy var dataPersistEngine = DataPersistEngine()
-    
     // Searchbar properties
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -51,11 +49,6 @@ class HomeViewController: UICollectionViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-    }
-    
     private func setupView() {
         self.view.addSubview(collectionView)
         
@@ -67,6 +60,11 @@ class HomeViewController: UICollectionViewController {
         // Setup bar button item
         filterButton.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: filterButton)
+        
+        let settingsButton = UIButton()
+        settingsButton.setImage(UIImage(systemName: "gear"), for: .normal)
+        settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: settingsButton)
     }
     
     /// Fetch the initial movies data
@@ -74,7 +72,7 @@ class HomeViewController: UICollectionViewController {
         API.shared.getData(type: Film.self, fromEndpoint: .films) { [weak self] (films) in
             guard let films = films else { return }
             self?.films = films.sorted(by: { $0.title < $1.title })
-            self?.createSnapshot(from: films)
+            self?.createSnapshot(from: self!.films)
         }
     }
     
@@ -120,6 +118,12 @@ class HomeViewController: UICollectionViewController {
         self.present(filterAlert, animated: true, completion: nil)
     }
     
+    @objc private func settingsButtonTapped() {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "SettingsVC") as! SettingsTableViewController
+        let navController = UINavigationController(rootViewController: vc)
+        self.present(navController, animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - Delegate and datasource configurations
@@ -137,15 +141,14 @@ extension HomeViewController {
             // Item
             let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-
+            
             // Group
             let groupFractionalHeight: CGFloat
             if isPhone {
-                groupFractionalHeight = UIDevice.current.hasNotch ? 0.35 : 0.5
+                groupFractionalHeight = UIDevice.current.hasNotch ? 0.34 : 0.45
             } else {
                 groupFractionalHeight = 0.42
             }
-            print(groupFractionalHeight)
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: isPhone ? .fractionalHeight(groupFractionalHeight) : .fractionalWidth(groupFractionalHeight))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: itemCount)
             group.edgeSpacing = .init(leading: .fixed(0), top: .fixed(10), trailing: .fixed(0), bottom: .fixed(10))
@@ -166,10 +169,7 @@ extension HomeViewController {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.REUSE_IDENTIFIER, for: indexPath) as! HomeCollectionViewCell
                 
                 cell.film = film
-                
-                let hoverGestureRecognizer = UIHoverGestureRecognizer(target: self, action: #selector(self.hoverEffect(_:)))
-                cell.addGestureRecognizer(hoverGestureRecognizer)
-                
+
                 return cell
             })
     }
@@ -181,27 +181,6 @@ extension HomeViewController {
         snapshot.appendItems(films)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
-    
-    @objc fileprivate func hoverEffect(_ gestureRecognizer: UIHoverGestureRecognizer) {
-        guard let shapeViewToUse = gestureRecognizer.view as? HomeCollectionViewCell else { return }
-        let scaleFactor: CGFloat = 1.025
-        let duration: Double = 0.25
-        
-        switch gestureRecognizer.state {
-        case .began:
-            UIView.animate(withDuration: duration) {
-                shapeViewToUse.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
-            }
-            
-        case .ended, .cancelled:
-            UIView.animate(withDuration: duration) {
-                shapeViewToUse.transform = .identity
-            }
-            
-        default: break
-        }
-    }
-    
 }
 
 extension HomeViewController: UISearchResultsUpdating {

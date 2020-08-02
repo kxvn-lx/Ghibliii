@@ -23,6 +23,8 @@
 		0A5D32A824D67394004F8108 /* films.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A5D32A324D6614F004F8108 /* films.json */; };
 		0A656F5824CDB579000C4113 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A656F5724CDB579000C4113 /* UIViewController.swift */; };
 		0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */; };
+		0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */; };
+		0AB0B35724D6AD7C00B54058 /* userDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */; };
 		0AF9A5CC24CD6796001D116C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF9A5CB24CD6796001D116C /* SnapKit */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +47,8 @@
 		0A656F5724CDB579000C4113 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		0A656F5B24CE88D9000C4113 /* Ghibliii.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghibliii.entitlements; sourceTree = "<group>"; };
 		0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
+		0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultsHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				0A656F5B24CE88D9000C4113 /* Ghibliii.entitlements */,
+				0AB0B35524D6AD6900B54058 /* Utils */,
 				0A5D32A224D6614F004F8108 /* Datasource */,
 				0A656F5624CDB56D000C4113 /* Extensions */,
 				0A16787C24CD26E20060B62C /* App */,
@@ -99,6 +104,7 @@
 		0A16787C24CD26E20060B62C /* App */ = {
 			isa = PBXGroup;
 			children = (
+				0AB0B35224D6A87400B54058 /* Settings */,
 				0A508EE624CF2F3F00793E8B /* Detail */,
 				0A787C6324CD6C8A00D569CE /* Home */,
 			);
@@ -147,6 +153,22 @@
 				0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		0AB0B35224D6A87400B54058 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		0AB0B35524D6AD6900B54058 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,7 +253,9 @@
 			files = (
 				0A16786D24CD26CE0060B62C /* HomeViewController.swift in Sources */,
 				0A1DACA124D1972500D32AD2 /* UIStackView.swift in Sources */,
+				0AB0B35724D6AD7C00B54058 /* userDefaultsHelper.swift in Sources */,
 				0A16786924CD26CE0060B62C /* AppDelegate.swift in Sources */,
+				0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */,
 				0A16786B24CD26CE0060B62C /* SceneDelegate.swift in Sources */,
 				0A5BFE8D24CFB89700962C7C /* DetailHeroView.swift in Sources */,
 				0A14BE3C24D28D1500B36E36 /* UIDevice.swift in Sources */,
@@ -389,7 +413,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D87H8GPTK2;
 				INFOPLIST_FILE = Ghibliii/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -411,7 +435,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D87H8GPTK2;
 				INFOPLIST_FILE = Ghibliii/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
