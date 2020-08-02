@@ -12,11 +12,16 @@ class DetailedButton: UIButton {
     private var highlightedBackgroundColor: UIColor?
     private var temporaryBackgroundColor: UIColor?
     private let highlightedAlphaValue: CGFloat = 0.9
+    private let scaleDuration: Double = 0.125
+    private let scale: CGFloat = 0.97
     
-    required init(title: String, image: UIImage) {
+    required init(title: String) {
         super.init(frame: .zero)
         setTitle(title, for: .normal)
         setupView()
+        self.addTarget(self, action: #selector(scaleDownButton), for: .touchDown)
+        self.addTarget(self, action: #selector(identityScaleButton), for: .touchUpInside)
+        self.addTarget(self, action: #selector(identityScaleButton), for: .touchUpOutside)
     }
     
     required override init(frame: CGRect) {
@@ -62,4 +67,20 @@ class DetailedButton: UIButton {
         self.adjustsImageWhenHighlighted = false
     }
     
+    @objc private func scaleDownButton() {
+        UIView.animate(withDuration: scaleDuration) {
+            self.transform = CGAffineTransform(scaleX: self.scale, y: self.scale)
+        }
+    }
+    
+    @objc private func identityScaleButton() {
+        UIView.animate(withDuration: scaleDuration) {
+            self.transform = CGAffineTransform(scaleX: self.scale, y: self.scale)
+        } completion: { (_) in
+            UIView.animate(withDuration: self.scaleDuration) {
+                self.transform = .identity
+            }
+        }
+
+    }
 }

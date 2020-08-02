@@ -8,7 +8,7 @@
 import UIKit
 import Backend
 import SafariServices
-import SPAlert
+import CloudKit
 
 class DetailViewController: UIViewController {
     
@@ -17,6 +17,22 @@ class DetailViewController: UIViewController {
             descriptionLabel.text = film.filmDescription
             directorLabel.text = "Director: \(film.director)"
             producerLabel.text = "Producer: \(film.producer)"
+        }
+    }
+    var hasWatched: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                self.addToWatchedButton.isHidden = self.hasWatched
+                self.removeFromWatchedButton.isHidden = !self.hasWatched
+            }
+
+        }
+    }
+    var filmRecord: CKRecord? {
+        didSet {
+            if filmRecord != nil {
+                hasWatched = true
+            }
         }
     }
     private var detailHeroView: DetailHeroView!
@@ -63,8 +79,14 @@ class DetailViewController: UIViewController {
     }
     private var originalScrollViewHeight: CGFloat!
     private var addToWatchedButton: DetailedButton = {
-        let button = DetailedButton(title: "Add to watched", image: UIImage(systemName: "tray.and.arrow.down.fill")!)
+        let button = DetailedButton(title: "Add to watched bucket!")
         button.backgroundColor = .systemBlue
+        return button
+    }()
+    private var removeFromWatchedButton: DetailedButton = {
+        let button = DetailedButton(title: "Remove from watched bucket")
+        button.isHidden = true
+        button.backgroundColor = .systemRed
         return button
     }()
     
@@ -112,6 +134,7 @@ class DetailViewController: UIViewController {
         // Setup button
         imdbLinkButton.addTarget(self, action: #selector(imdbButtonTapped), for: .touchUpInside)
         addToWatchedButton.addTarget(self, action: #selector(addToWatchedButtonTapped), for: .touchUpInside)
+        removeFromWatchedButton.addTarget(self, action: #selector(removeFromWatchedButtonTapped), for: .touchUpInside)
         
         // Setup views
         infoStackView = UIStackView(arrangedSubviews: [descriptionLabel, directorLabel, producerLabel, imdbLinkButton])
@@ -121,7 +144,7 @@ class DetailViewController: UIViewController {
         infoStackView.axis = .vertical
         infoStackView.setCustomSpacing(20, after: descriptionLabel)
         
-        mStackView = UIStackView(arrangedSubviews: [addToWatchedButton, infoStackView])
+        mStackView = UIStackView(arrangedSubviews: [addToWatchedButton, removeFromWatchedButton, infoStackView])
         mStackView.axis = .vertical
         mStackView.spacing = 20
         
@@ -151,6 +174,10 @@ class DetailViewController: UIViewController {
         addToWatchedButton.snp.makeConstraints { (make) in
             make.height.equalTo(50)
         }
+        
+        removeFromWatchedButton.snp.makeConstraints { (make) in
+            make.height.equalTo(50)
+        }
     }
     
     @objc private func closeTapped() {
@@ -176,8 +203,30 @@ class DetailViewController: UIViewController {
     }
     
     @objc private func addToWatchedButtonTapped(_ sender: UIButton) {
-        SPAlertHelper.shared.present(title: "Added to watched", preset: .done)
+        CloudKitEngine.shared.save(film: film) { [weak self] (result) in
+            switch result {
+            case .success(let record):
+                self?.hasWatched = true
+                self?.filmRecord = record
+                AlertHelper.shared.presentDefault(title: "Added to watched bucket!", to: self!)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
 
+    }
+    
+    @objc private func removeFromWatchedButtonTapped(_ sender: UIButton) {
+        CloudKitEngine.shared.remove(filmWithRecord: filmRecord) { [weak self] (result) in
+            switch result {
+            case .success(_):
+                self?.hasWatched = false
+                self?.filmRecord = nil
+                AlertHelper.shared.presentDefault(title: "removed from watched bucket.", to: self!)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     private func expandScrollView(_ isExpanded: Bool) {

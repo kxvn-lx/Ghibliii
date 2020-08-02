@@ -13,6 +13,7 @@ class HomeViewController: UICollectionViewController {
     
     private var dataSource: DataSource!
     private var films = [Film]()
+    private var watchedFilms = [Film]()
     private let filterButton: UIButton = {
         let button =  UIButton(type: .custom)
         button.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for: .normal)
@@ -49,6 +50,11 @@ class HomeViewController: UICollectionViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchWatchedFilms()
+    }
+    
     private func setupView() {
         self.view.addSubview(collectionView)
         
@@ -76,10 +82,22 @@ class HomeViewController: UICollectionViewController {
         }
     }
     
+    private func fetchWatchedFilms() {
+        CloudKitEngine.shared.fetch { [weak self] (result) in
+            switch result {
+            case .success(let watchedFilms):
+                self?.watchedFilms = watchedFilms
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
         let vc = DetailViewController()
         vc.film = film
+        vc.filmRecord = watchedFilms.first(where: { $0 == film })?.record
         let navController = UINavigationController(rootViewController: vc)
         switch UIDevice.current.userInterfaceIdiom {
         case .phone: navController.modalPresentationStyle = .fullScreen
@@ -123,7 +141,6 @@ class HomeViewController: UICollectionViewController {
         let navController = UINavigationController(rootViewController: vc)
         self.present(navController, animated: true, completion: nil)
     }
-    
 }
 
 // MARK: - Delegate and datasource configurations
@@ -137,11 +154,11 @@ extension HomeViewController {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             let isPhone = layoutEnvironment.traitCollection.userInterfaceIdiom == .phone
             let itemCount = isPhone ? 3 : 4
-
+            
             // Item
             let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-
+            
             // Group
             let groupFractionalHeight: CGFloat
             if isPhone {
@@ -151,7 +168,7 @@ extension HomeViewController {
             }
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(groupFractionalHeight))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: itemCount)
-
+            
             // Section
             let section = NSCollectionLayoutSection(group: group)
             return section

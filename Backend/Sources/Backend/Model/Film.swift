@@ -6,14 +6,22 @@
 //
 
 import Foundation
+import CloudKit
 
-public struct Film: Codable, Hashable {
+public struct Film: Codable, Hashable, CloudModel {
+    enum RecordKeys: String {
+        case id, title, filmDescription, image, director, producer, releaseDate, rtScore, imdbLink, imdbScore
+    }
+    public static let RecordType = "Film"
+    
     public let id, title, filmDescription: String
     public let image: String
     public let director, producer, releaseDate, rtScore: String
     public let imdbLink: String
     public let imdbScore: String
-
+    
+    public var record: CKRecord?
+    
     enum CodingKeys: String, CodingKey {
         case id, title
         case filmDescription = "description"
@@ -24,11 +32,43 @@ public struct Film: Codable, Hashable {
         case imdbScore = "imdb_score"
     }
     
-    public func hash(into hasher: inout Hasher) {
-      hasher.combine(id)
+    public init(withRecord record: CKRecord) {
+        self.id = record[RecordKeys.id.rawValue] as? String ?? ""
+        self.title = record[RecordKeys.title.rawValue] as? String ?? ""
+        self.filmDescription = record[RecordKeys.filmDescription.rawValue] as? String ?? ""
+        self.image = record[RecordKeys.image.rawValue] as? String ?? ""
+        self.director = record[RecordKeys.director.rawValue] as? String ?? ""
+        self.producer = record[RecordKeys.producer.rawValue] as? String ?? ""
+        self.releaseDate = record[RecordKeys.releaseDate.rawValue] as? String ?? ""
+        self.rtScore = record[RecordKeys.rtScore.rawValue] as? String ?? ""
+        self.imdbLink = record[RecordKeys.imdbLink.rawValue] as? String ?? ""
+        self.imdbScore = record[RecordKeys.imdbScore.rawValue] as? String ?? ""
+        self.record = record
     }
+    
+    public func toRecord() -> CKRecord {
+        let record = self.record ?? CKRecord(recordType: Self.RecordType)
+        record[RecordKeys.id.rawValue] = id
+        record[RecordKeys.title.rawValue] = title
+        record[RecordKeys.filmDescription.rawValue] = filmDescription
+        record[RecordKeys.image.rawValue] = image
+        record[RecordKeys.director.rawValue] = director
+        record[RecordKeys.producer.rawValue] = producer
+        record[RecordKeys.releaseDate.rawValue] = releaseDate
+        record[RecordKeys.rtScore.rawValue] = rtScore
+        record[RecordKeys.imdbLink.rawValue] = imdbLink
+        record[RecordKeys.imdbScore.rawValue] = imdbScore
+        
+        return record
+    }
+}
 
+extension Film {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     public static func == (lhs: Film, rhs: Film) -> Bool {
-      lhs.id == rhs.id
+        lhs.id == rhs.id
     }
 }
