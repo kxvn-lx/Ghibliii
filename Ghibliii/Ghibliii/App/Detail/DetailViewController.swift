@@ -62,6 +62,7 @@ class DetailViewController: UIViewController {
     
     private var mStackView: UIStackView!
     
+     //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -183,7 +184,7 @@ extension DetailViewController: UIScrollViewDelegate {
                     make.height.equalTo(300 - offset / 3)
                 }
                 
-                if offset < -300 {
+                if offset < -230 {
                     closeTapped()
                 }
             }
