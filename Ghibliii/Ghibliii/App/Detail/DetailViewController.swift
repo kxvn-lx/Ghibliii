@@ -165,26 +165,32 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset.y
-        let defaultTop: CGFloat = 0
         
-        var currentTop = defaultTop
-        if offset < 0 {
-            currentTop = offset
-            detailHeroView.snp.updateConstraints { (make) in
-                make.height.equalTo(originalHeight - offset)
-            }
-            detailHeroView.filmImageView.snp.updateConstraints { (make) in
-                make.top.equalToSuperview().offset(20 - offset)
+        // only implement the animation on phone
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            let offset = scrollView.contentOffset.y
+            let defaultTop: CGFloat = 0
+            
+            var currentTop = defaultTop
+            if offset < 0 {
+                currentTop = offset
+                detailHeroView.snp.updateConstraints { (make) in
+                    make.height.equalTo(originalHeight - offset * 1.5)
+                }
+                detailHeroView.filmImageView.snp.updateConstraints { (make) in
+                    make.top.equalToSuperview().offset(20 - offset)
+                    make.width.equalTo(200 - offset / 3)
+                    make.height.equalTo(300 - offset / 3)
+                }
+                
+                if offset < -300 {
+                    closeTapped()
+                }
             }
             
-            if offset < -300 {
-                closeTapped()
+            detailHeroView.snp.updateConstraints { (make) in
+                make.top.equalTo(currentTop)
             }
-        }
-        
-        detailHeroView.snp.updateConstraints { (make) in
-            make.top.equalTo(currentTop)
         }
     }
 }

@@ -63,14 +63,10 @@ class HomeViewController: UICollectionViewController {
     
     /// Fetch the initial movies data
     private func fetchData() {
-        if dataPersistEngine.films.isEmpty {
-            API.shared.getData(type: Film.self, fromEndpoint: .films) { [weak self] (films) in
-                guard let films = films else { return }
-                self?.films = films.sorted(by: { $0.title < $1.title })
-                self?.dataPersistEngine.saveFilms(films)
-            }
-        } else {
-            self.films = dataPersistEngine.films.sorted(by: { $0.title < $1.title })
+        API.shared.getData(type: Film.self, fromEndpoint: .films) { [weak self] (films) in
+            guard let films = films else { return }
+            self?.films = films.sorted(by: { $0.title < $1.title })
+            self?.dataPersistEngine.saveFilms(films)
         }
         self.createSnapshot(from: films)
     }

@@ -29,8 +29,8 @@ public struct DataPersistEngine {
 
             if let data = try? Data(contentsOf: filePath!) {
                 decoder.dataDecodingStrategy = .base64
-                let savedData = try! decoder.decode(SavedData.self, from: data)
-                self.films = savedData.films
+                let savedData = try? decoder.decode(SavedData.self, from: data)
+                self.films = savedData?.films ?? []
             }
         }
     }
