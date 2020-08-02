@@ -137,22 +137,21 @@ extension HomeViewController {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             let isPhone = layoutEnvironment.traitCollection.userInterfaceIdiom == .phone
             let itemCount = isPhone ? 3 : 4
-            
+
             // Item
             let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-            
+
             // Group
             let groupFractionalHeight: CGFloat
             if isPhone {
-                groupFractionalHeight = UIDevice.current.hasNotch ? 0.34 : 0.45
+                groupFractionalHeight = UIDevice.current.hasNotch ? 0.67 : 0.75
             } else {
                 groupFractionalHeight = 0.42
             }
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: isPhone ? .fractionalHeight(groupFractionalHeight) : .fractionalWidth(groupFractionalHeight))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(groupFractionalHeight))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: itemCount)
-            group.edgeSpacing = .init(leading: .fixed(0), top: .fixed(10), trailing: .fixed(0), bottom: .fixed(10))
-            
+
             // Section
             let section = NSCollectionLayoutSection(group: group)
             return section
@@ -169,7 +168,7 @@ extension HomeViewController {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.REUSE_IDENTIFIER, for: indexPath) as! HomeCollectionViewCell
                 
                 cell.film = film
-
+                
                 return cell
             })
     }

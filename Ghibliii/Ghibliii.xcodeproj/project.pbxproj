@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0A14BE3C24D28D1500B36E36 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14BE3B24D28D1500B36E36 /* UIDevice.swift */; };
-		0A14BE3E24D28EA100B36E36 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14BE3D24D28EA100B36E36 /* UIScrollView.swift */; };
 		0A16786924CD26CE0060B62C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A16786824CD26CE0060B62C /* AppDelegate.swift */; };
 		0A16786B24CD26CE0060B62C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A16786A24CD26CE0060B62C /* SceneDelegate.swift */; };
 		0A16786D24CD26CE0060B62C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A16786C24CD26CE0060B62C /* HomeViewController.swift */; };
@@ -25,12 +24,15 @@
 		0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */; };
 		0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */; };
 		0AB0B35724D6AD7C00B54058 /* userDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */; };
+		0AB0B35924D6C39700B54058 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AB0B35824D6C39700B54058 /* CloudKit.framework */; };
+		0AB0B36024D6CADD00B54058 /* DetailedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35F24D6CADD00B54058 /* DetailedButton.swift */; };
+		0AB0B36324D6ED4700B54058 /* SPAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 0AB0B36224D6ED4700B54058 /* SPAlert */; };
+		0AB0B36524D6ED5200B54058 /* SPAlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B36424D6ED5200B54058 /* SPAlertHelper.swift */; };
 		0AF9A5CC24CD6796001D116C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF9A5CB24CD6796001D116C /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0A14BE3B24D28D1500B36E36 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
-		0A14BE3D24D28EA100B36E36 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		0A16786524CD26CE0060B62C /* Ghibliii.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghibliii.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A16786824CD26CE0060B62C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A16786A24CD26CE0060B62C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +51,9 @@
 		0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultsHelper.swift; sourceTree = "<group>"; };
+		0AB0B35824D6C39700B54058 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		0AB0B35F24D6CADD00B54058 /* DetailedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedButton.swift; sourceTree = "<group>"; };
+		0AB0B36424D6ED5200B54058 /* SPAlertHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAlertHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +62,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A508EE224CEBA4E00793E8B /* Nuke in Frameworks */,
+				0AB0B36324D6ED4700B54058 /* SPAlert in Frameworks */,
+				0AB0B35924D6C39700B54058 /* CloudKit.framework in Frameworks */,
 				0A16788024CD38520060B62C /* Backend in Frameworks */,
 				0AF9A5CC24CD6796001D116C /* SnapKit in Frameworks */,
 			);
@@ -114,6 +121,7 @@
 		0A16787E24CD38520060B62C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0AB0B35824D6C39700B54058 /* CloudKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -141,7 +149,6 @@
 				0A656F5724CDB579000C4113 /* UIViewController.swift */,
 				0A1DACA024D1972500D32AD2 /* UIStackView.swift */,
 				0A14BE3B24D28D1500B36E36 /* UIDevice.swift */,
-				0A14BE3D24D28EA100B36E36 /* UIScrollView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -166,9 +173,19 @@
 		0AB0B35524D6AD6900B54058 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				0AB0B35E24D6CAC300B54058 /* Components */,
 				0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */,
+				0AB0B36424D6ED5200B54058 /* SPAlertHelper.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		0AB0B35E24D6CAC300B54058 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0AB0B35F24D6CADD00B54058 /* DetailedButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +208,7 @@
 				0A16787F24CD38520060B62C /* Backend */,
 				0AF9A5CB24CD6796001D116C /* SnapKit */,
 				0A508EE124CEBA4E00793E8B /* Nuke */,
+				0AB0B36224D6ED4700B54058 /* SPAlert */,
 			);
 			productName = Ghibliii;
 			productReference = 0A16786524CD26CE0060B62C /* Ghibliii.app */;
@@ -222,6 +240,7 @@
 			packageReferences = (
 				0AF9A5CA24CD6796001D116C /* XCRemoteSwiftPackageReference "SnapKit" */,
 				0A508EE024CEBA4E00793E8B /* XCRemoteSwiftPackageReference "Nuke" */,
+				0AB0B36124D6ED4700B54058 /* XCRemoteSwiftPackageReference "SPAlert" */,
 			);
 			productRefGroup = 0A16786624CD26CE0060B62C /* Products */;
 			projectDirPath = "";
@@ -253,15 +272,16 @@
 			files = (
 				0A16786D24CD26CE0060B62C /* HomeViewController.swift in Sources */,
 				0A1DACA124D1972500D32AD2 /* UIStackView.swift in Sources */,
+				0AB0B36024D6CADD00B54058 /* DetailedButton.swift in Sources */,
 				0AB0B35724D6AD7C00B54058 /* userDefaultsHelper.swift in Sources */,
 				0A16786924CD26CE0060B62C /* AppDelegate.swift in Sources */,
+				0AB0B36524D6ED5200B54058 /* SPAlertHelper.swift in Sources */,
 				0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */,
 				0A16786B24CD26CE0060B62C /* SceneDelegate.swift in Sources */,
 				0A5BFE8D24CFB89700962C7C /* DetailHeroView.swift in Sources */,
 				0A14BE3C24D28D1500B36E36 /* UIDevice.swift in Sources */,
 				0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */,
 				0A656F5824CDB579000C4113 /* UIViewController.swift in Sources */,
-				0A14BE3E24D28EA100B36E36 /* UIScrollView.swift in Sources */,
 				0A508EEA24CF2FC200793E8B /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,6 +500,14 @@
 				minimumVersion = 9.1.1;
 			};
 		};
+		0AB0B36124D6ED4700B54058 /* XCRemoteSwiftPackageReference "SPAlert" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanvorobei/SPAlert";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.4;
+			};
+		};
 		0AF9A5CA24CD6796001D116C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -499,6 +527,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0A508EE024CEBA4E00793E8B /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = Nuke;
+		};
+		0AB0B36224D6ED4700B54058 /* SPAlert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0AB0B36124D6ED4700B54058 /* XCRemoteSwiftPackageReference "SPAlert" */;
+			productName = SPAlert;
 		};
 		0AF9A5CB24CD6796001D116C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

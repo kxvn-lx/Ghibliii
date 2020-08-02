@@ -8,6 +8,7 @@
 import UIKit
 import Backend
 import SafariServices
+import SPAlert
 
 class DetailViewController: UIViewController {
     
@@ -50,6 +51,7 @@ class DetailViewController: UIViewController {
         let button = UIButton()
         button.setTitle("see on IMDB", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(UIColor.systemBlue.withAlphaComponent(0.9), for: .highlighted)
         button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
         return button
     }()
@@ -59,10 +61,17 @@ class DetailViewController: UIViewController {
         default: return 500
         }
     }
+    private var originalScrollViewHeight: CGFloat!
+    private var addToWatchedButton: DetailedButton = {
+        let button = DetailedButton(title: "Add to watched", image: UIImage(systemName: "tray.and.arrow.down.fill")!)
+        button.backgroundColor = .systemBlue
+        return button
+    }()
     
+    private var infoStackView: UIStackView!
     private var mStackView: UIStackView!
     
-     //MARK: - View lifecycle
+    //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,12 +85,8 @@ class DetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        mScrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        mScrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
+        originalScrollViewHeight = mStackView.frame.maxY + 40
+        expandScrollView(false)
     }
     
     private func setupView() {
@@ -106,14 +111,19 @@ class DetailViewController: UIViewController {
         
         // Setup button
         imdbLinkButton.addTarget(self, action: #selector(imdbButtonTapped), for: .touchUpInside)
+        addToWatchedButton.addTarget(self, action: #selector(addToWatchedButtonTapped), for: .touchUpInside)
         
         // Setup views
-        mStackView = UIStackView(arrangedSubviews: [descriptionLabel, directorLabel, producerLabel, imdbLinkButton])
-        mStackView.addBackgroundColor(.secondarySystemBackground, withCornerRadius: 10)
-        mStackView.isLayoutMarginsRelativeArrangement = true
-        mStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        infoStackView = UIStackView(arrangedSubviews: [descriptionLabel, directorLabel, producerLabel, imdbLinkButton])
+        infoStackView.addBackgroundColor(.secondarySystemBackground, withCornerRadius: 10)
+        infoStackView.isLayoutMarginsRelativeArrangement = true
+        infoStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        infoStackView.axis = .vertical
+        infoStackView.setCustomSpacing(20, after: descriptionLabel)
+        
+        mStackView = UIStackView(arrangedSubviews: [addToWatchedButton, infoStackView])
         mStackView.axis = .vertical
-        mStackView.setCustomSpacing(20, after: descriptionLabel)
+        mStackView.spacing = 20
         
         mScrollView.addSubview(mStackView)
     }
@@ -137,6 +147,10 @@ class DetailViewController: UIViewController {
             make.top.equalTo(detailHeroView.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
         }
+        
+        addToWatchedButton.snp.makeConstraints { (make) in
+            make.height.equalTo(50)
+        }
     }
     
     @objc private func closeTapped() {
@@ -150,8 +164,7 @@ class DetailViewController: UIViewController {
         UIView.animate(withDuration: 0.0625) {
             self.descriptionLabel.superview?.layoutIfNeeded()
         } completion: { [self] (_) in
-            viewDidLayoutSubviews()
-            mScrollView.updateContentView()
+            expandScrollView(descriptionLabel.numberOfLines == 0)
         }
     }
     
@@ -160,6 +173,16 @@ class DetailViewController: UIViewController {
             let vc = SFSafariViewController(url: url)
             present(vc, animated: true)
         }
+    }
+    
+    @objc private func addToWatchedButtonTapped(_ sender: UIButton) {
+        SPAlertHelper.shared.present(title: "Added to watched", preset: .done)
+
+    }
+    
+    private func expandScrollView(_ isExpanded: Bool) {
+        let margin: CGFloat = 40
+        mScrollView.contentSize.height = isExpanded ? mStackView.frame.maxY + margin : originalScrollViewHeight
     }
     
 }
