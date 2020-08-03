@@ -20,7 +20,7 @@ class DetailedButton: UIButton {
         setTitle(title, for: .normal)
         setupView()
         self.addTarget(self, action: #selector(scaleDownButton), for: .touchDown)
-        self.addTarget(self, action: #selector(identityScaleButton), for: .touchUpInside)
+        self.addTarget(self, action: #selector(completeAnimation), for: .touchUpInside)
         self.addTarget(self, action: #selector(identityScaleButton), for: .touchUpOutside)
     }
     
@@ -55,12 +55,23 @@ class DetailedButton: UIButton {
         }
     }
     
+    override var isEnabled: Bool {
+        didSet {
+            if self.isEnabled {
+                self.backgroundColor = self.backgroundColor?.withAlphaComponent(1.0)
+            } else {
+                self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.5)
+            }
+        }
+    }
+    
     private func setupView() {
         self.titleLabel?.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .medium)
         
         layer.cornerRadius = 12.5
         layer.cornerCurve = .continuous
         setTitleColor(.white, for: .normal)
+        setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .disabled)
         tintColor = .white
         
         setTitleColor(UIColor.white.withAlphaComponent(highlightedAlphaValue), for: .highlighted)
@@ -82,5 +93,18 @@ class DetailedButton: UIButton {
             }
         }
 
+    }
+    
+    @objc private func completeAnimation() {
+        UIView.animate(withDuration: scaleDuration) {
+            self.transform = CGAffineTransform(scaleX: self.scale, y: self.scale)
+        } completion: { (_) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + self.scaleDuration) {
+                UIView.animate(withDuration: self.scaleDuration) {
+                    self.transform = .identity
+                }
+            }
+
+        }
     }
 }

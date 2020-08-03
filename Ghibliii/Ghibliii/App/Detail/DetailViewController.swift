@@ -25,7 +25,8 @@ class DetailViewController: UIViewController {
             filmRecord = film.record
         }
     }
-    var hasWatched: Bool = false {
+    
+    private var hasWatched: Bool = false {
         didSet {
             DispatchQueue.main.async {
                 self.addToWatchedButton.isHidden = self.hasWatched
@@ -86,11 +87,13 @@ class DetailViewController: UIViewController {
     private var originalScrollViewHeight: CGFloat!
     private var addToWatchedButton: DetailedButton = {
         let button = DetailedButton(title: "Add to watched bucket!")
+        button.setTitle("Added", for: .disabled)
         button.backgroundColor = .systemBlue
         return button
     }()
     private var removeFromWatchedButton: DetailedButton = {
         let button = DetailedButton(title: "Remove from watched bucket")
+        button.setTitle("Removed", for: .disabled)
         button.isHidden = true
         button.backgroundColor = .systemRed
         return button
@@ -219,11 +222,10 @@ class DetailViewController: UIViewController {
         CloudKitEngine.shared.save(film: film) { [weak self] (result) in
             switch result {
             case .success(let record):
-                self?.hasWatched = true
-                self?.filmRecord = record
                 DispatchQueue.main.async {
                     SPAlert.present(message: "Added to your watched bucket")
                     loadingVC.remove()
+                    self?.animateButtonOut(sender)
                 }
                 TapticHelper.shared.successTaptic()
                 self?.delegate?.displayNeedsRefresh(withNewRecord: record)
@@ -246,11 +248,10 @@ class DetailViewController: UIViewController {
         CloudKitEngine.shared.remove(filmWithRecord: filmRecord) { [weak self] (result) in
             switch result {
             case .success(_):
-                self?.hasWatched = false
-                self?.filmRecord = nil
                 DispatchQueue.main.async {
                     SPAlert.present(message: "Removed from your watched bucket")
                     loadingVC.remove()
+                    self?.animateButtonOut(sender)
                 }
                 TapticHelper.shared.lightTaptic()
                 self?.delegate?.displayNeedsRefresh(withNewRecord: nil)
@@ -270,6 +271,15 @@ class DetailViewController: UIViewController {
         mScrollView.contentSize.height = isExpanded ? mStackView.frame.maxY + margin : originalScrollViewHeight
     }
     
+    private func animateButtonOut(_ sender: UIButton) {
+        sender.isEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            UIView.animate(withDuration: 0.25) {
+                sender.isHidden = true
+                sender.alpha = 0
+            }
+        }
+    }
 }
 
 extension DetailViewController: UIScrollViewDelegate {
