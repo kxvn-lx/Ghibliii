@@ -116,12 +116,13 @@ class HomeViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
+        
         let vc = DetailViewController()
         vc.film = film
+        
         let navController = UINavigationController(rootViewController: vc)
-        switch UIDevice.current.userInterfaceIdiom {
-        case .phone: navController.modalPresentationStyle = .fullScreen
-        default: break
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            navController.modalPresentationStyle = .fullScreen
         }
         self.present(navController, animated: true, completion: nil)
         

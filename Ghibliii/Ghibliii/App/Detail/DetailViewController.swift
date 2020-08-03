@@ -214,6 +214,7 @@ class DetailViewController: UIViewController {
                     SPAlert.present(message: "Added to your watched bucket")
                 }
                 TapticHelper.shared.successTaptic()
+                
             case .failure(let error):
                 DispatchQueue.main.async {
                     SPAlert.present(message: error.localizedDescription)
