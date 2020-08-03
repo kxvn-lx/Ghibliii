@@ -9,6 +9,7 @@ import UIKit
 import Backend
 import SafariServices
 import CloudKit
+import SPAlert
 
 class DetailViewController: UIViewController {
     
@@ -25,7 +26,7 @@ class DetailViewController: UIViewController {
                 self.addToWatchedButton.isHidden = self.hasWatched
                 self.removeFromWatchedButton.isHidden = !self.hasWatched
             }
-
+            
         }
     }
     var filmRecord: CKRecord? {
@@ -138,7 +139,7 @@ class DetailViewController: UIViewController {
         
         // Setup views
         infoStackView = UIStackView(arrangedSubviews: [descriptionLabel, directorLabel, producerLabel, imdbLinkButton])
-        infoStackView.addBackgroundColor(.secondarySystemBackground, withCornerRadius: 10)
+        infoStackView.addBackgroundColor(.secondarySystemBackground)
         infoStackView.isLayoutMarginsRelativeArrangement = true
         infoStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         infoStackView.axis = .vertical
@@ -208,12 +209,14 @@ class DetailViewController: UIViewController {
             case .success(let record):
                 self?.hasWatched = true
                 self?.filmRecord = record
-                AlertHelper.shared.presentDefault(title: "Added to watched bucket!", to: self!)
+                DispatchQueue.main.async {
+                    SPAlert.present(message: "Added to your watched bucket")
+                }
+                TapticHelper.shared.successTaptic()
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
-
     }
     
     @objc private func removeFromWatchedButtonTapped(_ sender: UIButton) {
@@ -222,7 +225,10 @@ class DetailViewController: UIViewController {
             case .success(_):
                 self?.hasWatched = false
                 self?.filmRecord = nil
-                AlertHelper.shared.presentDefault(title: "removed from watched bucket.", to: self!)
+                DispatchQueue.main.async {
+                    SPAlert.present(message: "Removed from your watched bucket")
+                }
+                TapticHelper.shared.lightTaptic()
             case .failure(let error):
                 print(error.localizedDescription)
             }
