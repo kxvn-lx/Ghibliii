@@ -12,8 +12,21 @@ import SnapKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         return true
+    }
+    
+    override func buildMenu(with builder: UIMenuBuilder) {
+        super.buildMenu(with: builder)
+        
+        builder.remove(menu: .edit)
+        builder.remove(menu: .format)
+        builder.remove(menu: .services)
+        
+        builder.insertChild(MenuController.navigationMenu(), atStartOfMenu: .view)
+    }
+    
+    @objc func refreshHomeVC() {
+        NotificationCenter.default.post(name: .refreshHomeVC, object: nil)
     }
 
     // MARK: UISceneSession Lifecycle

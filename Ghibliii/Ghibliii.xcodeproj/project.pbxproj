@@ -23,6 +23,8 @@
 		0A5D32A824D67394004F8108 /* films.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A5D32A324D6614F004F8108 /* films.json */; };
 		0A656F5824CDB579000C4113 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A656F5724CDB579000C4113 /* UIViewController.swift */; };
 		0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */; };
+		0AAE7DE824D85C2F00C96A18 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE7DE724D85C2F00C96A18 /* MenuController.swift */; };
+		0AAE7E4C24D868E000C96A18 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE7E4B24D868E000C96A18 /* Notification.Name.swift */; };
 		0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */; };
 		0AB0B35724D6AD7C00B54058 /* userDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */; };
 		0AB0B35924D6C39700B54058 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AB0B35824D6C39700B54058 /* CloudKit.framework */; };
@@ -52,6 +54,8 @@
 		0A656F5724CDB579000C4113 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		0A656F5B24CE88D9000C4113 /* Ghibliii.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghibliii.entitlements; sourceTree = "<group>"; };
 		0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
+		0AAE7DE724D85C2F00C96A18 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		0AAE7E4B24D868E000C96A18 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultsHelper.swift; sourceTree = "<group>"; };
 		0AB0B35824D6C39700B54058 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -154,6 +158,7 @@
 				0A1DACA024D1972500D32AD2 /* UIStackView.swift */,
 				0A14BE3B24D28D1500B36E36 /* UIDevice.swift */,
 				0AD60CFF24D7B9F6009E864F /* UIButton.swift */,
+				0AAE7E4B24D868E000C96A18 /* Notification.Name.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -190,6 +195,7 @@
 			children = (
 				0AB0B35F24D6CADD00B54058 /* DetailedButton.swift */,
 				0A55592C24D7F1F0003D5DFD /* LoadingViewController.swift */,
+				0AAE7DE724D85C2F00C96A18 /* MenuController.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -242,6 +248,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 0A16785C24CD26CE0060B62C;
 			packageReferences = (
@@ -305,9 +312,11 @@
 				0A16786924CD26CE0060B62C /* AppDelegate.swift in Sources */,
 				0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */,
 				0A16786B24CD26CE0060B62C /* SceneDelegate.swift in Sources */,
+				0AAE7DE824D85C2F00C96A18 /* MenuController.swift in Sources */,
 				0A5BFE8D24CFB89700962C7C /* DetailHeroView.swift in Sources */,
 				0A14BE3C24D28D1500B36E36 /* UIDevice.swift in Sources */,
 				0AD60CFE24D7B6D1009E864F /* TapticHelper.swift in Sources */,
+				0AAE7E4C24D868E000C96A18 /* Notification.Name.swift in Sources */,
 				0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */,
 				0AD60D0024D7B9F6009E864F /* UIButton.swift in Sources */,
 				0A656F5824CDB579000C4113 /* UIViewController.swift in Sources */,

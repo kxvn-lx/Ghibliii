@@ -121,7 +121,6 @@ class DetailViewController: UIViewController {
         if self.view.frame.height > originalHeight {
             originalScrollViewHeight = self.view.frame.height
         }
-        print(self.view.frame.height, originalHeight)
         expandScrollView(false)
     }
     

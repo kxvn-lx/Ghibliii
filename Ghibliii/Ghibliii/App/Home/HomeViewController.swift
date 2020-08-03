@@ -53,6 +53,8 @@ class HomeViewController: UICollectionViewController {
         fetchData()
         fetchWatchedFilms()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(pullToRefreshValueDidChanged), name: .refreshHomeVC, object: nil)
+        
         ImageLoadingOptions.shared.transition = .fadeIn(duration: 0.125)
     }
     
@@ -107,8 +109,10 @@ class HomeViewController: UICollectionViewController {
                 
                 self.films = mappedFilms
                 self.createSnapshot(from: self.films)
-                if self.pullToRefreshControl.isRefreshing {
-                    self.pullToRefreshControl.endRefreshing()
+                DispatchQueue.main.async {
+                    if self.pullToRefreshControl.isRefreshing {
+                        self.pullToRefreshControl.endRefreshing()
+                    }
                 }
                 
             case .failure(let error):

@@ -79,6 +79,9 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     override func setNeedsLayout() {
+        filmName.sizeToFit()
+        watchedLabel.sizeToFit()
+        
         filmImageView.snp.remakeConstraints { (make) in
             make.width.equalTo(self.frame.width)
             make.height.equalTo(self.frame.width * 1.5)
