@@ -118,6 +118,9 @@ class HomeViewController: UICollectionViewController {
             case .failure(let error):
                 DispatchQueue.main.async {
                     SPAlert.present(message: error.localizedDescription)
+                    if self.pullToRefreshControl.isRefreshing {
+                        self.pullToRefreshControl.endRefreshing()
+                    }
                 }
             }
         }
