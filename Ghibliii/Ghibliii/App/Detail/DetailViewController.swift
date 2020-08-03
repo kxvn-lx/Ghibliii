@@ -16,7 +16,6 @@ protocol WatchedBucketDelegate: class {
 }
 
 class DetailViewController: UIViewController {
-    
     var film: Film! {
         didSet {
             descriptionLabel.text = film.filmDescription
@@ -104,7 +103,7 @@ class DetailViewController: UIViewController {
     
     weak var delegate: WatchedBucketDelegate?
     
-    //MARK: - View lifecycle
+    // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -134,7 +133,8 @@ class DetailViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { (make) in
-            make.left.top.equalToSuperview().inset(NSDirectionalEdgeInsets(top: UIDevice.current.hasNotch ? 20 + 44 : 20 + 10, leading: 20, bottom: 0, trailing: 0))
+            let inset = NSDirectionalEdgeInsets(top: UIDevice.current.hasNotch ? 20 + 44 : 20 + 10, leading: 20, bottom: 0, trailing: 0)
+            make.left.top.equalToSuperview().inset(inset)
         }
         
         // Link Description label with action
@@ -208,8 +208,8 @@ class DetailViewController: UIViewController {
     
     @objc private func imdbButtonTapped() {
         if let url = URL(string: film.imdbLink) {
-            let vc = SFSafariViewController(url: url)
-            present(vc, animated: true)
+            let sfSafariVC = SFSafariViewController(url: url)
+            present(sfSafariVC, animated: true)
         }
     }
     
@@ -229,7 +229,7 @@ class DetailViewController: UIViewController {
                 }
                 TapticHelper.shared.successTaptic()
                 self?.delegate?.displayNeedsRefresh(withNewRecord: record)
-
+                
             case .failure(let error):
                 DispatchQueue.main.async {
                     SPAlert.present(message: error.localizedDescription)
@@ -247,7 +247,7 @@ class DetailViewController: UIViewController {
         
         CloudKitEngine.shared.remove(filmWithRecord: filmRecord) { [weak self] (result) in
             switch result {
-            case .success(_):
+            case .success:
                 DispatchQueue.main.async {
                     SPAlert.present(message: "Removed from your watched bucket")
                     loadingVC.remove()

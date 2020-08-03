@@ -141,7 +141,6 @@ class DetailHeroView: UIView {
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
         }
-        
 
     }
 }

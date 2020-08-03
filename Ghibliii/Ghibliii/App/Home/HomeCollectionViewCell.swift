@@ -11,7 +11,7 @@ import Nuke
 
 class HomeCollectionViewCell: UICollectionViewCell {
     
-    static let REUSE_IDENTIFIER = "FilmCell"
+    static let ReuseIdentifier = "FilmCell"
     private let filmImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemGray6

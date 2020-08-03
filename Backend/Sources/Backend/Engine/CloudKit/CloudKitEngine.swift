@@ -44,7 +44,7 @@ public class CloudKitEngine {
     /// Remove the film from CloudKit
     public func remove(filmWithRecord record: CKRecord?, completion: @escaping (Result<Bool, Error>) -> Swift.Void) {
         if let recordID = record?.recordID {
-            database.delete(withRecordID: recordID) { (recordID, error) in
+            database.delete(withRecordID: recordID) { (_, error) in
                 if let error = error {
                     completion(.failure(error))
                     return
@@ -91,7 +91,7 @@ public class CloudKitEngine {
                                     let additionalRecords = recordsDict.map({ $0.1 })
                                     
                                     let stichedRecords = Array(Set(additionalRecords + fetchedRecords))
-                                    let fetchedFilms = stichedRecords.map{ Film(withRecord: $0) }
+                                    let fetchedFilms = stichedRecords.map { Film(withRecord: $0) }
                                     completion(.success(fetchedFilms))
                                     return
                                 }

@@ -108,11 +108,11 @@ class HomeViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
         
-        let vc = DetailViewController()
-        vc.film = film
-        vc.delegate = self
+        let detailVC = DetailViewController()
+        detailVC.film = film
+        detailVC.delegate = self
         
-        let navController = UINavigationController(rootViewController: vc)
+        let navController = UINavigationController(rootViewController: detailVC)
         if UIDevice.current.userInterfaceIdiom == .phone {
             navController.modalPresentationStyle = .fullScreen
         }
@@ -150,9 +150,11 @@ class HomeViewController: UICollectionViewController {
     }
     
     @objc private func settingsButtonTapped() {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "SettingsVC") as! SettingsTableViewController
-        let navController = UINavigationController(rootViewController: vc)
-        self.present(navController, animated: true, completion: nil)
+        if let settingsVC = UIStoryboard(name: "main", bundle: nil).instantiateViewController(identifier: "SettingsVC") as? SettingsTableViewController {
+            let navController = UINavigationController(rootViewController: settingsVC)
+            self.present(navController, animated: true, completion: nil)
+        }
+
     }
 }
 
@@ -164,7 +166,7 @@ extension HomeViewController {
     
     /// Configure the layout
     fileprivate func makeLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { (_, layoutEnvironment) -> NSCollectionLayoutSection? in
             let isPhone = layoutEnvironment.traitCollection.userInterfaceIdiom == .phone
             let itemCount = isPhone ? 3 : 4
             
@@ -195,7 +197,10 @@ extension HomeViewController {
         dataSource = DataSource(
             collectionView: collectionView,
             cellProvider: { (collectionView, indexPath, film) -> UICollectionViewCell? in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.REUSE_IDENTIFIER, for: indexPath) as! HomeCollectionViewCell
+                guard
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.ReuseIdentifier, for: indexPath) as? HomeCollectionViewCell else {
+                    return nil
+                }
                 
                 cell.film = film
                 return cell
