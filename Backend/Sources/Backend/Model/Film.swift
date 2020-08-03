@@ -8,7 +8,7 @@
 import Foundation
 import CloudKit
 
-public struct Film: Codable, Hashable, CloudModel {
+public struct Film: Codable, Hashable {
     private enum RecordKeys: String {
         case id, title, filmDescription, image, director, producer, releaseDate, rtScore, imdbLink, imdbScore
     }

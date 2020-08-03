@@ -9,6 +9,7 @@ import UIKit
 import Backend
 import Nuke
 import SPAlert
+import CloudKit
 
 class HomeViewController: UICollectionViewController {
     
@@ -45,14 +46,9 @@ class HomeViewController: UICollectionViewController {
         
         configureDataSource()
         fetchData()
+        fetchWatchedFilms()
         
         ImageLoadingOptions.shared.transition = .fadeIn(duration: 0.125)
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        fetchWatchedFilms()
     }
     
     private func setupView() {
@@ -82,9 +78,9 @@ class HomeViewController: UICollectionViewController {
         }
     }
     
-    private func fetchWatchedFilms() {
-        CloudKitEngine.shared.fetch { [weak self] (result) in
-            guard let self = self else {  return }
+    private func fetchWatchedFilms(withnewRecord newRecord: CKRecord? = nil) {
+        CloudKitEngine.shared.fetch(withNewRecord: newRecord) { [weak self] (result) in
+            guard let self = self else { return }
             switch result {
             case .success(let watchedFilms):
                 let mappedFilms = self.films.map({ (film) -> Film in
@@ -101,11 +97,6 @@ class HomeViewController: UICollectionViewController {
                 self.films = mappedFilms
                 self.createSnapshot(from: self.films)
                 
-                
-                
-                watchedFilms.forEach({
-                    print("watched: \($0.title)")
-                })
             case .failure(let error):
                 DispatchQueue.main.async {
                     SPAlert.present(message: error.localizedDescription)
@@ -119,6 +110,7 @@ class HomeViewController: UICollectionViewController {
         
         let vc = DetailViewController()
         vc.film = film
+        vc.delegate = self
         
         let navController = UINavigationController(rootViewController: vc)
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -234,5 +226,11 @@ extension HomeViewController: UISearchResultsUpdating {
         }
         
         createSnapshot(from: filteredFilms)
+    }
+}
+
+extension HomeViewController: WatchedBucketDelegate {
+    func displayNeedsRefresh(withNewRecord record: CKRecord?) {
+        fetchWatchedFilms(withnewRecord: record)
     }
 }

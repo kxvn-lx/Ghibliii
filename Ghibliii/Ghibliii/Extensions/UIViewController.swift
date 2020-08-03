@@ -24,8 +24,22 @@ extension UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = preferredLargeTitle
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = tintColor
-        
     }
     
+    func add(_ child: UIViewController) {
+        addChild(child)
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+    }
+
+    func remove() {
+        guard parent != nil else {
+            return
+        }
+
+        willMove(toParent: nil)
+        view.removeFromSuperview()
+        removeFromParent()
+    }
     
 }

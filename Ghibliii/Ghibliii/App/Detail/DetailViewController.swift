@@ -11,6 +11,10 @@ import SafariServices
 import CloudKit
 import SPAlert
 
+protocol WatchedBucketDelegate: class {
+    func displayNeedsRefresh(withNewRecord record: CKRecord?)
+}
+
 class DetailViewController: UIViewController {
     
     var film: Film! {
@@ -94,6 +98,8 @@ class DetailViewController: UIViewController {
     
     private var infoStackView: UIStackView!
     private var mStackView: UIStackView!
+    
+    weak var delegate: WatchedBucketDelegate?
     
     //MARK: - View lifecycle
     override func viewDidLoad() {
@@ -205,6 +211,11 @@ class DetailViewController: UIViewController {
     }
     
     @objc private func addToWatchedButtonTapped(_ sender: UIButton) {
+        // Display loading indicator
+        let loadingVC = LoadingViewController()
+        add(loadingVC)
+        loadingVC.view.frame = self.view.frame
+        
         CloudKitEngine.shared.save(film: film) { [weak self] (result) in
             switch result {
             case .success(let record):
@@ -212,12 +223,15 @@ class DetailViewController: UIViewController {
                 self?.filmRecord = record
                 DispatchQueue.main.async {
                     SPAlert.present(message: "Added to your watched bucket")
+                    loadingVC.remove()
                 }
                 TapticHelper.shared.successTaptic()
-                
+                self?.delegate?.displayNeedsRefresh(withNewRecord: record)
+
             case .failure(let error):
                 DispatchQueue.main.async {
                     SPAlert.present(message: error.localizedDescription)
+                    loadingVC.remove()
                 }
                 TapticHelper.shared.errorTaptic()
             }
@@ -225,6 +239,10 @@ class DetailViewController: UIViewController {
     }
     
     @objc private func removeFromWatchedButtonTapped(_ sender: UIButton) {
+        let loadingVC = LoadingViewController()
+        add(loadingVC)
+        loadingVC.view.frame = self.view.frame
+        
         CloudKitEngine.shared.remove(filmWithRecord: filmRecord) { [weak self] (result) in
             switch result {
             case .success(_):
@@ -232,11 +250,15 @@ class DetailViewController: UIViewController {
                 self?.filmRecord = nil
                 DispatchQueue.main.async {
                     SPAlert.present(message: "Removed from your watched bucket")
+                    loadingVC.remove()
                 }
                 TapticHelper.shared.lightTaptic()
+                self?.delegate?.displayNeedsRefresh(withNewRecord: nil)
+                
             case .failure(let error):
                 DispatchQueue.main.async {
                     SPAlert.present(message: error.localizedDescription)
+                    loadingVC.remove()
                 }
                 TapticHelper.shared.errorTaptic()
             }

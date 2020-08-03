@@ -42,8 +42,6 @@ public class CloudKitEngine {
     }
     
     /// Remove the film from CloudKit
-    /// - Parameters:
-    ///   - id: The ID of the film
     public func remove(filmWithRecord record: CKRecord?, completion: @escaping (Result<Bool, Error>) -> Swift.Void) {
         if let recordID = record?.recordID {
             database.delete(withRecordID: recordID) { (recordID, error) in
@@ -61,25 +59,56 @@ public class CloudKitEngine {
                 return
             }
         }
-
+        
     }
     
     /// Fetch watched films from CloudKit
-    public func fetch(completion: @escaping (Result<[Film], Error>) -> Swift.Void) {
+    public func fetch(withNewRecord recordToCheck: CKRecord?, completion: @escaping (Result<[Film], Error>) -> Swift.Void) {
         let query = CKQuery(recordType: Film.RecordType, predicate: NSPredicate(value: true))
-        database.perform(query, inZoneWith: nil) { (records, error) in
+        database.perform(query, inZoneWith: nil) { (fetchedRecords, error) in
             DispatchQueue.main.async {
                 if let error = error {
                     completion(.failure(error))
                     return
                 }
                 
-                if let records = records {
-                    let fetchedFilms = records.map({ Film(withRecord: $0) })
+                // Check for the record that might  be missing
+                if let recordToCheck = recordToCheck {
+                    if let fetchedRecords = fetchedRecords {
+                        let newResults = fetchedRecords.filter({  $0.recordID == recordToCheck.recordID })
+                        
+                        // Only execute if there is a new record that is missing from the query
+                        if newResults.count == 0 {
+                            let additionalOperation = CKFetchRecordsOperation(recordIDs: [recordToCheck.recordID])
+                            
+                            additionalOperation.fetchRecordsCompletionBlock = { recordsDict, error in
+                                if let error = error {
+                                    completion(.failure(error))
+                                    return
+                                }
+                                
+                                if let recordsDict = recordsDict {
+                                    let additionalRecords = recordsDict.map({ $0.1 })
+                                    
+                                    let stichedRecords = Array(Set(additionalRecords + fetchedRecords))
+                                    let fetchedFilms = stichedRecords.map{ Film(withRecord: $0) }
+                                    completion(.success(fetchedFilms))
+                                    return
+                                }
+                            }
+                            self.database.add(additionalOperation)
+                        }
+                    }
+                }
+                
+                // If everything fails, that means no new record is found.
+                // Proceed to fetching normally.
+                if let fetchedRecords = fetchedRecords {
+                    let fetchedFilms = fetchedRecords.map({ Film(withRecord: $0) })
                     completion(.success(fetchedFilms))
+                    return
                 }
             }
-
         }
     }
 }

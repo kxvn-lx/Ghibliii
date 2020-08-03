@@ -11,7 +11,7 @@ struct UserDefaultsHelper {
     
     /// This is the keys for every value. We can add a new key here if we need to asve any new value with new category.
     enum UserDefaultsKeys: String, CaseIterable {
-        case test
+        case CKSubscription
     }
     
     private let defaults = UserDefaults.standard
