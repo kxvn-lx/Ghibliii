@@ -20,6 +20,11 @@ class HomeViewController: UICollectionViewController {
         button.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for: .normal)
         return button
     }()
+    private let pullToRefreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .label
+        return refreshControl
+    }()
     
     // Searchbar properties
     private let searchController: UISearchController = {
@@ -67,6 +72,10 @@ class HomeViewController: UICollectionViewController {
         settingsButton.setImage(UIImage(systemName: "gear"), for: .normal)
         settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: settingsButton)
+        
+        // Setup pull to refresh
+        pullToRefreshControl.addTarget(self, action: #selector(pullToRefreshValueDidChanged), for: .valueChanged)
+        self.collectionView.addSubview(pullToRefreshControl)
     }
     
     /// Fetch the initial movies data
@@ -78,24 +87,29 @@ class HomeViewController: UICollectionViewController {
         }
     }
     
-    private func fetchWatchedFilms(withnewRecord newRecord: CKRecord? = nil) {
+    private func fetchWatchedFilms(withNewRecord newRecord: CKRecord? = nil) {
         CloudKitEngine.shared.fetch(withNewRecord: newRecord) { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let watchedFilms):
                 let mappedFilms = self.films.map({ (film) -> Film in
                     var mutableFilm = film
+                    
                     mutableFilm.hasWatched = watchedFilms.contains(where: { (watchedFilm) -> Bool in
                         watchedFilm.id == mutableFilm.id
                     })
                     mutableFilm.record = watchedFilms.first(where: { (watchedFilm) -> Bool in
                         watchedFilm.id == mutableFilm.id
                     })?.record
+                    
                     return mutableFilm
                 })
                 
                 self.films = mappedFilms
                 self.createSnapshot(from: self.films)
+                if self.pullToRefreshControl.isRefreshing {
+                    self.pullToRefreshControl.endRefreshing()
+                }
                 
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -155,6 +169,10 @@ class HomeViewController: UICollectionViewController {
             self.present(navController, animated: true, completion: nil)
         }
 
+    }
+    
+    @objc private func pullToRefreshValueDidChanged() {
+        fetchWatchedFilms()
     }
 }
 
@@ -236,6 +254,6 @@ extension HomeViewController: UISearchResultsUpdating {
 
 extension HomeViewController: WatchedBucketDelegate {
     func displayNeedsRefresh(withNewRecord record: CKRecord?) {
-        fetchWatchedFilms(withnewRecord: record)
+        fetchWatchedFilms(withNewRecord: record)
     }
 }
