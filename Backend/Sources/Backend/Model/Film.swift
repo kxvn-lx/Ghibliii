@@ -9,18 +9,20 @@ import Foundation
 import CloudKit
 
 public struct Film: Codable, Hashable, CloudModel {
-    enum RecordKeys: String {
+    private enum RecordKeys: String {
         case id, title, filmDescription, image, director, producer, releaseDate, rtScore, imdbLink, imdbScore
     }
     public static let RecordType = "Film"
     
-    public let id, title, filmDescription: String
+    public let id, filmDescription: String
+    public var title: String
     public let image: String
     public let director, producer, releaseDate, rtScore: String
     public let imdbLink: String
     public let imdbScore: String
     
     public var record: CKRecord?
+    public var hasWatched = false
     
     enum CodingKeys: String, CodingKey {
         case id, title
@@ -66,9 +68,5 @@ public struct Film: Codable, Hashable, CloudModel {
 extension Film {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-    }
-    
-    public static func == (lhs: Film, rhs: Film) -> Bool {
-        lhs.id == rhs.id
     }
 }

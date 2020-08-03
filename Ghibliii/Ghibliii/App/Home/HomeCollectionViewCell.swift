@@ -12,7 +12,7 @@ import Nuke
 class HomeCollectionViewCell: UICollectionViewCell {
     
     static let REUSE_IDENTIFIER = "FilmCell"
-    let filmImageView: UIImageView = {
+    private let filmImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemGray6
         imageView.contentMode = .scaleToFill
@@ -21,7 +21,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         imageView.layer.masksToBounds = true
         return imageView
     }()
-    let filmName: UILabel = {
+    private let filmName: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .callout)
         label.adjustsFontForContentSizeCategory = true
@@ -30,14 +30,26 @@ class HomeCollectionViewCell: UICollectionViewCell {
         label.textColor = .label
         return label
     }()
-    let filmYear: UILabel = {
+    private let filmYear: UILabel = {
         let label = UILabel()
         label.adjustsFontForContentSizeCategory = true
         label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = .secondaryLabel
         return label
     }()
-    var textStackView: UIStackView!
+    private var textStackView: UIStackView!
+    private let watchedLabel: UIButton = {
+        let button = UIButton()
+        button.setTitle("Watched", for: .normal)
+        button.isHidden = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        button.setTitleColor(.secondaryLabel, for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption2)
+        button.isUserInteractionEnabled = false
+        button.addBlurEffect(style: .regular)
+       return button
+    }()
     
     var film: Film! {
         didSet {
@@ -52,6 +64,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
             
             filmYear.text = film.releaseDate
             filmYear.accessibilityValue = "\(film.releaseDate)"
+            
+            watchedLabel.isHidden = !film.hasWatched
         }
     }
     
@@ -75,11 +89,16 @@ class HomeCollectionViewCell: UICollectionViewCell {
             make.width.equalToSuperview()
             make.top.equalTo(filmImageView.snp.bottom).offset(10)
         }
+        
+        watchedLabel.snp.remakeConstraints { (make) in
+            make.left.top.equalToSuperview().inset(NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 0))
+        }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         self.filmImageView.image = UIImage()
+        self.watchedLabel.isHidden = true
     }
     
     private func setupView() {
@@ -91,6 +110,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
         textStackView.alignment = .leading
         textStackView.axis = .vertical
         textStackView.distribution = .fillProportionally
+        
+        addSubview(watchedLabel)
     }
     
     private func setupConstraint() {
@@ -103,6 +124,10 @@ class HomeCollectionViewCell: UICollectionViewCell {
         textStackView.snp.makeConstraints { (make) in
             make.width.equalToSuperview()
             make.top.equalTo(filmImageView.snp.bottom).offset(10)
+        }
+        
+        watchedLabel.snp.makeConstraints { (make) in
+            make.left.top.equalToSuperview().inset(NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 0))
         }
     }
 }

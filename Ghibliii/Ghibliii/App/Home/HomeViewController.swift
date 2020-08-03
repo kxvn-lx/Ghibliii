@@ -8,12 +8,12 @@
 import UIKit
 import Backend
 import Nuke
+import SPAlert
 
 class HomeViewController: UICollectionViewController {
     
     private var dataSource: DataSource!
     private var films = [Film]()
-    private var watchedFilms = [Film]()
     private let filterButton: UIButton = {
         let button =  UIButton(type: .custom)
         button.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for: .normal)
@@ -84,11 +84,32 @@ class HomeViewController: UICollectionViewController {
     
     private func fetchWatchedFilms() {
         CloudKitEngine.shared.fetch { [weak self] (result) in
+            guard let self = self else {  return }
             switch result {
             case .success(let watchedFilms):
-                self?.watchedFilms = watchedFilms
+                let mappedFilms = self.films.map({ (film) -> Film in
+                    var mutableFilm = film
+                    mutableFilm.hasWatched = watchedFilms.contains(where: { (watchedFilm) -> Bool in
+                        watchedFilm.id == mutableFilm.id
+                    })
+                    mutableFilm.record = watchedFilms.first(where: { (watchedFilm) -> Bool in
+                        watchedFilm.id == mutableFilm.id
+                    })?.record
+                    return mutableFilm
+                })
+                
+                self.films = mappedFilms
+                self.createSnapshot(from: self.films)
+                
+                
+                
+                watchedFilms.forEach({
+                    print("watched: \($0.title)")
+                })
             case .failure(let error):
-                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    SPAlert.present(message: error.localizedDescription)
+                }
             }
         }
     }
@@ -97,7 +118,6 @@ class HomeViewController: UICollectionViewController {
         guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
         let vc = DetailViewController()
         vc.film = film
-        vc.filmRecord = watchedFilms.first(where: { $0 == film })?.record
         let navController = UINavigationController(rootViewController: vc)
         switch UIDevice.current.userInterfaceIdiom {
         case .phone: navController.modalPresentationStyle = .fullScreen
@@ -185,14 +205,13 @@ extension HomeViewController {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.REUSE_IDENTIFIER, for: indexPath) as! HomeCollectionViewCell
                 
                 cell.film = film
-                
                 return cell
             })
     }
     
     /// Create the snapshot for our datasource
     fileprivate func createSnapshot(from films: [Film]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Film>()
+        var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(films)
         dataSource.apply(snapshot, animatingDifferences: true)
@@ -213,9 +232,6 @@ extension HomeViewController: UISearchResultsUpdating {
             filteredFilms = films
         }
         
-        var snapshot = Snapshot()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(filteredFilms, toSection: .main)
-        dataSource.apply(snapshot, animatingDifferences: true)
+        createSnapshot(from: filteredFilms)
     }
 }

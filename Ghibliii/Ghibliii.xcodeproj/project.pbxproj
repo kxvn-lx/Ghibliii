@@ -28,6 +28,7 @@
 		0AB0B36024D6CADD00B54058 /* DetailedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35F24D6CADD00B54058 /* DetailedButton.swift */; };
 		0AD60CFC24D7B62D009E864F /* SPAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 0AD60CFB24D7B62D009E864F /* SPAlert */; };
 		0AD60CFE24D7B6D1009E864F /* TapticHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60CFD24D7B6D1009E864F /* TapticHelper.swift */; };
+		0AD60D0024D7B9F6009E864F /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60CFF24D7B9F6009E864F /* UIButton.swift */; };
 		0AF9A5CC24CD6796001D116C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF9A5CB24CD6796001D116C /* SnapKit */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		0AB0B35824D6C39700B54058 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		0AB0B35F24D6CADD00B54058 /* DetailedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedButton.swift; sourceTree = "<group>"; };
 		0AD60CFD24D7B6D1009E864F /* TapticHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapticHelper.swift; sourceTree = "<group>"; };
+		0AD60CFF24D7B9F6009E864F /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				0A656F5724CDB579000C4113 /* UIViewController.swift */,
 				0A1DACA024D1972500D32AD2 /* UIStackView.swift */,
 				0A14BE3B24D28D1500B36E36 /* UIDevice.swift */,
+				0AD60CFF24D7B9F6009E864F /* UIButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				0A14BE3C24D28D1500B36E36 /* UIDevice.swift in Sources */,
 				0AD60CFE24D7B6D1009E864F /* TapticHelper.swift in Sources */,
 				0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */,
+				0AD60D0024D7B9F6009E864F /* UIButton.swift in Sources */,
 				0A656F5824CDB579000C4113 /* UIViewController.swift in Sources */,
 				0A508EEA24CF2FC200793E8B /* DetailViewController.swift in Sources */,
 			);

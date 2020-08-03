@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
             descriptionLabel.text = film.filmDescription
             directorLabel.text = "Director: \(film.director)"
             producerLabel.text = "Producer: \(film.producer)"
+            filmRecord = film.record
         }
     }
     var hasWatched: Bool = false {
@@ -29,7 +30,7 @@ class DetailViewController: UIViewController {
             
         }
     }
-    var filmRecord: CKRecord? {
+    private var filmRecord: CKRecord? {
         didSet {
             if filmRecord != nil {
                 hasWatched = true
@@ -214,7 +215,10 @@ class DetailViewController: UIViewController {
                 }
                 TapticHelper.shared.successTaptic()
             case .failure(let error):
-                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    SPAlert.present(message: error.localizedDescription)
+                }
+                TapticHelper.shared.errorTaptic()
             }
         }
     }
@@ -230,7 +234,10 @@ class DetailViewController: UIViewController {
                 }
                 TapticHelper.shared.lightTaptic()
             case .failure(let error):
-                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    SPAlert.present(message: error.localizedDescription)
+                }
+                TapticHelper.shared.errorTaptic()
             }
         }
     }
