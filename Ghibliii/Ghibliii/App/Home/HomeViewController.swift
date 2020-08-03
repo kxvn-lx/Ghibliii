@@ -168,7 +168,7 @@ class HomeViewController: UICollectionViewController {
     }
     
     @objc private func settingsButtonTapped() {
-        if let settingsVC = UIStoryboard(name: "main", bundle: nil).instantiateViewController(identifier: "SettingsVC") as? SettingsTableViewController {
+        if let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "SettingsVC") as? SettingsTableViewController {
             let navController = UINavigationController(rootViewController: settingsVC)
             self.present(navController, animated: true, completion: nil)
         }
