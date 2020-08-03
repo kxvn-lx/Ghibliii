@@ -118,6 +118,10 @@ class DetailViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         originalScrollViewHeight = mStackView.frame.maxY + 40
+        if self.view.frame.height > originalHeight {
+            originalScrollViewHeight = self.view.frame.height
+        }
+        print(self.view.frame.height, originalHeight)
         expandScrollView(false)
     }
     
