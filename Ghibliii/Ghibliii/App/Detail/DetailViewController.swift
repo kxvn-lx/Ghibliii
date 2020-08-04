@@ -9,7 +9,6 @@ import UIKit
 import Backend
 import SafariServices
 import CloudKit
-import SPAlert
 
 protocol WatchedBucketDelegate: class {
     func displayNeedsRefresh(withNewRecord record: CKRecord?)
@@ -226,7 +225,6 @@ class DetailViewController: UIViewController {
             switch result {
             case .success(let record):
                 DispatchQueue.main.async {
-                    SPAlert.present(message: "Added to your watched bucket")
                     loadingVC.remove()
                     self?.animateButtonOut(sender)
                 }
@@ -235,7 +233,7 @@ class DetailViewController: UIViewController {
                 
             case .failure(let error):
                 DispatchQueue.main.async {
-                    SPAlert.present(message: error.localizedDescription)
+                    AlertHelper.shared.presentOKAction(andMessage: error.rawValue, to: self)
                     loadingVC.remove()
                 }
                 TapticHelper.shared.errorTaptic()
@@ -252,7 +250,6 @@ class DetailViewController: UIViewController {
             switch result {
             case .success:
                 DispatchQueue.main.async {
-                    SPAlert.present(message: "Removed from your watched bucket")
                     loadingVC.remove()
                     self?.animateButtonOut(sender)
                 }
@@ -261,7 +258,7 @@ class DetailViewController: UIViewController {
                 
             case .failure(let error):
                 DispatchQueue.main.async {
-                    SPAlert.present(message: error.localizedDescription)
+                    AlertHelper.shared.presentOKAction(andMessage: error.rawValue, to: self)
                     loadingVC.remove()
                 }
                 TapticHelper.shared.errorTaptic()
@@ -276,8 +273,8 @@ class DetailViewController: UIViewController {
     
     private func animateButtonOut(_ sender: UIButton) {
         sender.isEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            UIView.animate(withDuration: 0.25) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            UIView.animate(withDuration: 0.5) {
                 sender.isHidden = true
                 sender.alpha = 0
             }

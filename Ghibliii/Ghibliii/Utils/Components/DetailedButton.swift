@@ -60,7 +60,7 @@ class DetailedButton: UIButton {
             if self.isEnabled {
                 self.backgroundColor = self.backgroundColor?.withAlphaComponent(1.0)
             } else {
-                self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.5)
+                self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.25)
             }
         }
     }
@@ -71,7 +71,7 @@ class DetailedButton: UIButton {
         layer.cornerRadius = 12.5
         layer.cornerCurve = .continuous
         setTitleColor(.white, for: .normal)
-        setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .disabled)
+        setTitleColor(UIColor.white.withAlphaComponent(0.25), for: .disabled)
         tintColor = .white
         
         setTitleColor(UIColor.white.withAlphaComponent(highlightedAlphaValue), for: .highlighted)

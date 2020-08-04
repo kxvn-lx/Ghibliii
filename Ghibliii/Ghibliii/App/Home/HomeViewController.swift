@@ -8,7 +8,6 @@
 import UIKit
 import Backend
 import Nuke
-import SPAlert
 import CloudKit
 
 class HomeViewController: UICollectionViewController {
@@ -109,19 +108,17 @@ class HomeViewController: UICollectionViewController {
                 
                 self.films = mappedFilms
                 self.createSnapshot(from: self.films)
-                DispatchQueue.main.async {
-                    if self.pullToRefreshControl.isRefreshing {
-                        self.pullToRefreshControl.endRefreshing()
-                    }
-                }
                 
             case .failure(let error):
                 DispatchQueue.main.async {
-                    SPAlert.present(message: error.localizedDescription)
-                    if self.pullToRefreshControl.isRefreshing {
-                        self.pullToRefreshControl.endRefreshing()
-                    }
+                    AlertHelper.shared.presentOKAction(andMessage: error.rawValue, to: self)
                 }
+            }
+        }
+        
+        DispatchQueue.main.async {
+            if self.pullToRefreshControl.isRefreshing {
+                self.pullToRefreshControl.endRefreshing()
             }
         }
     }

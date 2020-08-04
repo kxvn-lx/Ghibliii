@@ -23,13 +23,13 @@
 		0A5D32A824D67394004F8108 /* films.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A5D32A324D6614F004F8108 /* films.json */; };
 		0A656F5824CDB579000C4113 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A656F5724CDB579000C4113 /* UIViewController.swift */; };
 		0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */; };
+		0AAC682424D8FFE900286EE5 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAC682324D8FFE900286EE5 /* AlertHelper.swift */; };
 		0AAE7DE824D85C2F00C96A18 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE7DE724D85C2F00C96A18 /* MenuController.swift */; };
 		0AAE7E4C24D868E000C96A18 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE7E4B24D868E000C96A18 /* Notification.Name.swift */; };
 		0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */; };
 		0AB0B35724D6AD7C00B54058 /* userDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */; };
 		0AB0B35924D6C39700B54058 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AB0B35824D6C39700B54058 /* CloudKit.framework */; };
 		0AB0B36024D6CADD00B54058 /* DetailedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35F24D6CADD00B54058 /* DetailedButton.swift */; };
-		0AD60CFC24D7B62D009E864F /* SPAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 0AD60CFB24D7B62D009E864F /* SPAlert */; };
 		0AD60CFE24D7B6D1009E864F /* TapticHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60CFD24D7B6D1009E864F /* TapticHelper.swift */; };
 		0AD60D0024D7B9F6009E864F /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60CFF24D7B9F6009E864F /* UIButton.swift */; };
 		0AF9A5CC24CD6796001D116C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF9A5CB24CD6796001D116C /* SnapKit */; };
@@ -54,6 +54,7 @@
 		0A656F5724CDB579000C4113 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		0A656F5B24CE88D9000C4113 /* Ghibliii.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghibliii.entitlements; sourceTree = "<group>"; };
 		0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
+		0AAC682324D8FFE900286EE5 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		0AAE7DE724D85C2F00C96A18 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		0AAE7E4B24D868E000C96A18 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -70,7 +71,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A508EE224CEBA4E00793E8B /* Nuke in Frameworks */,
-				0AD60CFC24D7B62D009E864F /* SPAlert in Frameworks */,
 				0AB0B35924D6C39700B54058 /* CloudKit.framework in Frameworks */,
 				0A16788024CD38520060B62C /* Backend in Frameworks */,
 				0AF9A5CC24CD6796001D116C /* SnapKit in Frameworks */,
@@ -186,6 +186,7 @@
 				0AB0B35E24D6CAC300B54058 /* Components */,
 				0AD60CFD24D7B6D1009E864F /* TapticHelper.swift */,
 				0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */,
+				0AAC682324D8FFE900286EE5 /* AlertHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -221,7 +222,6 @@
 				0A16787F24CD38520060B62C /* Backend */,
 				0AF9A5CB24CD6796001D116C /* SnapKit */,
 				0A508EE124CEBA4E00793E8B /* Nuke */,
-				0AD60CFB24D7B62D009E864F /* SPAlert */,
 			);
 			productName = Ghibliii;
 			productReference = 0A16786524CD26CE0060B62C /* Ghibliii.app */;
@@ -254,7 +254,6 @@
 			packageReferences = (
 				0AF9A5CA24CD6796001D116C /* XCRemoteSwiftPackageReference "SnapKit" */,
 				0A508EE024CEBA4E00793E8B /* XCRemoteSwiftPackageReference "Nuke" */,
-				0AD60CFA24D7B62D009E864F /* XCRemoteSwiftPackageReference "SPAlert" */,
 			);
 			productRefGroup = 0A16786624CD26CE0060B62C /* Products */;
 			projectDirPath = "";
@@ -310,6 +309,7 @@
 				0AB0B36024D6CADD00B54058 /* DetailedButton.swift in Sources */,
 				0AB0B35724D6AD7C00B54058 /* userDefaultsHelper.swift in Sources */,
 				0A16786924CD26CE0060B62C /* AppDelegate.swift in Sources */,
+				0AAC682424D8FFE900286EE5 /* AlertHelper.swift in Sources */,
 				0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */,
 				0A16786B24CD26CE0060B62C /* SceneDelegate.swift in Sources */,
 				0AAE7DE824D85C2F00C96A18 /* MenuController.swift in Sources */,
@@ -538,14 +538,6 @@
 				minimumVersion = 9.1.1;
 			};
 		};
-		0AD60CFA24D7B62D009E864F /* XCRemoteSwiftPackageReference "SPAlert" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ivanvorobei/SPAlert";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.4;
-			};
-		};
 		0AF9A5CA24CD6796001D116C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -565,11 +557,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0A508EE024CEBA4E00793E8B /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = Nuke;
-		};
-		0AD60CFB24D7B62D009E864F /* SPAlert */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0AD60CFA24D7B62D009E864F /* XCRemoteSwiftPackageReference "SPAlert" */;
-			productName = SPAlert;
 		};
 		0AF9A5CB24CD6796001D116C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -10,9 +10,11 @@ import CloudKit
 
 public class CloudKitEngine {
     
-    public enum CloudKitEngineError: Error {
-        case recordFailure
-        case recordIDFailure
+    public enum CloudKitEngineError: String, Error {
+        case recordFailure = "Failured to parse the new record, please try again."
+        case cloudKitNotAuthenticated = "Could not authenticate iCloud. Please make sure you have an iCloud account signed in."
+        case networkFailure = "Your internet seems to not be working properly right now. Perhaps try again?"
+        case generalError = "Something's not right. Please try again."
     }
     private let database = CKContainer.default().privateCloudDatabase
     public static let shared = CloudKitEngine()
@@ -20,13 +22,17 @@ public class CloudKitEngine {
     
     // MARK: - Class methods
     /// Save the film to CloudKit
-    public func save(film: Film, completion: @escaping (Result<CKRecord, Error>) -> Swift.Void) {
+    public func save(film: Film, completion: @escaping (Result<CKRecord, CloudKitEngineError>) -> Swift.Void) {
         let filmRecord = film.toRecord()
         
         database.save(filmRecord) { (record, error) in
             DispatchQueue.main.async {
-                if let error = error {
-                    completion(.failure(error))
+                if let error = error as? CKError {
+                    switch error.code {
+                    case .notAuthenticated: completion(.failure(CloudKitEngineError.cloudKitNotAuthenticated))
+                    case .networkFailure, .networkUnavailable: completion(.failure(CloudKitEngineError.networkFailure))
+                    default: completion(.failure(CloudKitEngineError.generalError))
+                    }
                     return
                 }
                 
@@ -42,11 +48,15 @@ public class CloudKitEngine {
     }
     
     /// Remove the film from CloudKit
-    public func remove(filmWithRecord record: CKRecord?, completion: @escaping (Result<Bool, Error>) -> Swift.Void) {
+    public func remove(filmWithRecord record: CKRecord?, completion: @escaping (Result<Bool, CloudKitEngineError>) -> Swift.Void) {
         if let recordID = record?.recordID {
             database.delete(withRecordID: recordID) { (_, error) in
-                if let error = error {
-                    completion(.failure(error))
+                if let error = error as? CKError {
+                    switch error.code {
+                    case .notAuthenticated: completion(.failure(CloudKitEngineError.cloudKitNotAuthenticated))
+                    case .networkFailure, .networkUnavailable: completion(.failure(CloudKitEngineError.networkFailure))
+                    default: completion(.failure(CloudKitEngineError.generalError))
+                    }
                     return
                 }
                 
@@ -62,13 +72,21 @@ public class CloudKitEngine {
         
     }
     
+    
     /// Fetch watched films from CloudKit
-    public func fetch(withNewRecord recordToCheck: CKRecord?, completion: @escaping (Result<[Film], Error>) -> Swift.Void) {
+    ///
+    /// Use this method to fetch data from CloudKit. If you expect a new record to be fetched along,
+    /// Specify the record in its parameter.
+    public func fetch(withNewRecord recordToCheck: CKRecord? = nil, completion: @escaping (Result<[Film], CloudKitEngineError>) -> Swift.Void) {
         let query = CKQuery(recordType: Film.RecordType, predicate: NSPredicate(value: true))
         database.perform(query, inZoneWith: nil) { (fetchedRecords, error) in
             DispatchQueue.main.async {
-                if let error = error {
-                    completion(.failure(error))
+                if let error = error as? CKError {
+                    switch error.code {
+                    case .notAuthenticated: completion(.failure(CloudKitEngineError.cloudKitNotAuthenticated))
+                    case .networkFailure, .networkUnavailable: completion(.failure(CloudKitEngineError.networkFailure))
+                    default: completion(.failure(CloudKitEngineError.generalError))
+                    }
                     return
                 }
                 
@@ -82,8 +100,12 @@ public class CloudKitEngine {
                             let additionalOperation = CKFetchRecordsOperation(recordIDs: [recordToCheck.recordID])
                             
                             additionalOperation.fetchRecordsCompletionBlock = { recordsDict, error in
-                                if let error = error {
-                                    completion(.failure(error))
+                                if let error = error as? CKError {
+                                    switch error.code {
+                                    case .notAuthenticated: completion(.failure(CloudKitEngineError.cloudKitNotAuthenticated))
+                                    case .networkFailure, .networkUnavailable: completion(.failure(CloudKitEngineError.networkFailure))
+                                    default: completion(.failure(CloudKitEngineError.generalError))
+                                    }
                                     return
                                 }
                                 
