@@ -32,6 +32,9 @@
 		0AB0B36024D6CADD00B54058 /* DetailedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35F24D6CADD00B54058 /* DetailedButton.swift */; };
 		0AD60CFE24D7B6D1009E864F /* TapticHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60CFD24D7B6D1009E864F /* TapticHelper.swift */; };
 		0AD60D0024D7B9F6009E864F /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60CFF24D7B9F6009E864F /* UIButton.swift */; };
+		0AE3EAC324D9849400A7B070 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE3EAC224D9849300A7B070 /* SettingsViewModel.swift */; };
+		0AE3EAC624D9967500A7B070 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE3EAC524D9967500A7B070 /* UIFont.swift */; };
+		0AE3EAC824D99C5A00A7B070 /* SettingsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE3EAC724D99C5A00A7B070 /* SettingsFooterView.swift */; };
 		0AF9A5CC24CD6796001D116C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF9A5CB24CD6796001D116C /* SnapKit */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +66,9 @@
 		0AB0B35F24D6CADD00B54058 /* DetailedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedButton.swift; sourceTree = "<group>"; };
 		0AD60CFD24D7B6D1009E864F /* TapticHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapticHelper.swift; sourceTree = "<group>"; };
 		0AD60CFF24D7B9F6009E864F /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		0AE3EAC224D9849300A7B070 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		0AE3EAC524D9967500A7B070 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		0AE3EAC724D99C5A00A7B070 /* SettingsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +165,7 @@
 				0A14BE3B24D28D1500B36E36 /* UIDevice.swift */,
 				0AD60CFF24D7B9F6009E864F /* UIButton.swift */,
 				0AAE7E4B24D868E000C96A18 /* Notification.Name.swift */,
+				0AE3EAC524D9967500A7B070 /* UIFont.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -176,6 +183,8 @@
 			isa = PBXGroup;
 			children = (
 				0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */,
+				0AE3EAC224D9849300A7B070 /* SettingsViewModel.swift */,
+				0AE3EAC724D99C5A00A7B070 /* SettingsFooterView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -305,11 +314,14 @@
 			files = (
 				0A16786D24CD26CE0060B62C /* HomeViewController.swift in Sources */,
 				0A1DACA124D1972500D32AD2 /* UIStackView.swift in Sources */,
+				0AE3EAC824D99C5A00A7B070 /* SettingsFooterView.swift in Sources */,
 				0A55592D24D7F1F0003D5DFD /* LoadingViewController.swift in Sources */,
 				0AB0B36024D6CADD00B54058 /* DetailedButton.swift in Sources */,
 				0AB0B35724D6AD7C00B54058 /* userDefaultsHelper.swift in Sources */,
+				0AE3EAC324D9849400A7B070 /* SettingsViewModel.swift in Sources */,
 				0A16786924CD26CE0060B62C /* AppDelegate.swift in Sources */,
 				0AAC682424D8FFE900286EE5 /* AlertHelper.swift in Sources */,
+				0AE3EAC624D9967500A7B070 /* UIFont.swift in Sources */,
 				0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */,
 				0A16786B24CD26CE0060B62C /* SceneDelegate.swift in Sources */,
 				0AAE7DE824D85C2F00C96A18 /* MacTabController.swift in Sources */,

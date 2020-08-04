@@ -72,7 +72,6 @@ public class CloudKitEngine {
         
     }
     
-    
     /// Fetch watched films from CloudKit
     ///
     /// Use this method to fetch data from CloudKit. If you expect a new record to be fetched along,

@@ -155,11 +155,9 @@ class HomeViewController: UICollectionViewController {
     }
     
     @objc private func settingsButtonTapped() {
-        if let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "SettingsVC") as? SettingsTableViewController {
-            let navController = UINavigationController(rootViewController: settingsVC)
-            self.present(navController, animated: true, completion: nil)
-        }
-        
+        let settingsVC = SettingsTableViewController(style: .insetGrouped)
+        let navController = UINavigationController(rootViewController: settingsVC)
+        self.present(navController, animated: true, completion: nil)
     }
     
     @objc private func pullToRefreshValueDidChanged() {
