@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         builder.remove(menu: .format)
         builder.remove(menu: .services)
         
-        builder.insertChild(MenuController.navigationMenu(), atStartOfMenu: .view)
+        builder.insertChild(MacTabController.navigationMenu(), atStartOfMenu: .view)
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

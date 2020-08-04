@@ -14,11 +14,7 @@ class HomeViewController: UICollectionViewController {
     
     private var dataSource: DataSource!
     private var films = [Film]()
-    private let filterButton: UIButton = {
-        let button =  UIButton(type: .custom)
-        button.setImage(UIImage(systemName: "arrow.up.arrow.down.circle"), for: .normal)
-        return button
-    }()
+    private var sortButton: UIBarButtonItem!
     private let pullToRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .label
@@ -66,13 +62,18 @@ class HomeViewController: UICollectionViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         // Setup bar button item
-        filterButton.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: filterButton)
+//        if #available(iOS 14.0, *) {
+//            let barButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.up.arrow.down.circle"), primaryAction: nil, menu: createSortMenu())
+//            self.navigationItem.leftBarButtonItem = barButtonItem
+//        } else {
+//            sortButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle"), style: .plain, target: self, action: #selector(sortButtonTapped))
+//            self.navigationItem.leftBarButtonItem = sortButton
+//        }
+        sortButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle"), style: .plain, target: self, action: #selector(sortButtonTapped))
+        self.navigationItem.leftBarButtonItem = sortButton
         
-        let settingsButton = UIButton()
-        settingsButton.setImage(UIImage(systemName: "gear"), for: .normal)
-        settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: settingsButton)
+        let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+        self.navigationItem.rightBarButtonItem = settingsButton
         
         // Setup pull to refresh
         pullToRefreshControl.addTarget(self, action: #selector(pullToRefreshValueDidChanged), for: .valueChanged)
@@ -88,6 +89,7 @@ class HomeViewController: UICollectionViewController {
         }
     }
     
+    /// Fetch any watched films
     private func fetchWatchedFilms(withNewRecord newRecord: CKRecord? = nil) {
         CloudKitEngine.shared.fetch(withNewRecord: newRecord) { [weak self] (result) in
             guard let self = self else { return }
@@ -123,23 +125,9 @@ class HomeViewController: UICollectionViewController {
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
-        
-        let detailVC = DetailViewController()
-        detailVC.film = film
-        detailVC.delegate = self
-        
-        let navController = UINavigationController(rootViewController: detailVC)
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            navController.modalPresentationStyle = .fullScreen
-        }
-        self.present(navController, animated: true, completion: nil)
-        
-    }
-    
-    @objc private func filterButtonTapped() {
-        let filterAlert = UIAlertController(title: "Sort movies", message: nil, preferredStyle: .actionSheet)
+    // MARK: - @objc methods
+    @objc private func sortButtonTapped() {
+        let filterAlert = UIAlertController(title: "Sort movies by", message: nil, preferredStyle: .actionSheet)
         let titleFilterAction = UIAlertAction(title: "Name", style: .default) { (_) in
             var snapshot = Snapshot()
             snapshot.appendSections([.main])
@@ -158,12 +146,13 @@ class HomeViewController: UICollectionViewController {
         filterAlert.addAction(yearFilterAction)
         filterAlert.addAction(cancelAction)
         
-        if let popoverController = filterAlert.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: filterButton.bounds.midX, y: filterButton.bounds.maxY - 80, width: 0, height: 0)
-            popoverController.permittedArrowDirections = [.up]
+        if #available(iOS 14.0, *) {} else {
+            if let popoverController = filterAlert.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.minX, y: self.view.bounds.minY - 50, width: 0, height: 0)
+                popoverController.permittedArrowDirections = [.up]
+            }
         }
-        
         self.present(filterAlert, animated: true, completion: nil)
     }
     
@@ -172,7 +161,7 @@ class HomeViewController: UICollectionViewController {
             let navController = UINavigationController(rootViewController: settingsVC)
             self.present(navController, animated: true, completion: nil)
         }
-
+        
     }
     
     @objc private func pullToRefreshValueDidChanged() {
@@ -236,6 +225,21 @@ extension HomeViewController {
         snapshot.appendItems(films)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        let detailVC = DetailViewController()
+        detailVC.film = film
+        detailVC.delegate = self
+        
+        let navController = UINavigationController(rootViewController: detailVC)
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            navController.modalPresentationStyle = .fullScreen
+        }
+        self.present(navController, animated: true, completion: nil)
+        
+    }
 }
 
 extension HomeViewController: UISearchResultsUpdating {
@@ -259,5 +263,38 @@ extension HomeViewController: UISearchResultsUpdating {
 extension HomeViewController: WatchedBucketDelegate {
     func displayNeedsRefresh(withNewRecord record: CKRecord?) {
         fetchWatchedFilms(withNewRecord: record)
+    }
+}
+
+// MARK: - Menu configuration (iOS 14+)
+extension HomeViewController {
+    fileprivate func createSortMenu() -> UIMenu {
+        let photoAction = UIAction(
+            title: "Title",
+            image: nil
+        ) { (_) in
+            var snapshot = Snapshot()
+            snapshot.appendSections([.main])
+            snapshot.appendItems(self.films.sorted(by: { $0.title < $1.title }))
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+        }
+        
+        let albumAction = UIAction(
+            title: "Year",
+            image: nil
+        ) { (_) in
+            var snapshot = Snapshot()
+            snapshot.appendSections([.main])
+            snapshot.appendItems(self.films.sorted(by: { $0.releaseDate < $1.releaseDate }))
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+        }
+        
+        let menuActions = [photoAction, albumAction]
+        
+        let addNewMenu = UIMenu(
+            title: "Sort movies by",
+            children: menuActions)
+        
+        return addNewMenu
     }
 }

@@ -24,7 +24,7 @@
 		0A656F5824CDB579000C4113 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A656F5724CDB579000C4113 /* UIViewController.swift */; };
 		0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */; };
 		0AAC682424D8FFE900286EE5 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAC682324D8FFE900286EE5 /* AlertHelper.swift */; };
-		0AAE7DE824D85C2F00C96A18 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE7DE724D85C2F00C96A18 /* MenuController.swift */; };
+		0AAE7DE824D85C2F00C96A18 /* MacTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE7DE724D85C2F00C96A18 /* MacTabController.swift */; };
 		0AAE7E4C24D868E000C96A18 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE7E4B24D868E000C96A18 /* Notification.Name.swift */; };
 		0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */; };
 		0AB0B35724D6AD7C00B54058 /* userDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */; };
@@ -55,7 +55,7 @@
 		0A656F5B24CE88D9000C4113 /* Ghibliii.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghibliii.entitlements; sourceTree = "<group>"; };
 		0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		0AAC682324D8FFE900286EE5 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
-		0AAE7DE724D85C2F00C96A18 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		0AAE7DE724D85C2F00C96A18 /* MacTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacTabController.swift; sourceTree = "<group>"; };
 		0AAE7E4B24D868E000C96A18 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		0AB0B35324D6A88800B54058 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultsHelper.swift; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 			children = (
 				0AB0B35F24D6CADD00B54058 /* DetailedButton.swift */,
 				0A55592C24D7F1F0003D5DFD /* LoadingViewController.swift */,
-				0AAE7DE724D85C2F00C96A18 /* MenuController.swift */,
+				0AAE7DE724D85C2F00C96A18 /* MacTabController.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -312,7 +312,7 @@
 				0AAC682424D8FFE900286EE5 /* AlertHelper.swift in Sources */,
 				0AB0B35424D6A88800B54058 /* SettingsTableViewController.swift in Sources */,
 				0A16786B24CD26CE0060B62C /* SceneDelegate.swift in Sources */,
-				0AAE7DE824D85C2F00C96A18 /* MenuController.swift in Sources */,
+				0AAE7DE824D85C2F00C96A18 /* MacTabController.swift in Sources */,
 				0A5BFE8D24CFB89700962C7C /* DetailHeroView.swift in Sources */,
 				0A14BE3C24D28D1500B36E36 /* UIDevice.swift in Sources */,
 				0AD60CFE24D7B6D1009E864F /* TapticHelper.swift in Sources */,
