@@ -60,7 +60,7 @@ class DetailedButton: UIButton {
             if self.isEnabled {
                 self.backgroundColor = self.backgroundColor?.withAlphaComponent(1.0)
             } else {
-                self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.25)
+                self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.5)
             }
         }
     }
