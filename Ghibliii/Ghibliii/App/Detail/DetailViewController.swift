@@ -84,7 +84,7 @@ class DetailViewController: UIViewController {
     }
     private var originalScrollViewHeight: CGFloat!
     private var addToWatchedButton: DetailedButton = {
-        let button = DetailedButton(title: "Add to watched bucket!")
+        let button = DetailedButton(title: "Add to watched bucket")
         button.setTitle("Added", for: .disabled)
         button.backgroundColor = .systemBlue
         return button
