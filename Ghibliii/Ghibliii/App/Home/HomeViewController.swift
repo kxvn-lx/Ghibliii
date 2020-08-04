@@ -62,15 +62,13 @@ class HomeViewController: UICollectionViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         
         // Setup bar button item
-//        if #available(iOS 14.0, *) {
-//            let barButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.up.arrow.down.circle"), primaryAction: nil, menu: createSortMenu())
-//            self.navigationItem.leftBarButtonItem = barButtonItem
-//        } else {
-//            sortButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle"), style: .plain, target: self, action: #selector(sortButtonTapped))
-//            self.navigationItem.leftBarButtonItem = sortButton
-//        }
-        sortButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle"), style: .plain, target: self, action: #selector(sortButtonTapped))
-        self.navigationItem.leftBarButtonItem = sortButton
+        if #available(iOS 14.0, *) {
+            let barButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.up.arrow.down.circle"), primaryAction: nil, menu: createSortMenu())
+            self.navigationItem.leftBarButtonItem = barButtonItem
+        } else {
+            sortButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle"), style: .plain, target: self, action: #selector(sortButtonTapped))
+            self.navigationItem.leftBarButtonItem = sortButton
+        }
         
         let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsButtonTapped))
         self.navigationItem.rightBarButtonItem = settingsButton
@@ -128,7 +126,7 @@ class HomeViewController: UICollectionViewController {
     // MARK: - @objc methods
     @objc private func sortButtonTapped() {
         let filterAlert = UIAlertController(title: "Sort movies by", message: nil, preferredStyle: .actionSheet)
-        let titleFilterAction = UIAlertAction(title: "Name", style: .default) { (_) in
+        let titleFilterAction = UIAlertAction(title: "Title", style: .default) { (_) in
             var snapshot = Snapshot()
             snapshot.appendSections([.main])
             snapshot.appendItems(self.films.sorted(by: { $0.title < $1.title }))
@@ -269,9 +267,9 @@ extension HomeViewController: WatchedBucketDelegate {
 // MARK: - Menu configuration (iOS 14+)
 extension HomeViewController {
     fileprivate func createSortMenu() -> UIMenu {
-        let photoAction = UIAction(
+        let titleAction = UIAction(
             title: "Title",
-            image: nil
+            image: UIImage(systemName: "a.square")
         ) { (_) in
             var snapshot = Snapshot()
             snapshot.appendSections([.main])
@@ -279,9 +277,9 @@ extension HomeViewController {
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
         
-        let albumAction = UIAction(
+        let yearAction = UIAction(
             title: "Year",
-            image: nil
+            image: UIImage(systemName: "00.square")
         ) { (_) in
             var snapshot = Snapshot()
             snapshot.appendSections([.main])
@@ -289,8 +287,7 @@ extension HomeViewController {
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
         
-        let menuActions = [photoAction, albumAction]
-        
+        let menuActions = [titleAction, yearAction]
         let addNewMenu = UIMenu(
             title: "Sort movies by",
             children: menuActions)
