@@ -26,9 +26,8 @@ class SettingsTableViewController: UITableViewController {
     
     private func setupView() {
         // Setup close button
-        let closeButton = UIButton(type: .close)
-        closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: closeButton)
+        let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeTapped))
+        navigationItem.leftBarButtonItem = closeButton
         
         self.tableView.tableFooterView = SettingsFooterView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 150))
     }

@@ -285,12 +285,17 @@ class DetailViewController: UIViewController {
     
     private func expandScrollView(_ isExpanded: Bool) {
         let margin: CGFloat = 40
-        originalScrollViewHeight = mStackView.frame.maxY + 40
+        originalScrollViewHeight = mStackView.frame.maxY + margin
         if self.view.frame.height > originalScrollViewHeight {
             originalScrollViewHeight = self.view.frame.height
         }
         
         mScrollView.layoutIfNeeded()
+        if isExpanded && self.view.frame.height > mStackView.frame.maxY {
+            mScrollView.contentSize.height = originalScrollViewHeight
+            return
+        }
+        
         mScrollView.contentSize.height = isExpanded ? mStackView.frame.maxY + margin : originalScrollViewHeight
     }
     

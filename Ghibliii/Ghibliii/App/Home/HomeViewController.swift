@@ -95,13 +95,9 @@ class HomeViewController: UICollectionViewController {
             case .success(let watchedFilms):
                 let mappedFilms = self.films.map({ (film) -> Film in
                     var mutableFilm = film
-                    
-                    mutableFilm.hasWatched = watchedFilms.contains(where: { (watchedFilm) -> Bool in
-                        watchedFilm.id == mutableFilm.id
-                    })
-                    mutableFilm.record = watchedFilms.first(where: { (watchedFilm) -> Bool in
-                        watchedFilm.id == mutableFilm.id
-                    })?.record
+
+                    mutableFilm.hasWatched = watchedFilms.contains(where: { $0.id == mutableFilm.id })
+                    mutableFilm.record = watchedFilms.first(where: { $0.id == mutableFilm.id })?.record
                     
                     return mutableFilm
                 })
