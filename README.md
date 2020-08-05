@@ -23,7 +23,7 @@ Feel free to submit a PR because contribution is always fun!
 Clone this repo, build, and run!
 
 ## Contact
-[Twitter](www.twitter.com/kevinlx_)
+[Twitter](https://www.twitter.com/kevinlx_)
 
 ## Acknowledgement
 The datasource for this project is based off of a modified API from [ghibliapi](https://github.com/janaipakos/ghibliapi)
