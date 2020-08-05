@@ -13,10 +13,8 @@ struct SettingsSection {
 }
 
 struct SettingsItem {
-    typealias Action = ((SettingsItem) -> Swift.Void)
-    
-    var createdCell: ((SettingsItem) -> UITableViewCell)
-    var action: Action?
+    var createdCell: (SettingsItem) -> UITableViewCell
+    var action: ((SettingsItem) -> Swift.Void)?
 }
 
 protocol SettingsViewModelDelegate: class {
