@@ -94,18 +94,14 @@ class DetailViewController: UIViewController {
         button.backgroundColor = .systemRed
         return button
     }()
-    private let noIcloudLabel: UILabel = {
+    private let disclosureLabel: UILabel = {
         let label = UILabel()
         label.isHidden = true
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = .tertiaryLabel
-        label.text =
-            """
-            Oops! This is one of the iCloud based feature.
-            Please log into your iCloud on your device to use it.
-            """
+
         return label
     }()
     
@@ -128,7 +124,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        checkIcloud()
+        checkConnectivity()
         expandScrollView(false)
     }
     
@@ -166,18 +162,43 @@ class DetailViewController: UIViewController {
         infoStackView.axis = .vertical
         infoStackView.setCustomSpacing(20, after: descriptionLabel)
         
-        mStackView = UIStackView(arrangedSubviews: [addToWatchedButton, removeFromWatchedButton, noIcloudLabel, infoStackView])
+        mStackView = UIStackView(arrangedSubviews: [addToWatchedButton, removeFromWatchedButton, disclosureLabel, infoStackView])
         mStackView.axis = .vertical
         mStackView.spacing = 20
         
         mScrollView.addSubview(mStackView)
     }
     
-    private func checkIcloud() {
-        UIView.animate(withDuration: 0.25) {
-            self.addToWatchedButton.isEnabled = FileManager.default.ubiquityIdentityToken != nil
-            self.removeFromWatchedButton.isEnabled = FileManager.default.ubiquityIdentityToken != nil
-            self.noIcloudLabel.isHidden = FileManager.default.ubiquityIdentityToken != nil
+    private func checkConnectivity() {
+        if !ReachabilityHelper.shared.isConnectedToNetwork() {
+            disclosureLabel.text =
+                """
+                Yikes! This feature requires internet connectivity to function.
+                Please make sure your device is connected to one.
+                """
+            // Internet
+            UIView.animate(withDuration: 0.25) {
+                self.addToWatchedButton.isEnabled = ReachabilityHelper.shared.isConnectedToNetwork()
+                self.removeFromWatchedButton.isEnabled = ReachabilityHelper.shared.isConnectedToNetwork()
+                self.disclosureLabel.isHidden = ReachabilityHelper.shared.isConnectedToNetwork()
+            }
+            
+        } else if FileManager.default.ubiquityIdentityToken == nil {
+            disclosureLabel.text =
+                """
+                Oops! This is one of the iCloud based feature.
+                Please log into your iCloud on your device to use it.
+                """
+            UIView.animate(withDuration: 0.25) {
+                self.addToWatchedButton.isEnabled = FileManager.default.ubiquityIdentityToken != nil
+                self.removeFromWatchedButton.isEnabled = FileManager.default.ubiquityIdentityToken != nil
+                self.disclosureLabel.isHidden = FileManager.default.ubiquityIdentityToken != nil
+            }
+        }
+        
+        if !disclosureLabel.isHidden {
+            mStackView.setCustomSpacing(10, after: addToWatchedButton)
+            mStackView.setCustomSpacing(10, after: removeFromWatchedButton)
         }
     }
     

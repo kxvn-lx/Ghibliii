@@ -36,6 +36,7 @@
 		0AE3EAC324D9849400A7B070 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE3EAC224D9849300A7B070 /* SettingsViewModel.swift */; };
 		0AE3EAC624D9967500A7B070 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE3EAC524D9967500A7B070 /* UIFont.swift */; };
 		0AE3EAC824D99C5A00A7B070 /* SettingsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE3EAC724D99C5A00A7B070 /* SettingsFooterView.swift */; };
+		0AEC9EED24DB189D0080424B /* ReachabilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AEC9EEC24DB189D0080424B /* ReachabilityHelper.swift */; };
 		0AF9A5CC24CD6796001D116C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF9A5CB24CD6796001D116C /* SnapKit */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		0AE3EAC224D9849300A7B070 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		0AE3EAC524D9967500A7B070 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		0AE3EAC724D99C5A00A7B070 /* SettingsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFooterView.swift; sourceTree = "<group>"; };
+		0AEC9EEC24DB189D0080424B /* ReachabilityHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 				0AD60CFD24D7B6D1009E864F /* TapticHelper.swift */,
 				0AB0B35624D6AD7C00B54058 /* userDefaultsHelper.swift */,
 				0AAC682324D8FFE900286EE5 /* AlertHelper.swift */,
+				0AEC9EEC24DB189D0080424B /* ReachabilityHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				0A5BFE8D24CFB89700962C7C /* DetailHeroView.swift in Sources */,
 				0A70914024DA676400111012 /* UIApplication.swift in Sources */,
 				0A14BE3C24D28D1500B36E36 /* UIDevice.swift in Sources */,
+				0AEC9EED24DB189D0080424B /* ReachabilityHelper.swift in Sources */,
 				0AD60CFE24D7B6D1009E864F /* TapticHelper.swift in Sources */,
 				0AAE7E4C24D868E000C96A18 /* Notification.Name.swift in Sources */,
 				0A787C6524CD6C9D00D569CE /* HomeCollectionViewCell.swift in Sources */,
