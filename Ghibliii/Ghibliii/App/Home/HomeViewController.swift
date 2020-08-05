@@ -46,7 +46,7 @@ class HomeViewController: UICollectionViewController {
         
         configureDataSource()
         fetchData()
-        fetchWatchedFilms()
+        fetchWatchedFilms(withNewRecord: nil, showError: false)
         
         NotificationCenter.default.addObserver(self, selector: #selector(pullToRefreshValueDidChanged), name: .refreshHomeVC, object: nil)
         
@@ -88,7 +88,7 @@ class HomeViewController: UICollectionViewController {
     }
     
     /// Fetch any watched films
-    private func fetchWatchedFilms(withNewRecord newRecord: CKRecord? = nil) {
+    private func fetchWatchedFilms(withNewRecord newRecord: CKRecord? = nil, showError: Bool = true) {
         CloudKitEngine.shared.fetch(withNewRecord: newRecord) { [weak self] (result) in
             guard let self = self else { return }
             switch result {
@@ -110,8 +110,10 @@ class HomeViewController: UICollectionViewController {
                 self.createSnapshot(from: self.films)
                 
             case .failure(let error):
-                DispatchQueue.main.async {
-                    AlertHelper.shared.presentOKAction(andMessage: error.rawValue, to: self)
+                if showError {
+                    DispatchQueue.main.async {
+                        AlertHelper.shared.presentOKAction(andMessage: error.rawValue, to: self)
+                    }
                 }
             }
         }

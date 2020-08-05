@@ -15,7 +15,7 @@ struct SettingsSection {
 struct SettingsItem {
     typealias Action = ((SettingsItem) -> Swift.Void)
     
-    var cell: UITableViewCell
+    var createdCell: ((SettingsItem) -> UITableViewCell)
     var action: Action?
 }
 
@@ -24,23 +24,11 @@ protocol SettingsViewModelDelegate: class {
     func twitterCellTapped()
 }
 
+// MARK: - SettingsViewModel
 class SettingsViewModel: NSObject {
     
-    private let emailCell: UITableViewCell = {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: ReuseIdentifier)
-        cell.textLabel?.text = "Email"
-        cell.accessoryType = .disclosureIndicator
-        return cell
-    }()
-    private let twitterCell: UITableViewCell = {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: ReuseIdentifier)
-        cell.textLabel?.text = "Twitter"
-        cell.accessoryType = .disclosureIndicator
-        return cell
-    }()
-    
-    var tableViewSections = [SettingsSection]()
     static let ReuseIdentifier = "SettingsCell"
+    private var tableViewSections = [SettingsSection]()
     weak var delegate: SettingsViewModelDelegate?
     
     // MARK: - Init
@@ -55,11 +43,21 @@ class SettingsViewModel: NSObject {
             title: "Get in touch",
             cells: [
                 SettingsItem(
-                    cell: emailCell,
+                    createdCell: {_ in
+                        let cell = UITableViewCell(style: .value1, reuseIdentifier: Self.ReuseIdentifier)
+                        cell.textLabel?.text = "Email"
+                        cell.accessoryType = .disclosureIndicator
+                        return cell
+                    },
                     action: { [weak self] _ in self?.delegate?.emailCellTapped() }
                 ),
                 SettingsItem(
-                    cell: twitterCell,
+                    createdCell: {_ in
+                        let cell = UITableViewCell(style: .value1, reuseIdentifier: Self.ReuseIdentifier)
+                        cell.textLabel?.text = "Twitter"
+                        cell.accessoryType = .disclosureIndicator
+                        return cell
+                    },
                     action: { [weak self] _ in self?.delegate?.twitterCellTapped() }
                 )
             ] // Cells
@@ -77,7 +75,8 @@ extension SettingsViewModel: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableViewSections[indexPath.section].cells[indexPath.row].cell
+        let cell = tableViewSections[indexPath.section].cells[indexPath.row]
+        return cell.createdCell(cell)
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -100,16 +99,5 @@ extension SettingsViewModel: UITableViewDelegate, UITableViewDataSource {
             headerView.textLabel?.text = tableViewSections[section].title
             headerView.textLabel?.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .headline).pointSize, weight: .bold)
         }
-    }
-}
-
-// MARK: - Cell tap methods
-extension SettingsViewModel {
-    private func emailCellTapped() {
-        
-    }
-    
-    private func twitterCellTapped() {
-        
     }
 }

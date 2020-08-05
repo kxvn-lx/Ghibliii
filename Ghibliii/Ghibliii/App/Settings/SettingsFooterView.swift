@@ -14,14 +14,14 @@ class SettingsFooterView: UIView {
         let label = UILabel()
         label.text = "Ghibliii"
         label.textColor = .label
-        label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title3).pointSize, weight: .bold)
+        label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .headline).pointSize, weight: .bold)
         return label
     }()
     private let appVersionLabel: UILabel = {
         let label = UILabel()
-        label.text = "1.1"
+        label.text = UIApplication.appVersion
         label.textColor = .secondaryLabel
-        label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .medium)
+        label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .callout).pointSize, weight: .medium)
         return label
     }()
     private let createdByLabel: UILabel = {
@@ -30,7 +30,7 @@ class SettingsFooterView: UIView {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = .secondaryLabel
-        label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .medium)
+        label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .subheadline).pointSize, weight: .medium)
         return label
     }()
     

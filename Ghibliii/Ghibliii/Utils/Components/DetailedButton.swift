@@ -12,6 +12,7 @@ class DetailedButton: UIButton {
     private var highlightedBackgroundColor: UIColor?
     private var temporaryBackgroundColor: UIColor?
     private let highlightedAlphaValue: CGFloat = 0.9
+    private let disabledAlphaValue: CGFloat = 0.4
     private let scaleDuration: Double = 0.125
     private let scale: CGFloat = 0.97
     
@@ -60,7 +61,7 @@ class DetailedButton: UIButton {
             if self.isEnabled {
                 self.backgroundColor = self.backgroundColor?.withAlphaComponent(1.0)
             } else {
-                self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.5)
+                self.backgroundColor = self.backgroundColor?.withAlphaComponent(disabledAlphaValue)
             }
         }
     }
@@ -71,7 +72,7 @@ class DetailedButton: UIButton {
         layer.cornerRadius = 12.5
         layer.cornerCurve = .continuous
         setTitleColor(.white, for: .normal)
-        setTitleColor(UIColor.white.withAlphaComponent(0.25), for: .disabled)
+        setTitleColor(UIColor.white.withAlphaComponent(disabledAlphaValue), for: .disabled)
         tintColor = .white
         
         setTitleColor(UIColor.white.withAlphaComponent(highlightedAlphaValue), for: .highlighted)

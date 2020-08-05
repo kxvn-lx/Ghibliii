@@ -8,13 +8,20 @@
 import UIKit
 
 extension UIViewController {
-    func setNavigationBarTitle(_ title: String, preferredLargeTitle: Bool = false, tintColor: UIColor = .systemBlue, titleColor: UIColor = .label, removeSeparator: Bool = true) {
+    func setNavigationBarTitle(
+        _ title: String,
+        backgroundColor: UIColor = .systemBackground,
+        preferredLargeTitle: Bool = false,
+        tintColor: UIColor = .systemBlue,
+        titleColor: UIColor = .label,
+        removeSeparator: Bool = true) {
         navigationItem.title = title
         
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: titleColor]
         navBarAppearance.titleTextAttributes = [.foregroundColor: titleColor]
+        navBarAppearance.backgroundColor = backgroundColor
         navBarAppearance.shadowColor = removeSeparator ? .clear : .quaternaryLabel
         
         navigationController?.navigationBar.standardAppearance = navBarAppearance

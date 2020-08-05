@@ -83,18 +83,30 @@ class DetailViewController: UIViewController {
         }
     }
     private var originalScrollViewHeight: CGFloat!
-    private var addToWatchedButton: DetailedButton = {
+    private let addToWatchedButton: DetailedButton = {
         let button = DetailedButton(title: "Add to watched bucket")
-        button.setTitle("Added", for: .disabled)
         button.backgroundColor = .systemBlue
         return button
     }()
-    private var removeFromWatchedButton: DetailedButton = {
+    private let removeFromWatchedButton: DetailedButton = {
         let button = DetailedButton(title: "Remove from watched bucket")
-        button.setTitle("Removed", for: .disabled)
         button.isHidden = true
         button.backgroundColor = .systemRed
         return button
+    }()
+    private let noIcloudLabel: UILabel = {
+        let label = UILabel()
+        label.isHidden = true
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.textColor = .tertiaryLabel
+        label.text =
+            """
+            Oops! This is one of the iCloud based feature.
+            Please log into your iCloud on your device to use it.
+            """
+        return label
     }()
     
     private var infoStackView: UIStackView!
@@ -116,10 +128,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        originalScrollViewHeight = mStackView.frame.maxY + 40
-        if self.view.frame.height > originalHeight {
-            originalScrollViewHeight = self.view.frame.height
-        }
+        checkIcloud()
         expandScrollView(false)
     }
     
@@ -157,11 +166,19 @@ class DetailViewController: UIViewController {
         infoStackView.axis = .vertical
         infoStackView.setCustomSpacing(20, after: descriptionLabel)
         
-        mStackView = UIStackView(arrangedSubviews: [addToWatchedButton, removeFromWatchedButton, infoStackView])
+        mStackView = UIStackView(arrangedSubviews: [addToWatchedButton, removeFromWatchedButton, noIcloudLabel, infoStackView])
         mStackView.axis = .vertical
         mStackView.spacing = 20
         
         mScrollView.addSubview(mStackView)
+    }
+    
+    private func checkIcloud() {
+        UIView.animate(withDuration: 0.25) {
+            self.addToWatchedButton.isEnabled = FileManager.default.ubiquityIdentityToken != nil
+            self.removeFromWatchedButton.isEnabled = FileManager.default.ubiquityIdentityToken != nil
+            self.noIcloudLabel.isHidden = FileManager.default.ubiquityIdentityToken != nil
+        }
     }
     
     private func setupConstraint() {
@@ -268,13 +285,19 @@ class DetailViewController: UIViewController {
     
     private func expandScrollView(_ isExpanded: Bool) {
         let margin: CGFloat = 40
+        originalScrollViewHeight = mStackView.frame.maxY + 40
+        if self.view.frame.height > originalScrollViewHeight {
+            originalScrollViewHeight = self.view.frame.height
+        }
+        
+        mScrollView.layoutIfNeeded()
         mScrollView.contentSize.height = isExpanded ? mStackView.frame.maxY + margin : originalScrollViewHeight
     }
     
     private func animateButtonOut(_ sender: UIButton) {
         sender.isEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.25) {
                 sender.isHidden = true
                 sender.alpha = 0
             }

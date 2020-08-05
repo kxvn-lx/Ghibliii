@@ -15,7 +15,7 @@ class SettingsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavigationBarTitle("Settings")
+        setNavigationBarTitle("Settings", backgroundColor: .systemGroupedBackground)
         setupView()
         
         viewModel = SettingsViewModel(delegate: self)
@@ -51,7 +51,7 @@ extension SettingsTableViewController: SettingsViewModelDelegate {
             present(mail, animated: true)
         } else {
             AlertHelper.shared.presentOKAction(
-                withTitle: "No mail account(s).",
+                withTitle: "No mail account.",
                 andMessage: "Please configure a mail account in order to send email. Or, manually email it to kevin.laminto@gmail.com",
                 to: self
             )

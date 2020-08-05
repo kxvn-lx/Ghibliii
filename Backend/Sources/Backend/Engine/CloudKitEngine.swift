@@ -11,7 +11,6 @@ import CloudKit
 public class CloudKitEngine {
     
     public enum CloudKitEngineError: String, Error {
-        case recordFailure = "Failured to parse the new record, please try again."
         case cloudKitNotAuthenticated = "Could not authenticate iCloud. Please make sure you have an iCloud account signed in."
         case networkFailure = "Your internet seems to not be working properly right now. Perhaps try again?"
         case generalError = "Something's not right. Please try again."
@@ -37,7 +36,7 @@ public class CloudKitEngine {
                 }
                 
                 guard let record = record else {
-                    completion(.failure(CloudKitEngineError.recordFailure))
+                    completion(.failure(CloudKitEngineError.generalError))
                     return
                 }
                 
@@ -63,7 +62,7 @@ public class CloudKitEngine {
                 if record != nil {
                     completion(.success(true))
                 } else {
-                    completion(.failure(CloudKitEngineError.recordFailure))
+                    completion(.failure(CloudKitEngineError.generalError))
                 }
                 
                 return
