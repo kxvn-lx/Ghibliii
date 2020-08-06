@@ -10,7 +10,7 @@ import Backend
 import SafariServices
 import CloudKit
 
-protocol WatchedBucketDelegate: class {
+protocol DetailViewDelegate: class {
     func displayNeedsRefresh(withNewRecord record: CKRecord?)
 }
 
@@ -108,7 +108,7 @@ class DetailViewController: UIViewController {
     private var infoStackView: UIStackView!
     private var mStackView: UIStackView!
     
-    weak var delegate: WatchedBucketDelegate?
+    weak var delegate: DetailViewDelegate?
     
     // MARK: - View lifecycle
     override func viewDidLoad() {

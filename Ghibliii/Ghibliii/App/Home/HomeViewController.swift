@@ -95,7 +95,7 @@ class HomeViewController: UICollectionViewController {
             case .success(let watchedFilms):
                 let mappedFilms = self.films.map({ (film) -> Film in
                     var mutableFilm = film
-
+                    
                     mutableFilm.hasWatched = watchedFilms.contains(where: { $0.id == mutableFilm.id })
                     mutableFilm.record = watchedFilms.first(where: { $0.id == mutableFilm.id })?.record
                     
@@ -220,6 +220,7 @@ extension HomeViewController {
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
+    /// Runs when user tap on a film
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
         
@@ -234,8 +235,98 @@ extension HomeViewController {
         self.present(navController, animated: true, completion: nil)
         
     }
+    
+    /// Functions for the context menu
+    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let selectedFilm = self.films[indexPath.row]
+        
+        return UIContextMenuConfiguration(
+            identifier: indexPath as NSIndexPath,
+            previewProvider: {
+                return HomePreviewProviderViewController(film: self.films[indexPath.row])
+            }) { (_) -> UIMenu? in
+            
+            // Add to watched bucket menu action
+            let addToWatchedBucketMenu = UIAction(title: "Add to watched bucket", image: UIImage(systemName: "tray.and.arrow.down.fill")) { (_) in
+                // Display loading indicator
+                let loadingVC = LoadingViewController()
+                
+                if let keyWindow = UIApplication.shared.keyWindow {
+                    keyWindow.addSubview(loadingVC.view)
+                    loadingVC.view.frame = keyWindow.frame
+                }
+                
+                CloudKitEngine.shared.save(film: selectedFilm) { [weak self] (result) in
+                    switch result {
+                    case .success(let record):
+                        DispatchQueue.main.async {
+                            loadingVC.view.removeFromSuperview()
+                        }
+                        TapticHelper.shared.successTaptic()
+                        self?.displayNeedsRefresh(withNewRecord: record)
+                        
+                    case .failure(let error):
+                        DispatchQueue.main.async {
+                            AlertHelper.shared.presentOKAction(andMessage: error.rawValue, to: self)
+                            loadingVC.view.removeFromSuperview()
+                        }
+                        TapticHelper.shared.errorTaptic()
+                    }
+                }
+            }
+            
+            // remove from watched bucket menu action
+            let removeFromWatchedBucketMenu = UIAction(title: "Remove from watched bucket", image: UIImage(systemName: "bin.xmark.fill"), attributes: [.destructive]) { (_) in
+                let loadingVC = LoadingViewController()
+                
+                if let keyWindow = UIApplication.shared.keyWindow {
+                    keyWindow.addSubview(loadingVC.view)
+                    loadingVC.view.frame = keyWindow.frame
+                }
+                
+                CloudKitEngine.shared.remove(filmWithRecord: selectedFilm.record) { [weak self] (result) in
+                    switch result {
+                    case .success:
+                        DispatchQueue.main.async {
+                            loadingVC.view.removeFromSuperview()
+                        }
+                        TapticHelper.shared.lightTaptic()
+                        self?.displayNeedsRefresh(withNewRecord: nil)
+                        
+                    case .failure(let error):
+                        DispatchQueue.main.async {
+                            AlertHelper.shared.presentOKAction(andMessage: error.rawValue, to: self)
+                            loadingVC.view.removeFromSuperview()
+                        }
+                        TapticHelper.shared.errorTaptic()
+                    }
+                }
+            }
+            
+            let selectedMenu = self.films[indexPath.row].record == nil ? addToWatchedBucketMenu : removeFromWatchedBucketMenu
+            return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [selectedMenu])
+        }
+    }
+    
+    /// Runs the context menu animation when tapped
+    override func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        guard let indexPath = configuration.identifier as? IndexPath, let film = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        animator.addCompletion {
+            let detailVC = DetailViewController()
+            detailVC.film = film
+            detailVC.delegate = self
+
+            let navController = UINavigationController(rootViewController: detailVC)
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                navController.modalPresentationStyle = .fullScreen
+            }
+            self.present(navController, animated: true, completion: nil)
+        }
+    }
 }
 
+// MARK: - Search delegates
 extension HomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
@@ -254,7 +345,7 @@ extension HomeViewController: UISearchResultsUpdating {
     }
 }
 
-extension HomeViewController: WatchedBucketDelegate {
+extension HomeViewController: DetailViewDelegate {
     func displayNeedsRefresh(withNewRecord record: CKRecord?) {
         fetchWatchedFilms(withNewRecord: record)
     }

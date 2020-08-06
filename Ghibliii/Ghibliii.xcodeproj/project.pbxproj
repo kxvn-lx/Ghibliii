@@ -16,6 +16,7 @@
 		0A16787524CD26D00060B62C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A16787324CD26D00060B62C /* LaunchScreen.storyboard */; };
 		0A16788024CD38520060B62C /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 0A16787F24CD38520060B62C /* Backend */; };
 		0A1DACA124D1972500D32AD2 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1DACA024D1972500D32AD2 /* UIStackView.swift */; };
+		0A21126A24DC04DA00318D8B /* HomePreviewProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21126924DC04DA00318D8B /* HomePreviewProviderViewController.swift */; };
 		0A508EE224CEBA4E00793E8B /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 0A508EE124CEBA4E00793E8B /* Nuke */; };
 		0A508EEA24CF2FC200793E8B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A508EE924CF2FC200793E8B /* DetailViewController.swift */; };
 		0A55592D24D7F1F0003D5DFD /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A55592C24D7F1F0003D5DFD /* LoadingViewController.swift */; };
@@ -52,6 +53,7 @@
 		0A16787624CD26D00060B62C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A16787D24CD2E0A0060B62C /* Backend */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Backend; path = ../Backend; sourceTree = "<group>"; };
 		0A1DACA024D1972500D32AD2 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		0A21126924DC04DA00318D8B /* HomePreviewProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePreviewProviderViewController.swift; sourceTree = "<group>"; };
 		0A508EE924CF2FC200793E8B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		0A55592C24D7F1F0003D5DFD /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		0A5BFE8C24CFB89700962C7C /* DetailHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeroView.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			children = (
 				0A16786C24CD26CE0060B62C /* HomeViewController.swift */,
 				0A787C6424CD6C9D00D569CE /* HomeCollectionViewCell.swift */,
+				0A21126924DC04DA00318D8B /* HomePreviewProviderViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				0AAE7DE824D85C2F00C96A18 /* MacTabController.swift in Sources */,
 				0A5BFE8D24CFB89700962C7C /* DetailHeroView.swift in Sources */,
 				0A70914024DA676400111012 /* UIApplication.swift in Sources */,
+				0A21126A24DC04DA00318D8B /* HomePreviewProviderViewController.swift in Sources */,
 				0A14BE3C24D28D1500B36E36 /* UIDevice.swift in Sources */,
 				0AEC9EED24DB189D0080424B /* ReachabilityHelper.swift in Sources */,
 				0AD60CFE24D7B6D1009E864F /* TapticHelper.swift in Sources */,
