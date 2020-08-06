@@ -19,6 +19,11 @@ Feel free to submit a PR because contribution is always fun!
 - [x] Optimised for iOS, iPadOS, MacOS, 100% Swift.
 - [x] Add any movies to your watched bucket to mark them as watched
 
+## What can be added
+- [ ] Offline support (CoreData maybe?)
+- [ ] Added people sections for each movies (Need to modified the original people datasource)
+- [ ] Suggest... 😊
+
 ## Installation
 Clone this repo, build, and run!
 
