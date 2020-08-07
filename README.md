@@ -19,11 +19,16 @@ Feel free to submit a PR because contribution is always fun!
 - [x] Optimised for iOS, iPadOS, MacOS, 100% Swift.
 - [x] Add any movies to your watched bucket to mark them as watched
 
+## What can be added
+- [ ] Offline support (CoreData maybe?)
+- [ ] Added people sections for each movies (Need to modified the original people datasource)
+- [ ] Suggest... 😊
+
 ## Installation
 Clone this repo, build, and run!
 
 ## Contact
-[Twitter](www.twitter.com/kevinlx_)
+[Twitter](https://www.twitter.com/kevinlx_)
 
 ## Acknowledgement
 The datasource for this project is based off of a modified API from [ghibliapi](https://github.com/janaipakos/ghibliapi)
