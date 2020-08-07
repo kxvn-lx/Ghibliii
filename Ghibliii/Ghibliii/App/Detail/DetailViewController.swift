@@ -24,6 +24,7 @@ class DetailViewController: UIViewController {
             filmRecord = film.record
         }
     }
+    var peoples = [People]()
     
     private var hasWatched: Bool = false {
         didSet {
@@ -95,7 +96,7 @@ class DetailViewController: UIViewController {
         button.backgroundColor = .systemRed
         return button
     }()
-    private let disclosureLabel: UILabel = {
+    private let noticeLabel: UILabel = {
         let label = UILabel()
         label.isHidden = true
         label.textAlignment = .center
@@ -163,7 +164,7 @@ class DetailViewController: UIViewController {
         infoStackView.axis = .vertical
         infoStackView.setCustomSpacing(20, after: descriptionLabel)
         
-        mStackView = UIStackView(arrangedSubviews: [addToWatchedButton, removeFromWatchedButton, disclosureLabel, infoStackView])
+        mStackView = UIStackView(arrangedSubviews: [addToWatchedButton, removeFromWatchedButton, noticeLabel, infoStackView])
         mStackView.axis = .vertical
         mStackView.spacing = 20
         
@@ -172,7 +173,7 @@ class DetailViewController: UIViewController {
     
     private func checkConnectivity() {
         if !ReachabilityHelper.shared.isConnectedToNetwork() {
-            disclosureLabel.text =
+            noticeLabel.text =
                 """
                 Yikes! This feature requires internet connectivity to function.
                 Please make sure your device is connected to one.
@@ -181,11 +182,11 @@ class DetailViewController: UIViewController {
             UIView.animate(withDuration: 0.25) {
                 self.addToWatchedButton.isEnabled = ReachabilityHelper.shared.isConnectedToNetwork()
                 self.removeFromWatchedButton.isEnabled = ReachabilityHelper.shared.isConnectedToNetwork()
-                self.disclosureLabel.isHidden = ReachabilityHelper.shared.isConnectedToNetwork()
+                self.noticeLabel.isHidden = ReachabilityHelper.shared.isConnectedToNetwork()
             }
             
         } else if FileManager.default.ubiquityIdentityToken == nil {
-            disclosureLabel.text =
+            noticeLabel.text =
                 """
                 Oops! This is one of the iCloud based feature.
                 Please log into your iCloud on your device to use it.
@@ -193,11 +194,11 @@ class DetailViewController: UIViewController {
             UIView.animate(withDuration: 0.25) {
                 self.addToWatchedButton.isEnabled = FileManager.default.ubiquityIdentityToken != nil
                 self.removeFromWatchedButton.isEnabled = FileManager.default.ubiquityIdentityToken != nil
-                self.disclosureLabel.isHidden = FileManager.default.ubiquityIdentityToken != nil
+                self.noticeLabel.isHidden = FileManager.default.ubiquityIdentityToken != nil
             }
         }
         
-        if !disclosureLabel.isHidden {
+        if !noticeLabel.isHidden {
             mStackView.setCustomSpacing(10, after: addToWatchedButton)
             mStackView.setCustomSpacing(10, after: removeFromWatchedButton)
         }

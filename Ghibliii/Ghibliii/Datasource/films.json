@@ -9,7 +9,9 @@
     "release_date": "1986",
     "rt_score": "95",
     "imdb_link": "https://www.imdb.com/title/tt0092067/",
-    "imdb_score": "8"
+    "imdb_score": "8",
+    "runtime": 125,
+    "itunes_link": "https://itunes.apple.com/movie/laputa-castle-in-the-sky/id1521577613?ls=1"
   },
   {
     "id": "12cfb892-aac0-4c5b-94af-521852e46d6a",
@@ -21,7 +23,9 @@
     "release_date": "1988",
     "rt_score": "97",
     "imdb_link": "https://www.imdb.com/title/tt0095327/",
-    "imdb_score": "8.5"
+    "imdb_score": "8.5",
+    "runtime": 93,
+    "itunes_link": "https://itunes.apple.com/movie/grave-of-the-fireflies-1988/id917750274"
   },
   {
     "id": "58611129-2dbc-4a81-a72f-77ddfc1b1b49",
@@ -33,7 +37,9 @@
     "release_date": "1988",
     "rt_score": "93",
     "imdb_link": "https://www.imdb.com/title/tt0096283/",
-    "imdb_score": "8.2"
+    "imdb_score": "8.2",
+    "runtime": 86,
+    "itunes_link": "https://itunes.apple.com/movie/my-neighbor-totoro/id1520290363?ls=1"
   },
   {
     "id": "ea660b10-85c4-4ae3-8a5f-41cea3648e3e",
@@ -45,7 +51,9 @@
     "release_date": "1989",
     "rt_score": "98",
     "imdb_link": "https://www.imdb.com/title/tt0097814/",
-    "imdb_score": "7.8"
+    "imdb_score": "7.8",
+    "runtime": 103,
+    "itunes_link": "https://itunes.apple.com/movie/kikis-delivery-service/id1521591926?ls=1"
   },
   {
     "id": "4e236f34-b981-41c3-8c65-f8c9000b94e7",
@@ -57,7 +65,9 @@
     "release_date": "1991",
     "rt_score": "100",
     "imdb_link": "https://www.imdb.com/title/tt0102587/",
-    "imdb_score": "7.6"
+    "imdb_score": "7.6",
+    "runtime": 119,
+    "itunes_link": "https://itunes.apple.com/movie/only-yesterday/id1521601848?ls=1"
   },
   {
     "id": "ebbb6b7c-945c-41ee-a792-de0e43191bd8",
@@ -69,7 +79,9 @@
     "release_date": "1992",
     "rt_score": "95",
     "imdb_link": "https://www.imdb.com/title/tt0104652/",
-    "imdb_score": "7.7"
+    "imdb_score": "7.7",
+    "runtime": 93,
+    "itunes_link": "https://itunes.apple.com/movie/porco-rosso/id1521603209?ls=1"
   },
   {
     "id": "1b67aa9a-2e4a-45af-ac98-64d6ad15b16c",
@@ -81,7 +93,9 @@
     "release_date": "1994",
     "rt_score": "85",
     "imdb_link": "https://www.imdb.com/title/tt0110008/",
-    "imdb_score": "7.3"
+    "imdb_score": "7.3",
+    "runtime": 119,
+    "itunes_link": "https://itunes.apple.com/au/movie/pom-poko/id1522614648?ls=1"
   },
   {
     "id": "ff24da26-a969-4f0e-ba1e-a122ead6c6e3",
@@ -93,7 +107,9 @@
     "release_date": "1995",
     "rt_score": "94",
     "imdb_link": "https://www.imdb.com/title/tt0113824/",
-    "imdb_score": "7.9"
+    "imdb_score": "7.9",
+    "runtime": 111,
+    "itunes_link": "https://itunes.apple.com/au/movie/whisper-of-the-heart/id1522619966?ls=1"
   },
   {
     "id": "0440483e-ca0e-4120-8c50-4c8cd9b965d6",
@@ -105,7 +121,9 @@
     "release_date": "1997",
     "rt_score": "93",
     "imdb_link": "https://www.imdb.com/title/tt0119698/",
-    "imdb_score": "8.4"
+    "imdb_score": "8.4",
+    "runtime": 134,
+    "itunes_link": "https://itunes.apple.com/au/movie/princess-mononoke/id1521781634?ls=1"
   },
   {
     "id": "45204234-adfd-45cb-a505-a8e7a676b114",
@@ -117,7 +135,9 @@
     "release_date": "1999",
     "rt_score": "78",
     "imdb_link": "https://www.imdb.com/title/tt0206013/",
-    "imdb_score": "7.2"
+    "imdb_score": "7.2",
+    "runtime": 104,
+    "itunes_link": "https://itunes.apple.com/au/movie/my-neighbors-the-yamadas/id1521790021?ls=1"
   },
   {
     "id": "dc2e6bd1-8156-4886-adff-b39e6043af0c",
@@ -129,7 +149,9 @@
     "release_date": "2001",
     "rt_score": "97",
     "imdb_link": "https://www.imdb.com/title/tt0245429/",
-    "imdb_score": "8.7"
+    "imdb_score": "8.7",
+    "runtime": 125,
+    "itunes_link": "https://itunes.apple.com/au/movie/spirited-away/id1519917922?ls=1"
   },
   {
     "id": "90b72513-afd4-4570-84de-a56c312fdf81",
@@ -141,7 +163,9 @@
     "release_date": "2002",
     "rt_score": "90",
     "imdb_link": "https://www.imdb.com/title/tt0347618/",
-    "imdb_score": "7.2"
+    "imdb_score": "7.2",
+    "runtime": 75,
+    "itunes_link": "https://itunes.apple.com/au/movie/the-cat-returns/id1521935977?ls=1"
   },
   {
     "id": "cd3d059c-09f4-4ff3-8d63-bc765a5184fa",
@@ -153,7 +177,9 @@
     "release_date": "2004",
     "rt_score": "87",
     "imdb_link": "https://www.imdb.com/title/tt0347149/",
-    "imdb_score": "8.2"
+    "imdb_score": "8.2",
+    "runtime": 114,
+    "itunes_link": "https://itunes.apple.com/au/movie/howls-moving-castle/id1523005877?ls=1"
   },
   {
     "id": "112c1e67-726f-40b1-ac17-6974127bb9b9",
@@ -165,7 +191,9 @@
     "release_date": "2006",
     "rt_score": "43",
     "imdb_link": "https://www.imdb.com/title/tt0495596/",
-    "imdb_score": "6.4"
+    "imdb_score": "6.4",
+    "runtime": 115,
+    "itunes_link": "https://itunes.apple.com/au/movie/tales-from-earthsea/id1521757785?ls=1"
   },
   {
     "id": "758bf02e-3122-46e0-884e-67cf83df1786",
@@ -177,7 +205,9 @@
     "release_date": "2008",
     "rt_score": "92",
     "imdb_link": "https://www.imdb.com/title/tt0876563/",
-    "imdb_score": "7.7"
+    "imdb_score": "7.7",
+    "runtime": 100,
+    "itunes_link": "https://itunes.apple.com/au/movie/ponyo/id1522632184?ls=1"
   },
   {
     "id": "2de9426b-914a-4a06-a3a0-5e6d9d3886f6",
@@ -189,7 +219,9 @@
     "release_date": "2010",
     "rt_score": "95",
     "imdb_link": "https://www.imdb.com/title/tt1568921/",
-    "imdb_score": "7.6"
+    "imdb_score": "7.6",
+    "runtime": 94,
+    "itunes_link": "https://itunes.apple.com/au/movie/arrietty/id1521791013?ls=1"
   },
   {
     "id": "45db04e4-304a-4933-9823-33f389e8d74d",
@@ -201,7 +233,9 @@
     "release_date": "2011",
     "rt_score": "86",
     "imdb_link": "https://www.imdb.com/title/tt1798188/",
-    "imdb_score": "7.4"
+    "imdb_score": "7.4",
+    "runtime": 91,
+    "itunes_link": "https://itunes.apple.com/au/movie/from-up-on-poppy-hill/id1522614754?ls=1"
   },
   {
     "id": "67405111-37a5-438f-81cc-4666af60c800",
@@ -213,7 +247,9 @@
     "release_date": "2013",
     "rt_score": "89",
     "imdb_link": "https://www.imdb.com/title/tt2013293/",
-    "imdb_score": "7.8"
+    "imdb_score": "7.8",
+    "runtime": 126,
+    "itunes_link": "https://itunes.apple.com/au/movie/the-wind-rises/id1522828224?ls=1"
   },
   {
     "id": "578ae244-7750-4d9f-867b-f3cd3d6fecf4",
@@ -225,7 +261,9 @@
     "release_date": "2013",
     "rt_score": "100",
     "imdb_link": "https://www.imdb.com/title/tt2576852/",
-    "imdb_score": "8"
+    "imdb_score": "8",
+    "runtime": 137,
+    "itunes_link": "https://itunes.apple.com/us/movie/the-tale-of-the-princess-kaguya/id1521935736?ls=1"
   },
   {
     "id": "5fdfb320-2a02-49a7-94ff-5ca418cae602",
@@ -237,6 +275,8 @@
     "release_date": "2014",
     "rt_score": "92",
     "imdb_link": "https://www.imdb.com/title/tt3398268/",
-    "imdb_score": "7.7"
+    "imdb_score": "7.7",
+    "runtime": 103,
+    "itunes_link": "https://itunes.apple.com/us/movie/when-marnie-was-there/id1523006807?ls=1"
   }
 ]

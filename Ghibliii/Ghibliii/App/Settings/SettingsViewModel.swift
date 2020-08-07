@@ -27,7 +27,7 @@ class SettingsViewModel: NSObject {
     
     static let ReuseIdentifier = "SettingsCell"
     private var tableViewSections = [SettingsSection]()
-    weak var delegate: SettingsViewModelDelegate?
+    private weak var delegate: SettingsViewModelDelegate?
     
     // MARK: - Init
     init(delegate: SettingsViewModelDelegate) {

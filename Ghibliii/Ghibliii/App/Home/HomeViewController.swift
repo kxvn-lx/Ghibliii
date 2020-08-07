@@ -14,6 +14,7 @@ class HomeViewController: UICollectionViewController {
     
     private var dataSource: DataSource!
     private var films = [Film]()
+    private var peoples = [People]()
     private var sortButton: UIBarButtonItem!
     private let pullToRefreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -78,12 +79,17 @@ class HomeViewController: UICollectionViewController {
         self.collectionView.addSubview(pullToRefreshControl)
     }
     
-    /// Fetch the initial movies data
+    /// Fetch the initial movies data and people data
     private func fetchData() {
         API.shared.getData(type: Film.self, fromEndpoint: .films) { [weak self] (films) in
             guard let films = films else { return }
             self?.films = films.sorted(by: { $0.title < $1.title })
             self?.createSnapshot(from: self!.films)
+        }
+        
+        API.shared.getData(type: People.self, fromEndpoint: .people) { [weak self] (peoples) in
+            guard let peoples = peoples else { return }
+            self?.peoples = peoples
         }
     }
     
@@ -223,9 +229,10 @@ extension HomeViewController {
     /// Runs when user tap on a film
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
-        
+
         let detailVC = DetailViewController()
         detailVC.film = film
+        detailVC.peoples = self.peoples.filter({ $0.filmIDs.contains(film.id) })
         detailVC.delegate = self
         
         let navController = UINavigationController(rootViewController: detailVC)
