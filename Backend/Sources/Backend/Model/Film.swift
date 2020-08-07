@@ -10,7 +10,7 @@ import CloudKit
 
 public struct Film: Codable, Hashable {
     private enum RecordKeys: String {
-        case id, title, filmDescription, image, director, producer, releaseDate, rtScore, imdbLink, imdbScore
+        case id, title, filmDescription, image, director, producer, releaseDate, rtScore, imdbLink, imdbScore, runtime, itunesLink
     }
     public static let RecordType = "Film"
     
@@ -20,6 +20,8 @@ public struct Film: Codable, Hashable {
     public let director, producer, releaseDate, rtScore: String
     public let imdbLink: String
     public let imdbScore: String
+    public let runtime: Int
+    public let itunesLink: String
     
     public var record: CKRecord?
     public var hasWatched = false
@@ -32,6 +34,8 @@ public struct Film: Codable, Hashable {
         case rtScore = "rt_score"
         case imdbLink = "imdb_link"
         case imdbScore = "imdb_score"
+        case runtime
+        case itunesLink = "itunes_link"
     }
     
     public init(withRecord record: CKRecord) {
@@ -45,6 +49,8 @@ public struct Film: Codable, Hashable {
         self.rtScore = record[RecordKeys.rtScore.rawValue] as? String ?? ""
         self.imdbLink = record[RecordKeys.imdbLink.rawValue] as? String ?? ""
         self.imdbScore = record[RecordKeys.imdbScore.rawValue] as? String ?? ""
+        self.runtime = record[RecordKeys.runtime.rawValue] as? Int ?? 0
+        self.itunesLink = record[RecordKeys.itunesLink.rawValue] as? String ?? ""
         self.record = record
     }
     

@@ -8,6 +8,5 @@
 import Foundation
 
 public enum Endpoint: String {
-    case films
-    
+    case films, people
 }

@@ -70,6 +70,21 @@ class DetailViewController: UIViewController {
         label.textColor = .secondaryLabel
         return label
     }()
+    private let runtimeLabel: UILabel = {
+        let label = UILabel()
+        label.adjustsFontForContentSizeCategory = true
+        label.font = .preferredFont(forTextStyle: .callout)
+        label.textColor = .secondaryLabel
+        return label
+    }()
+    private let itunesButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Available on iTunes", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(UIColor.systemBlue.withAlphaComponent(0.9), for: .highlighted)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
+        return button
+    }()
     private let imdbLinkButton: UIButton = {
         let button = UIButton()
         button.setTitle("see on IMDB", for: .normal)
@@ -116,7 +131,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setNavigationBarTitle("")
+        setNavigationBarTitle(film.title)
         view.backgroundColor = .systemBackground
         self.navigationController?.isNavigationBarHidden = true
         
@@ -153,18 +168,52 @@ class DetailViewController: UIViewController {
         
         // Setup button
         imdbLinkButton.addTarget(self, action: #selector(imdbButtonTapped), for: .touchUpInside)
+        itunesButton.addTarget(self, action: #selector(itunesButtonTapped), for: .touchUpInside)
         addToWatchedButton.addTarget(self, action: #selector(addToWatchedButtonTapped), for: .touchUpInside)
         removeFromWatchedButton.addTarget(self, action: #selector(removeFromWatchedButtonTapped), for: .touchUpInside)
         
         // Setup views
-        infoStackView = UIStackView(arrangedSubviews: [descriptionLabel, directorLabel, producerLabel, imdbLinkButton])
+        // 1. setup people collectionviews
+        let peopleVC = PeopleViewController()
+        peopleVC.peoples = self.peoples
+        peopleVC.view.snp.makeConstraints { (make) in
+            make.height.equalTo(self.view.frame.height * 0.4)
+        }
+        
+        let peopleTitleLabel = UILabel()
+        peopleTitleLabel.text = "Characters"
+        peopleTitleLabel.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title3).pointSize, weight: .medium)
+        peopleTitleLabel.adjustsFontForContentSizeCategory = true
+        
+        let peopleSV = UIStackView(arrangedSubviews: [peopleTitleLabel, peopleVC.view])
+        peopleSV.axis = .vertical
+        peopleSV.isLayoutMarginsRelativeArrangement = true
+        peopleSV.addBackgroundColor(.secondarySystemBackground)
+        peopleSV.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        
+        self.addChild(peopleVC)
+        peopleVC.didMove(toParent: self)
+        
+        // 2. Setup info stacks
+        infoStackView = UIStackView(arrangedSubviews: [
+                                        descriptionLabel,
+                                        directorLabel,
+                                        producerLabel,
+                                        imdbLinkButton,
+                                        itunesButton])
         infoStackView.addBackgroundColor(.secondarySystemBackground)
         infoStackView.isLayoutMarginsRelativeArrangement = true
         infoStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         infoStackView.axis = .vertical
         infoStackView.setCustomSpacing(20, after: descriptionLabel)
         
-        mStackView = UIStackView(arrangedSubviews: [addToWatchedButton, removeFromWatchedButton, noticeLabel, infoStackView])
+        // 3. Setup master stacks
+        mStackView = UIStackView(arrangedSubviews: [
+                                    addToWatchedButton,
+                                    removeFromWatchedButton,
+                                    noticeLabel,
+                                    infoStackView,
+                                    peopleSV])
         mStackView.axis = .vertical
         mStackView.spacing = 20
         
@@ -282,6 +331,14 @@ class DetailViewController: UIViewController {
         }
     }
     
+    @objc private func itunesButtonTapped() {
+        if let url = URL(string: film.itunesLink) {
+            print(url)
+            let sfSafariVC = SFSafariViewController(url: url)
+            present(sfSafariVC, animated: true)
+        }
+    }
+    
     @objc private func addToWatchedButtonTapped(_ sender: UIButton) {
         let loadingVC = LoadingViewController()
         add(loadingVC)
@@ -357,7 +414,7 @@ extension DetailViewController: UIScrollViewDelegate {
                     closeTapped()
                 }
             }
-            
+
             detailHeroView.snp.updateConstraints { (make) in
                 make.top.equalTo(currentTop)
             }
