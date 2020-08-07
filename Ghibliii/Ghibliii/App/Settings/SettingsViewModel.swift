@@ -13,7 +13,7 @@ struct SettingsSection {
 }
 
 struct SettingsItem {
-    var createdCell: (SettingsItem) -> UITableViewCell
+    var createdCell: () -> UITableViewCell
     var action: ((SettingsItem) -> Swift.Void)?
 }
 
@@ -41,7 +41,7 @@ class SettingsViewModel: NSObject {
             title: "Get in touch",
             cells: [
                 SettingsItem(
-                    createdCell: {_ in
+                    createdCell: {
                         let cell = UITableViewCell(style: .value1, reuseIdentifier: Self.ReuseIdentifier)
                         cell.textLabel?.text = "Email"
                         cell.accessoryType = .disclosureIndicator
@@ -50,7 +50,7 @@ class SettingsViewModel: NSObject {
                     action: { [weak self] _ in self?.delegate?.emailCellTapped() }
                 ),
                 SettingsItem(
-                    createdCell: {_ in
+                    createdCell: {
                         let cell = UITableViewCell(style: .value1, reuseIdentifier: Self.ReuseIdentifier)
                         cell.textLabel?.text = "Twitter"
                         cell.accessoryType = .disclosureIndicator
@@ -74,7 +74,7 @@ extension SettingsViewModel: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableViewSections[indexPath.section].cells[indexPath.row]
-        return cell.createdCell(cell)
+        return cell.createdCell()
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {

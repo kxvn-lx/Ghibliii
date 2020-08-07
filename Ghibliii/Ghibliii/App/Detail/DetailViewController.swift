@@ -11,6 +11,7 @@ import SafariServices
 import CloudKit
 
 protocol DetailViewDelegate: class {
+    /// Call this method to refresh the home VC. Usually after updating the watched buckets.
     func displayNeedsRefresh(withNewRecord record: CKRecord?)
 }
 
@@ -231,6 +232,33 @@ class DetailViewController: UIViewController {
         }
     }
     
+    private func expandScrollView(_ isExpanded: Bool) {
+        let margin: CGFloat = 40
+        originalScrollViewHeight = mStackView.frame.maxY + margin
+        if self.view.frame.height > originalScrollViewHeight {
+            originalScrollViewHeight = self.view.frame.height
+        }
+        
+        mScrollView.layoutIfNeeded()
+        if isExpanded && self.view.frame.height > mStackView.frame.maxY {
+            mScrollView.contentSize.height = originalScrollViewHeight
+            return
+        }
+        
+        mScrollView.contentSize.height = isExpanded ? mStackView.frame.maxY + margin : originalScrollViewHeight
+    }
+    
+    private func animateButtonOut(_ sender: UIButton) {
+        sender.isEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            UIView.animate(withDuration: 0.25) {
+                sender.isHidden = true
+                sender.alpha = 0
+            }
+        }
+    }
+    
+    // MARK: - @objc methods
     @objc private func closeTapped() {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
@@ -254,7 +282,6 @@ class DetailViewController: UIViewController {
     }
     
     @objc private func addToWatchedButtonTapped(_ sender: UIButton) {
-        // Display loading indicator
         let loadingVC = LoadingViewController()
         add(loadingVC)
         loadingVC.view.frame = self.view.frame
@@ -291,7 +318,7 @@ class DetailViewController: UIViewController {
                     loadingVC.remove()
                     self?.animateButtonOut(sender)
                 }
-                TapticHelper.shared.lightTaptic()
+                TapticHelper.shared.successTaptic()
                 self?.delegate?.displayNeedsRefresh(withNewRecord: nil)
                 
             case .failure(let error):
@@ -300,32 +327,6 @@ class DetailViewController: UIViewController {
                     loadingVC.remove()
                 }
                 TapticHelper.shared.errorTaptic()
-            }
-        }
-    }
-    
-    private func expandScrollView(_ isExpanded: Bool) {
-        let margin: CGFloat = 40
-        originalScrollViewHeight = mStackView.frame.maxY + margin
-        if self.view.frame.height > originalScrollViewHeight {
-            originalScrollViewHeight = self.view.frame.height
-        }
-        
-        mScrollView.layoutIfNeeded()
-        if isExpanded && self.view.frame.height > mStackView.frame.maxY {
-            mScrollView.contentSize.height = originalScrollViewHeight
-            return
-        }
-        
-        mScrollView.contentSize.height = isExpanded ? mStackView.frame.maxY + margin : originalScrollViewHeight
-    }
-    
-    private func animateButtonOut(_ sender: UIButton) {
-        sender.isEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            UIView.animate(withDuration: 0.25) {
-                sender.isHidden = true
-                sender.alpha = 0
             }
         }
     }

@@ -247,8 +247,9 @@ extension HomeViewController {
             }) { (_) -> UIMenu? in
             
             // Add to watched bucket menu action
-            let addToWatchedBucketMenu = UIAction(title: "Add to watched bucket", image: UIImage(systemName: "tray.and.arrow.down.fill")) { (_) in
-                // Display loading indicator
+            let addToWatchedBucketMenu = UIAction(
+                title: "Add to watched bucket",
+                image: UIImage(systemName: "tray.and.arrow.down.fill")) { (_) in
                 let loadingVC = LoadingViewController()
                 
                 if let keyWindow = UIApplication.shared.keyWindow {
@@ -274,9 +275,12 @@ extension HomeViewController {
                     }
                 }
             }
-            
-            // remove from watched bucket menu action
-            let removeFromWatchedBucketMenu = UIAction(title: "Remove from watched bucket", image: UIImage(systemName: "bin.xmark.fill"), attributes: [.destructive]) { (_) in
+                
+                // remove from watched bucket menu action
+            let removeFromWatchedBucketMenu = UIAction(
+                title: "Remove from watched bucket",
+                image: UIImage(systemName: "bin.xmark.fill"),
+                attributes: [.destructive]) { (_) in
                 let loadingVC = LoadingViewController()
                 
                 if let keyWindow = UIApplication.shared.keyWindow {
@@ -290,7 +294,7 @@ extension HomeViewController {
                         DispatchQueue.main.async {
                             loadingVC.view.removeFromSuperview()
                         }
-                        TapticHelper.shared.lightTaptic()
+                        TapticHelper.shared.successTaptic()
                         self?.displayNeedsRefresh(withNewRecord: nil)
                         
                     case .failure(let error):
@@ -302,8 +306,8 @@ extension HomeViewController {
                     }
                 }
             }
-            
-            let selectedMenu = self.films[indexPath.row].record == nil ? addToWatchedBucketMenu : removeFromWatchedBucketMenu
+                
+                let selectedMenu = self.films[indexPath.row].record == nil ? addToWatchedBucketMenu : removeFromWatchedBucketMenu
             return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [selectedMenu])
         }
     }
@@ -316,7 +320,7 @@ extension HomeViewController {
             let detailVC = DetailViewController()
             detailVC.film = film
             detailVC.delegate = self
-
+            
             let navController = UINavigationController(rootViewController: detailVC)
             if UIDevice.current.userInterfaceIdiom == .phone {
                 navController.modalPresentationStyle = .fullScreen

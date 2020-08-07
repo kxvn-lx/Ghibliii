@@ -58,7 +58,6 @@ extension SettingsTableViewController: SettingsViewModelDelegate {
     }
     
     func twitterCellTapped() {
-        
         if let url = URL(string: "https://twitter.com/kevinlx_") {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
