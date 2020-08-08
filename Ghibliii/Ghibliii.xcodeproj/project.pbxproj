@@ -152,13 +152,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		0A200A0624DE919100CC96E7 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				0A32EA0E24DD7CE800BA8CAE /* PeopleViewController.swift */,
+				0A32EA1024DDA27700BA8CAE /* PeopleCollectionViewCell.swift */,
+			);
+			path = People;
+			sourceTree = "<group>";
+		};
 		0A508EE624CF2F3F00793E8B /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				0A200A0624DE919100CC96E7 /* People */,
 				0A508EE924CF2FC200793E8B /* DetailViewController.swift */,
 				0A5BFE8C24CFB89700962C7C /* DetailHeroView.swift */,
-				0A32EA0E24DD7CE800BA8CAE /* PeopleViewController.swift */,
-				0A32EA1024DDA27700BA8CAE /* PeopleCollectionViewCell.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";

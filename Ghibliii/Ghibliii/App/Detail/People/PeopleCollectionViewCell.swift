@@ -11,18 +11,9 @@ import Backend
 class PeopleCollectionViewCell: UICollectionViewCell {
     
     static let ReuseIdentifier = "PeopleCell"
-    private let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .systemGray5
-        imageView.contentMode = .scaleToFill
-        imageView.layer.cornerRadius = 5
-        imageView.layer.cornerCurve = .continuous
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .callout)
+        label.font = .preferredFont(forTextStyle: .body)
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.textColor = .label
@@ -48,9 +39,11 @@ class PeopleCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupView() {
-        mStackView = UIStackView(arrangedSubviews: [imageView, nameLabel])
+        mStackView = UIStackView(arrangedSubviews: [nameLabel])
         mStackView.axis = .vertical
-        mStackView.spacing = 20
+        mStackView.addBackgroundColor(.secondarySystemBackground)
+        mStackView.isLayoutMarginsRelativeArrangement = true
+        mStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
         self.addSubview(mStackView)
     }

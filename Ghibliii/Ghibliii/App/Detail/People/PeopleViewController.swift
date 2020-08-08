@@ -57,18 +57,23 @@ extension PeopleViewController {
     fileprivate func makeLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (_, _) -> NSCollectionLayoutSection? in
             
-            // Item
-            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-            item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                                  heightDimension: .fractionalHeight(0.5))
+                                                  
+            let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+            layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+
+            let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.95),
+                                                         heightDimension: .fractionalHeight(1))
             
-            // Group
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6), heightDimension: .fractionalHeight(1))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            
-            // Section
-            let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .continuous
-            return section
+            let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize,
+                                                               subitem: layoutItem,
+                                                               count: 3)
+
+            let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+            layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
+
+            return layoutSection
         }
         
         return layout

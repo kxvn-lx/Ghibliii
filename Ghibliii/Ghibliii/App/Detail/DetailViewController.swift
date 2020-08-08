@@ -177,7 +177,7 @@ class DetailViewController: UIViewController {
         let peopleVC = PeopleViewController()
         peopleVC.peoples = self.peoples
         peopleVC.view.snp.makeConstraints { (make) in
-            make.height.equalTo(self.view.frame.height * 0.4)
+            make.height.equalTo(self.view.frame.height * 0.2)
         }
         
         let peopleTitleLabel = UILabel()
@@ -187,8 +187,8 @@ class DetailViewController: UIViewController {
         
         let peopleSV = UIStackView(arrangedSubviews: [peopleTitleLabel, peopleVC.view])
         peopleSV.axis = .vertical
+        peopleSV.spacing = 10
         peopleSV.isLayoutMarginsRelativeArrangement = true
-        peopleSV.addBackgroundColor(.secondarySystemBackground)
         peopleSV.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
         self.addChild(peopleVC)
