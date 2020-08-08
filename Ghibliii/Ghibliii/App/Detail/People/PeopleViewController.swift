@@ -35,7 +35,6 @@ class PeopleViewController: UIViewController {
         view.backgroundColor = .clear
         self.view.addSubview(collectionView)
         collectionView.frame = self.view.frame
-        collectionView.delegate = self
         collectionView.register(PeopleCollectionViewCell.self, forCellWithReuseIdentifier: PeopleCollectionViewCell.ReuseIdentifier)
         collectionView.collectionViewLayout = makeLayout()
     }
@@ -98,12 +97,5 @@ extension PeopleViewController {
         snapshot.appendSections([.main])
         snapshot.appendItems(peoples)
         dataSource.apply(snapshot, animatingDifferences: true)
-    }
-}
-
-// MARK: - CollectionView delegates
-extension PeopleViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
     }
 }

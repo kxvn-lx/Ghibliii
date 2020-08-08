@@ -55,8 +55,6 @@ class HomeViewController: UICollectionViewController {
     }
     
     private func setupView() {
-        self.view.addSubview(collectionView)
-        
         // Setup searchController
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
