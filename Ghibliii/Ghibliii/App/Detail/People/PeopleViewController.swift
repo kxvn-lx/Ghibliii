@@ -10,7 +10,11 @@ import Backend
 
 class PeopleViewController: UIViewController {
 
-    var peoples: [People]!
+    var peoples: [People]! {
+        didSet {
+            self.peoples = self.peoples.sorted(by: { $0.name < $1.name })
+        }
+    }
     
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
@@ -57,7 +61,7 @@ extension PeopleViewController {
         let layout = UICollectionViewCompositionalLayout { (_, _) -> NSCollectionLayoutSection? in
             
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                  heightDimension: .fractionalHeight(0.5))
+                                                  heightDimension: .fractionalHeight(1))
                                                   
             let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
             layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
@@ -65,12 +69,14 @@ extension PeopleViewController {
             let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.95),
                                                          heightDimension: .fractionalHeight(1))
             
-            let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize,
+            let layoutGroupV = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize,
                                                                subitem: layoutItem,
                                                                count: 3)
+            
+            let layoutGroupH = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitem: layoutGroupV, count: 2)
 
-            let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-            layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
+            let layoutSection = NSCollectionLayoutSection(group: layoutGroupH)
+            layoutSection.orthogonalScrollingBehavior = .groupPaging
 
             return layoutSection
         }

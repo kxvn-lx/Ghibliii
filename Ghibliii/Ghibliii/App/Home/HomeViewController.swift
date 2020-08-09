@@ -227,7 +227,6 @@ extension HomeViewController {
     /// Runs when user tap on a film
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let film = dataSource.itemIdentifier(for: indexPath) else { return }
-
         let detailVC = DetailViewController()
         detailVC.film = film
         detailVC.peoples = self.peoples.filter({ $0.filmIDs.contains(film.id) })

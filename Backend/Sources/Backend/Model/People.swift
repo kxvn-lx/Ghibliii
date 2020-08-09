@@ -10,15 +10,8 @@ import Foundation
 public struct People: Codable, Hashable {
     public let id, name: String
     public let gender: Gender
-    public let age, eyeColor, hairColor: String
+    public let age: String
     public let filmIDs: [String]
-
-    enum CodingKeys: String, CodingKey {
-        case id, name, gender, age
-        case eyeColor = "eye_color"
-        case hairColor = "hair_color"
-        case filmIDs
-    }
 }
 
 public enum Gender: String, Codable {

@@ -17,10 +17,10 @@
 		0A16788024CD38520060B62C /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 0A16787F24CD38520060B62C /* Backend */; };
 		0A1DACA124D1972500D32AD2 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1DACA024D1972500D32AD2 /* UIStackView.swift */; };
 		0A21126A24DC04DA00318D8B /* HomePreviewProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A21126924DC04DA00318D8B /* HomePreviewProviderViewController.swift */; };
-		0A32EA0B24DD66FA00BA8CAE /* people.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A32EA0A24DD66FA00BA8CAE /* people.json */; };
 		0A32EA0D24DD70B300BA8CAE /* films.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A32EA0C24DD70B300BA8CAE /* films.json */; };
 		0A32EA0F24DD7CE800BA8CAE /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A32EA0E24DD7CE800BA8CAE /* PeopleViewController.swift */; };
 		0A32EA1124DDA27700BA8CAE /* PeopleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A32EA1024DDA27700BA8CAE /* PeopleCollectionViewCell.swift */; };
+		0A4D8BD224DFB6A200658828 /* people.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D8BD124DFB6A200658828 /* people.json */; };
 		0A508EE224CEBA4E00793E8B /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 0A508EE124CEBA4E00793E8B /* Nuke */; };
 		0A508EEA24CF2FC200793E8B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A508EE924CF2FC200793E8B /* DetailViewController.swift */; };
 		0A55592D24D7F1F0003D5DFD /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A55592C24D7F1F0003D5DFD /* LoadingViewController.swift */; };
@@ -57,10 +57,10 @@
 		0A16787D24CD2E0A0060B62C /* Backend */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Backend; path = ../Backend; sourceTree = "<group>"; };
 		0A1DACA024D1972500D32AD2 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		0A21126924DC04DA00318D8B /* HomePreviewProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePreviewProviderViewController.swift; sourceTree = "<group>"; };
-		0A32EA0A24DD66FA00BA8CAE /* people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = people.json; sourceTree = "<group>"; };
 		0A32EA0C24DD70B300BA8CAE /* films.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = films.json; sourceTree = "<group>"; };
 		0A32EA0E24DD7CE800BA8CAE /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		0A32EA1024DDA27700BA8CAE /* PeopleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleCollectionViewCell.swift; sourceTree = "<group>"; };
+		0A4D8BD124DFB6A200658828 /* people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = people.json; sourceTree = "<group>"; };
 		0A508EE924CF2FC200793E8B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		0A55592C24D7F1F0003D5DFD /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		0A5BFE8C24CFB89700962C7C /* DetailHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeroView.swift; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				0A32EA0C24DD70B300BA8CAE /* films.json */,
-				0A32EA0A24DD66FA00BA8CAE /* people.json */,
+				0A4D8BD124DFB6A200658828 /* people.json */,
 			);
 			path = Datasource;
 			sourceTree = "<group>";
@@ -304,8 +304,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A32EA0B24DD66FA00BA8CAE /* people.json in Resources */,
 				0A16787524CD26D00060B62C /* LaunchScreen.storyboard in Resources */,
+				0A4D8BD224DFB6A200658828 /* people.json in Resources */,
 				0A32EA0D24DD70B300BA8CAE /* films.json in Resources */,
 				0A16787224CD26D00060B62C /* Assets.xcassets in Resources */,
 				0A16787024CD26CE0060B62C /* Main.storyboard in Resources */,
