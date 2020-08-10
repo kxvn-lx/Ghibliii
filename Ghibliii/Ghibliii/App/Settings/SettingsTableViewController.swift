@@ -44,14 +44,14 @@ extension SettingsTableViewController: SettingsViewModelDelegate {
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setToRecipients(["kevin.laminto@gmail.com"])
+            mail.setToRecipients(["kevinlaminto.dev@gmail.com"])
             mail.setSubject("[Ghibliii] Hi there! ✉️")
             
             present(mail, animated: true)
         } else {
             AlertHelper.shared.presentOKAction(
                 withTitle: "No mail account.",
-                andMessage: "Please configure a mail account in order to send email. Or, manually email it to kevin.laminto@gmail.com",
+                andMessage: "Please configure a mail account in order to send email. Or, manually email it to kevinlaminto.dev@gmail.com",
                 to: self
             )
         }
@@ -62,9 +62,7 @@ extension SettingsTableViewController: SettingsViewModelDelegate {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             } else {
-                let config = SFSafariViewController.Configuration()
-
-                let sfSafariVC = SFSafariViewController(url: url, configuration: config)
+                let sfSafariVC = SFSafariViewController(url: url)
                 present(sfSafariVC, animated: true)
             }
         }

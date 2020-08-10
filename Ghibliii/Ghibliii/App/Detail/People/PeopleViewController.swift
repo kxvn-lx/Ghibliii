@@ -66,16 +66,14 @@ extension PeopleViewController {
             let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
             layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
 
-            let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.95),
+            let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8),
                                                          heightDimension: .fractionalHeight(1))
             
             let layoutGroupV = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize,
                                                                subitem: layoutItem,
                                                                count: 3)
-            
-            let layoutGroupH = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitem: layoutGroupV, count: 2)
 
-            let layoutSection = NSCollectionLayoutSection(group: layoutGroupH)
+            let layoutSection = NSCollectionLayoutSection(group: layoutGroupV)
             layoutSection.orthogonalScrollingBehavior = .groupPaging
 
             return layoutSection
