@@ -26,7 +26,7 @@ class DetailViewController: UIViewController {
     }
     var peoples = [People]()
     
-    private var hasWatched: Bool = false {
+    private var hasWatched = false {
         didSet {
             DispatchQueue.main.async {
                 self.addToWatchedButton.isHidden = self.hasWatched
@@ -298,16 +298,6 @@ class DetailViewController: UIViewController {
         mScrollView.contentSize.height = isExpanded ? mStackView.frame.maxY + margin : originalScrollViewHeight
     }
     
-    private func animateButtonOut(_ sender: UIButton) {
-        sender.isEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            UIView.animate(withDuration: 0.25) {
-                sender.isHidden = true
-                sender.alpha = 0
-            }
-        }
-    }
-    
     // MARK: - @objc methods
     @objc private func closeTapped() {
         navigationController?.popViewController(animated: true)
@@ -349,8 +339,9 @@ class DetailViewController: UIViewController {
             case .success(let record):
                 DispatchQueue.main.async {
                     loadingVC.remove()
-                    self?.animateButtonOut(sender)
+                    self?.hasWatched = true
                 }
+                self?.filmRecord = record
                 TapticHelper.shared.successTaptic()
                 self?.delegate?.displayNeedsRefresh(withNewRecord: record)
                 
@@ -374,7 +365,7 @@ class DetailViewController: UIViewController {
             case .success:
                 DispatchQueue.main.async {
                     loadingVC.remove()
-                    self?.animateButtonOut(sender)
+                    self?.hasWatched = false
                 }
                 TapticHelper.shared.successTaptic()
                 self?.delegate?.displayNeedsRefresh(withNewRecord: nil)
