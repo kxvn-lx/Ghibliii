@@ -72,10 +72,7 @@ class DetailedButton: UIButton {
         layer.cornerRadius = 12.5
         layer.cornerCurve = .continuous
         setTitleColor(.white, for: .normal)
-        setTitleColor(UIColor.white.withAlphaComponent(disabledAlphaValue), for: .disabled)
         tintColor = .white
-        
-        setTitleColor(UIColor.white.withAlphaComponent(highlightedAlphaValue), for: .highlighted)
         self.adjustsImageWhenHighlighted = false
     }
     

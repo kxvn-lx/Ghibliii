@@ -77,20 +77,14 @@ class DetailViewController: UIViewController {
         label.textColor = .secondaryLabel
         return label
     }()
-    private let itunesButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Available on iTunes", for: .normal)
+    private let itunesButton: DetailedButton = {
+        let button = DetailedButton(title: "See on iTunes")
         button.setTitleColor(.systemBlue, for: .normal)
-        button.setTitleColor(UIColor.systemBlue.withAlphaComponent(0.9), for: .highlighted)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
         return button
     }()
-    private let imdbLinkButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("see on IMDB", for: .normal)
+    private let imdbLinkButton: DetailedButton = {
+        let button = DetailedButton(title: "See on IMDB")
         button.setTitleColor(.systemBlue, for: .normal)
-        button.setTitleColor(UIColor.systemBlue.withAlphaComponent(0.9), for: .highlighted)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
         return button
     }()
     private var originalHeight: CGFloat {
@@ -120,6 +114,13 @@ class DetailViewController: UIViewController {
         label.textColor = .tertiaryLabel
 
         return label
+    }()
+    private let seeMoreButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitle("See more", for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
+        return button
     }()
     
     private var infoStackView: UIStackView!
@@ -161,12 +162,8 @@ class DetailViewController: UIViewController {
             make.left.top.equalToSuperview().inset(inset)
         }
         
-        // Link Description label with action
-        let tap = UITapGestureRecognizer(target: self, action: #selector(showMoreLessButtonTapped))
-        descriptionLabel.isUserInteractionEnabled = true
-        descriptionLabel.addGestureRecognizer(tap)
-        
         // Setup button
+        seeMoreButton.addTarget(self, action: #selector(seeMoreButtonTapped), for: .touchUpInside)
         imdbLinkButton.addTarget(self, action: #selector(imdbButtonTapped), for: .touchUpInside)
         itunesButton.addTarget(self, action: #selector(itunesButtonTapped), for: .touchUpInside)
         addToWatchedButton.addTarget(self, action: #selector(addToWatchedButtonTapped), for: .touchUpInside)
@@ -180,6 +177,7 @@ class DetailViewController: UIViewController {
             make.height.equalTo(self.view.frame.height * 0.2)
         }
         
+        // People stack view
         let peopleTitleLabel = UILabel()
         peopleTitleLabel.text = "Characters"
         peopleTitleLabel.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title3).pointSize, weight: .medium)
@@ -194,24 +192,29 @@ class DetailViewController: UIViewController {
         self.addChild(peopleVC)
         peopleVC.didMove(toParent: self)
         
+        // Setup secondaryButton stackview
+        let secondaryButtonStackView = UIStackView(arrangedSubviews: [itunesButton, imdbLinkButton])
+        secondaryButtonStackView.distribution = .equalCentering
+        
         // 2. Setup info stacks
         infoStackView = UIStackView(arrangedSubviews: [
                                         descriptionLabel,
+                                        seeMoreButton,
                                         directorLabel,
-                                        producerLabel,
-                                        imdbLinkButton,
-                                        itunesButton])
+                                        producerLabel])
         infoStackView.addBackgroundColor(.secondarySystemBackground)
         infoStackView.isLayoutMarginsRelativeArrangement = true
         infoStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         infoStackView.axis = .vertical
-        infoStackView.setCustomSpacing(20, after: descriptionLabel)
+        infoStackView.setCustomSpacing(10, after: seeMoreButton)
+        infoStackView.alignment = .leading
         
         // 3. Setup master stacks
         mStackView = UIStackView(arrangedSubviews: [
                                     addToWatchedButton,
                                     removeFromWatchedButton,
                                     noticeLabel,
+                                    secondaryButtonStackView,
                                     infoStackView,
                                     peopleSV])
         mStackView.axis = .vertical
@@ -280,6 +283,14 @@ class DetailViewController: UIViewController {
         removeFromWatchedButton.snp.makeConstraints { (make) in
             make.height.equalTo(50)
         }
+        
+        itunesButton.snp.makeConstraints { (make) in
+            make.width.equalTo(mStackView.snp.width).multipliedBy(0.485)
+        }
+        
+        imdbLinkButton.snp.makeConstraints { (make) in
+            make.width.equalTo(mStackView.snp.width).multipliedBy(0.485)
+        }
     }
     
     private func expandScrollView(_ isExpanded: Bool) {
@@ -305,13 +316,15 @@ class DetailViewController: UIViewController {
         
     }
     
-    @objc private func showMoreLessButtonTapped() {
+    @objc private func seeMoreButtonTapped(sender: UIButton) {
         descriptionLabel.numberOfLines = descriptionLabel.numberOfLines == 0 ? 2 : 0
+        sender.setTitle(descriptionLabel.numberOfLines == 0 ? "See less" : "See more", for: .normal)
         UIView.animate(withDuration: 0.0625) {
             self.descriptionLabel.superview?.layoutIfNeeded()
-        } completion: { [self] (_) in
-            expandScrollView(descriptionLabel.numberOfLines == 0)
+        } completion: { (_) in
+            self.expandScrollView(self.descriptionLabel.numberOfLines == 0)
         }
+
     }
     
     @objc private func imdbButtonTapped() {
